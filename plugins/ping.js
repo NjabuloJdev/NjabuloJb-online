@@ -2,11 +2,6 @@ import config from "../config.cjs";
 import pkg, { prepareWAMessageMedia } from "@whiskeysockets/baileys";
 const { generateWAMessageFromContent, proto } = pkg;
 
-const alive = async (m, Matrix) => {
-  try {
-    const prefix = config.Prefix || config.PREFIX || ".";
-    const cmd = m.body?.startsWith(prefix) ? m.body.slice(prefix.length).trim().split(" ")[0].toLowerCase() : "";
-
 //System stats
 const totalMemoryBytes = os.totalmem();
 const freeMemoryBytes = os.freemem();
@@ -20,6 +15,11 @@ function formatBytes(bytes) {
   if (bytes >= 1024) return (bytes * byteToKB).toFixed(2) + " KB";
   return bytes.toFixed(2) + " bytes";
 }
+
+const alive = async (m, Matrix) => {
+  try {
+    const prefix = config.Prefix || config.PREFIX || ".";
+    const cmd = m.body?.startsWith(prefix) ? m.body.slice(prefix.length).trim().split(" ")[0].toLowerCase() : "";
     if (!["alive", "uptime", "runtime"].includes(cmd)) return;
 
     const listButton = { 
@@ -60,6 +60,16 @@ function formatBytes(bytes) {
         buttonText: listButton.buttonText,
         sections: listButton.sections,
         listType: 1,
+       contextInfo: {
+        externalAdReply: {
+         title: "𝗡𝗝𝗔𝗕𝗨𝗟𝗢 𝗝𝗕 𝗠𝗘𝗡𝗨 𝗟𝗜𝗦𝗧",
+         body: "Tap here my friend join channel update",
+          thumbnailUrl: "https://files.catbox.moe/60hwdx.jpeg",
+         sourceUrl: "https://whatsapp.com/channel/0029VarYP5iAInPtfQ8fRb2T",
+        mediaType: 1,
+       renderLargerThumbnail: true
+        }
+        }
       },
       { quoted: m }
     );
