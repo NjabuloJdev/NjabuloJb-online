@@ -3,11 +3,32 @@ import ytSearch from 'yt-search';
 import fs from 'fs';
 import { pipeline } from 'stream';
 import { promisify } from 'util';
-import osCallbacks from 'os';
+import os from 'os';
 import config from "../config.cjs";
 
 const streamPipeline = promisify(pipeline);
-const tmpDir = osCallbacks.tmpdir();
+const tmpDir = os.tmpdir();
+
+const listButton = {
+  buttonText: "Select an option",
+  sections: [
+    {
+      title: "Toxic-MD Menu",
+      rows: [
+        {
+          title: "Play Audio",
+          rowId: "play_audio",
+          description: "Play an audio file",
+        },
+        {
+          title: "Send Document",
+          rowId: "send_document",
+          description: "Send a document file",
+        },
+      ],
+    },
+  ],
+};
 
 const play = async (m, Matrix) => {
   try {
@@ -16,28 +37,21 @@ const play = async (m, Matrix) => {
     const args = m.body.slice(prefix.length + cmd.length).trim().split(" ");
 
     if (cmd === "pla") {
-      if (args.length === 0 || !args.join(" ")) {
+      if (!args.length || !args.join(" ")) {
         return Matrix.sendMessage(m.from, {
-          text: `◈━━━━━━━━━━━━━━━━◈
-│❒ Give me a song name or keywords to search 😎
-◈━━━━━━━━━━━━━━━━◈`,
+          text: `Give me a song name or keywords to search 😎`,
         }, { quoted: m });
       }
 
       const searchQuery = args.join(" ");
       await Matrix.sendMessage(m.from, {
-        text: `◈━━━━━━━━━━━━━━━━◈
-│❒ *Toxic-MD* huntin' for "${searchQuery}"... 🎧
-◈━━━━━━━━━━━━━━━━◈`,
+        text: `*Toxic-MD* huntin' for "${searchQuery}"... 🎧`,
       }, { quoted: m });
 
-      // Search YouTube for song info
       const searchResults = await ytSearch(searchQuery);
-      if (!searchResults.videos || searchResults.videos.length === 0) {
+      if (!searchResults.videos?.length) {
         return Matrix.sendMessage(m.from, {
-          text: `◈━━━━━━━━━━━━━━━━◈
-│❒ No tracks found for "${searchQuery}". You slippin'! 💀
-◈━━━━━━━━━━━━━━━━◈`,
+          text: `No tracks found for "${searchQuery}". You slippin'! 💀`,
         }, { quoted: m });
       }
 
@@ -45,11 +59,9 @@ const play = async (m, Matrix) => {
       const safeTitle = song.title.replace(/[^\w\s]/gi, '').replace(/\s+/g, '_').substring(0, 100);
       const filePath = `${tmpDir}/${safeTitle}.mp3`;
 
-      // Fetch download URL from the new API
-      let apiResponse;
       try {
         const apiUrl = `https://apis.davidcyriltech.my.id/play?query=${encodeURIComponent(searchQuery)}`;
-        apiResponse = await fetch(apiUrl);
+        const apiResponse = await fetch(apiUrl);
         if (!apiResponse.ok) {
           throw new Error(`API responded with status: ${apiResponse.status}`);
         }
@@ -58,37 +70,23 @@ const play = async (m, Matrix) => {
           throw new Error('API response missing download URL or failed');
         }
 
-        // Send song info from yt-search and API
         const songInfo = `
-◈━━━━━━━━━━━━━━━━◈
-│❒ *Toxic-MD* Song Intel 🔥
-│❒ *Title*: ${data.result.title || song.title}
-│❒ *Views*: ${song.views.toLocaleString()}
-│❒ *Duration*: ${song.timestamp}
-│❒ *Channel*: ${song.author.name}
-│❒ *Uploaded*: ${song.ago}
-│❒ *URL*: ${data.result.video_url || song.url}
-◈━━━━━━━━━━━━━━━━◈`;
+*Toxic-MD* Song Intel 🔥
+*Title*: ${data.result.title || song.title}
+*Views*: ${song.views.toLocaleString()}
+*Duration*: ${song.timestamp}
+*Channel*: ${song.author.name}
+*Uploaded*: ${song.ago}
+*URL*: ${data.result.video_url || song.url}`;
         await Matrix.sendMessage(m.from, { text: songInfo }, { quoted: m });
 
-        // Download the audio file
         const downloadResponse = await fetch(data.result.download_url);
         if (!downloadResponse.ok) {
           throw new Error(`Failed to download audio: ${downloadResponse.status}`);
         }
         const fileStream = fs.createWriteStream(filePath);
         await streamPipeline(downloadResponse.body, fileStream);
-      } catch (apiError) {
-        console.error(`API error:`, apiError.message);
-        return Matrix.sendMessage(m.from, {
-          text: `◈━━━━━━━━━━━━━━━━◈
-│❒ *Toxic-MD* couldn't hit the API for "${song.title}". Server's actin' up! 😡
-◈━━━━━━━━━━━━━━━━◈`,
-        }, { quoted: m });
-      }
 
-      // Send the audio file
-      try {
         const doc = {
           audio: {
             url: filePath,
@@ -97,10 +95,8 @@ const play = async (m, Matrix) => {
           ptt: false,
           fileName: `${safeTitle}.mp3`,
         };
-        await Matrix.sendMessage(m.from, doc, { quoted: m });
 
-        // Clean up temp file after 5 seconds
-        setTimeout(() => {
+        Matrix.sendMessage(m.from, doc, { quoted: m }).then(() => {
           try {
             if (fs.existsSync(filePath)) {
               fs.unlinkSync(filePath);
@@ -109,28 +105,55 @@ const play = async (m, Matrix) => {
           } catch (cleanupErr) {
             console.error('Error during file cleanup:', cleanupErr);
           }
-        }, 5000);
-      } catch (sendError) {
-        console.error(`Failed to send audio:`, sendError.message);
+        }).catch(sendError => {
+          console.error(`Failed to send audio:`, sendError.message);
+          Matrix.sendMessage(m.from, {
+            text: `*Toxic-MD* can't play "${song.title}". Failed to send audio 😣`,
+          }, { quoted: m });
+        });
+
+        await Matrix.sendMessage(m.from, {
+          text: `*${song.title}* dropped by *Toxic-MD*! Blast it! 🎶`,
+        }, { quoted: m });
+      } catch (apiError) {
+        console.error(`API error:`, apiError.message);
         return Matrix.sendMessage(m.from, {
-          text: `◈━━━━━━━━━━━━━━━━◈
-│❒ *Toxic-MD* can't play "${song.title}". Failed to send audio 😣
-◈━━━━━━━━━━━━━━━━◈`,
+          text: `*Toxic-MD* couldn't hit the API for "${song.title}". Server's actin' up! 😡`,
         }, { quoted: m });
       }
-
-      await Matrix.sendMessage(m.from, {
-        text: `◈━━━━━━━━━━━━━━━━◈
-│❒ *${song.title}* dropped by *Toxic-MD*! Blast it! 🎶
-◈━━━━━━━━━━━━━━━━◈`,
-      }, { quoted: m });
+    } else if (m.listResponse) {
+      const selectedRowId = m.listResponse.singleSelectReply.selectedRowId;
+      switch (selectedRowId) {
+        case "play_audio":
+          // Handle play audio command
+          const audio = {
+            audio: {
+              url: "https://example.com/audio.mp3", // replace with your audio url
+            },
+            mimetype: "audio/mpeg",
+          };
+          await Matrix.sendMessage(m.from, audio, { quoted: m });
+          break;
+        case "send_document":
+          // Handle send document command
+          const document = {
+            document: {
+              url: "https://example.com/document.pdf", // replace with your document url
+            },
+            mimetype: "application/pdf",
+            fileName: "document.pdf",
+          };
+          await Matrix.sendMessage(m.from, document, { quoted: m });
+          break;
+        default:
+          await Matrix.sendMessage(m.from, { text: "Invalid option" }, { quoted: m });
+          break;
+      }
     }
   } catch (error) {
     console.error(`❌ Play error: ${error.message}`);
     await Matrix.sendMessage(m.from, {
-      text: `◈━━━━━━━━━━━━━━━━◈
-│❒ *Toxic-MD* hit a snag, fam! Try again or pick a better track! 😈
-◈━━━━━━━━━━━━━━━━◈`,
+      text: `*Toxic-MD* hit a snag, fam! Try again or pick a better track! 😈`,
     }, { quoted: m });
   }
 };
