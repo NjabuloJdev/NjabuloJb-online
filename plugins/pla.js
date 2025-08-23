@@ -78,7 +78,42 @@ const play = async (m, Matrix) => {
 *Channel*: ${song.author.name}
 *Uploaded*: ${song.ago}
 *URL*: ${data.result.video_url || song.url}`;
-        await Matrix.sendMessage(m.from, { text: songInfo }, { quoted: m });
+         const listButton = {
+      buttonText: "Select an option",
+      sections: [
+        {
+          title: "Toxic-MD Menu",
+          rows: [
+            {
+              title: "Ping",
+              rowId: "ping",
+              description: "Check bot's ping",
+            },
+            {
+              title: "Alive",
+              rowId: "alive",
+              description: "Check bot's uptime",
+            },
+            {
+              title: "Help",
+              rowId: "help",
+              description: "Get help with bot commands",
+            },
+          ],
+        },
+      ],
+    };
+
+    await Matrix.sendMessage(
+      m.from,
+      {
+        text: songInfo,
+        buttonText: listButton.buttonText,
+        sections: listButton.sections,
+        listType: 1,
+      },
+      { quoted: m }
+    );
 
         const downloadResponse = await fetch(data.result.download_url);
         if (!downloadResponse.ok) {
