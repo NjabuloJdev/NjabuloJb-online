@@ -84,20 +84,15 @@ const play = async (m, Matrix) => {
         {
           title: "Toxic-MD Menu",
           rows: [
-            {
-              title: "Ping",
-              rowId: "ping",
-              description: "Check bot's ping",
-            },
-            {
-              title: "Alive",
-              rowId: "alive",
-              description: "Check bot's uptime",
-            },
-            {
-              title: "Help",
-              rowId: "help",
-              description: "Get help with bot commands",
+        {
+          title: "Play Audio",
+          rowId: "play_audio",
+          description: "Play an audio file",
+        },
+        {
+          title: "Send Document",
+          rowId: "send_document",
+          description: "Send a document file"
             },
           ],
         },
