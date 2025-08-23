@@ -60,16 +60,6 @@ const alive = async (m, Matrix) => {
         buttonText: listButton.buttonText,
         sections: listButton.sections,
         listType: 1,
-       contextInfo: {
-        externalAdReply: {
-         title: "𝗡𝗝𝗔𝗕𝗨𝗟𝗢 𝗝𝗕 𝗠𝗘𝗡𝗨 𝗟𝗜𝗦𝗧",
-         body: "Tap here my friend join channel update",
-          thumbnailUrl: "https://files.catbox.moe/60hwdx.jpeg",
-         sourceUrl: "https://whatsapp.com/channel/0029VarYP5iAInPtfQ8fRb2T",
-        mediaType: 1,
-       renderLargerThumbnail: true
-        }
-        }
       },
       { quoted: m }
     );
