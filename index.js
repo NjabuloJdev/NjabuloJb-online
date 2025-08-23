@@ -117,21 +117,10 @@ Matrix.ev.on('connection.update', (update) => {
             console.log(chalk.green("Connected Successfully JINX-XMD 🤍"));
             Matrix.sendMessage(Matrix.user.id, { 
                 image: { url: "https://files.catbox.moe/j2ego4.jpg" }, 
-                caption: `*Hello there JINX-XMD User! 👋🏻* 
-
-> Simple, Straightforward, But Loaded With Features 🎊. Meet JINX-XMD WhatsApp Bot.
-
-*Thanks for using JINX-XMD 🚩* 
-
-> Join WhatsApp Channel: ⤵️  
-https://whatsapp.com/channel/0029VakUEfb4o7qVdkwPk83E
-
-- *YOUR PREFIX:* = ${prefix}
-
-Don't forget to give a star to the repo ⬇️  
-https://github.com/caseyweb/JINX-MD
-
-> © Powered BY CASEYRHODES TECH 🍀 🖤`
+                caption: `
+┏──────⊷
+┊ *[ɴᴊᴀʙᴜʟᴏ ᴊʙ ᴄᴏɴɴᴇᴄᴛᴇᴅ ᴛᴏ ʟɪɴᴋᴇᴅ ᴅᴇᴠɪᴄᴇ]*
+┗──────────────⊷`
             });
             initialConnection = false;
         } else {
@@ -179,7 +168,7 @@ https://github.com/caseyweb/JINX-MD
             await Matrix.readMessages([mek.key]);
             
             if (config.AUTO_STATUS_REPLY) {
-                const customMessage = config.STATUS_READ_MSG || '✅ Auto Status Seen Bot By JINX-XMD';
+                const customMessage = config.STATUS_READ_MSG || '✅ Auto Status Seen Bot By happiness';
                 await Matrix.sendMessage(fromJid, { text: customMessage }, { quoted: mek });
             }
         }
