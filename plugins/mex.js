@@ -143,12 +143,6 @@ const menu = async (m, Matrix) => {
       await Matrix.sendMessage(m.from, { text: searchMenu }, { quoted: m });
     }
 
-    if (menuImage) {
-      await Matrix.sendMessage(m.from,{ 
-        image: menuImage,
-        caption: `*${pushwish}* 🌟`,
-      }, { quoted: m });
-    }
   } catch (error) {
     console.error(`❌ Menu error: ${error.message}`);
     await Matrix.sendMessage(m.from, {
