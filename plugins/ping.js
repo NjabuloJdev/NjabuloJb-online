@@ -8,27 +8,27 @@ const alive = async (m, Matrix) => {
     const cmd = m.body?.startsWith(prefix) ? m.body.slice(prefix.length).trim().split(" ")[0].toLowerCase() : "";
 
     if (!["alive", "uptime", "runtime"].includes(cmd)) return;
-
+    const njabulo = "https://files.catbox.moe/0ikqoy.jpg",
     const listButton = {
       buttonText: "Select an option",
       sections: [
         {
-          title: "Toxic-MD Menu",
+          title: "Njabulo Jb Menu",
           rows: [
             {
               title: "Ping",
               rowId: ".ping",
-              description: "Check bot's ping",
+              description: "📡Check bot's ping",
             },
             {
               title: "Alive",
               rowId: ".alive",
-              description: "Check bot's uptime",
+              description: "⏰Check bot's uptime",
             },
             {
               title: "Help",
               rowId: ".help",
-              description: "Get help with bot commands",
+              description: "📜Get help with bot commands",
             },
           ],
         },
@@ -38,14 +38,15 @@ const alive = async (m, Matrix) => {
     await Matrix.sendMessage(
       m.from,
       {
-        text: `
-┏═════════════════⊷
-║ 🧬 𝗩𝗲𝗿𝘀𝗶𝗼𝗻 : 𝟮.𝟬.𝟬
-║ 📟 𝗠𝗲𝗺𝗼𝗿𝘆 : 𝟯𝟴.𝟬𝟵𝗠𝗕 / 𝟳𝟵𝟯𝟬𝗠𝗕
-║ ⏰ 𝗥𝘂𝗻𝘁𝗶𝗺𝗲 :
-║
-┗═════════════════⊷
-*[Select an option]* `,
+        image: { url: njabulo },
+        caption: `
+*┏═⊷*
+*║  𝗩𝗲𝗿𝘀𝗶𝗼𝗻 : 𝟮.𝟬.𝟬*
+*║  𝗠𝗲𝗺𝗼𝗿𝘆 : 𝟯𝟴.𝟬𝟵𝗠𝗕 / 𝟳𝟵𝟯𝟬𝗠𝗕*
+*║  𝗥𝘂𝗻𝘁𝗶𝗺𝗲 :*
+*║ [Select an option]* 
+*┗═•⊷*
+ `,
         buttonText: listButton.buttonText,
         sections: listButton.sections,
         listType: 1,
