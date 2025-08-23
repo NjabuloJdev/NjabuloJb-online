@@ -17,17 +17,17 @@ const alive = async (m, Matrix) => {
           rows: [
             {
               title: "Ping",
-              rowId: "ping",
+              rowId: ".ping",
               description: "Check bot's ping",
             },
             {
               title: "Alive",
-              rowId: "alive",
+              rowId: ".alive",
               description: "Check bot's uptime",
             },
             {
               title: "Help",
-              rowId: "help",
+              rowId: ".help",
               description: "Get help with bot commands",
             },
           ],
@@ -51,7 +51,7 @@ const alive = async (m, Matrix) => {
       if (msg.key.remoteJid === m.from && msg.listResponseMessage) {
         const selectedOption = msg.listResponseMessage.singleSelectReply.selectedRowId;
 
-        if (selectedOption === "ping") {
+        if (selectedOption === ".ping") {
           await Matrix.sendMessage(m.from, { text: "Pong!" });
         } else if (selectedOption === "alive") {
           const uptimeSeconds = process.uptime();
