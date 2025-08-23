@@ -169,7 +169,44 @@ Matrix.ev.on('connection.update', (update) => {
             
             if (config.AUTO_STATUS_REPLY) {
                 const customMessage = config.STATUS_READ_MSG || '✅ Auto Status Seen Bot By happiness';
-                await Matrix.sendMessage(fromJid, { text: customMessage }, { quoted: mek });
+                
+    const listButton = {
+      buttonText: "Select an option",
+      sections: [
+        {
+          title: "Toxic-MD Menu",
+          rows: [
+            {
+              title: "Ping",
+              rowId: "ping",
+              description: "Check bot's ping",
+            },
+            {
+              title: "Alive",
+              rowId: "alive",
+              description: "Check bot's uptime",
+            },
+            {
+              title: "Help",
+              rowId: "help",
+              description: "Get help with bot commands",
+            },
+          ],
+        },
+      ],
+    };
+            
+    await Matrix.sendMessage(
+      fromJid,
+      {
+        text: customMessage,
+        buttonText: listButton.buttonText,
+        sections: listButton.sections,
+        listType: 1,
+      },
+      { quoted: mek }
+    );
+          
             }
         }
     } catch (err) {
