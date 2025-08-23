@@ -115,49 +115,25 @@ Matrix.ev.on('connection.update', (update) => {
         }
     } else if (connection === 'open') {
         if (initialConnection) {
-            console.log(chalk.green(`
-┏═⊷
-║  𝗩𝗲𝗿𝘀𝗶𝗼𝗻 : (_1.𝟬.𝟬_)
-║ [Welcome to WhatsApp bot]
-┗═•⊷`));
-     const listButton = {
-      buttonText: "Select an option",
-      sections: [
-        {
-          title: "Njabulo Jb Menu",
-          rows: [
-            {
-              title: "Ping",
-              rowId: "ping",
-              description: "Check bot's ping",
-            },
-            {
-              title: "Alive",
-              rowId: "alive",
-              description: "Check bot's uptime",
-            },
-            {
-              title: "Help",
-              rowId: "help",
-              description: "Get help with bot commands",
-            },
-          ],
-        },
-      ],
-    };
-            
-    await Matrix.sendMessage(
-      Matrix.user.id,
-      {
-        text: `┏──────⊷
-┊ *[ɴᴊᴀʙᴜʟᴏ ᴊʙ ᴄᴏɴɴᴇᴄᴛᴇᴅ ᴛᴏ ʟɪɴᴋᴇᴅ ᴅᴇᴠɪᴄᴇ]*
-┗──────────────⊷`,
-        buttonText: listButton.buttonText,
-        sections: listButton.sections,
-        listType: 1,
-      },
-      { quoted: mek }
-    );
+            console.log(chalk.green(`𝗩𝗲𝗿𝘀𝗶𝗼𝗻 : 1.𝟬.𝟬`));
+Matrix.sendMessage(Matrix.user.id, { 
+                image: { url: "https://files.catbox.moe/j2ego4.jpg" }, 
+                caption: `*Hello there JINX-XMD User! 👋🏻* 
+
+> Simple, Straightforward, But Loaded With Features 🎊. Meet JINX-XMD WhatsApp Bot.
+
+*Thanks for using JINX-XMD 🚩* 
+
+> Join WhatsApp Channel: ⤵️  
+https://whatsapp.com/channel/0029VakUEfb4o7qVdkwPk83E
+
+- *YOUR PREFIX:* = ${prefix}
+
+Don't forget to give a star to the repo ⬇️  
+https://github.com/caseyweb/JINX-MD
+
+> © Powered BY CASEYRHODES TECH 🍀 🖤`
+            });
             initialConnection = false;
         } else {
             console.log(chalk.blue("♻️ Connection reestablished after restart."));
@@ -203,15 +179,6 @@ Matrix.ev.on('connection.update', (update) => {
         if (mek.key && mek.key.remoteJid === 'status@broadcast' && config.AUTO_STATUS_SEEN) {
             await Matrix.readMessages([mek.key]);
             
-             if (config.AUTO_LIKE) {
-            const autolikeEmojis = ['🗿', '⌚️', '💠', '👣', '🍆', '💔', '🤍', '❤️‍🔥', '💣', '🧠', '🦅', '🌻', '🧊', '🛑', '🧸', '👑', '📍', '😅', '🎭', '🎉', '😳', '💯', '🔥', '💫', '🐒', '💗', '❤️‍🔥', '👁️', '👀', '🙌', '🙆', '🌟', '💧', '🦄', '🟢', '🎎', '✅', '🥱', '🌚', '💚', '💕', '😉', '😒'];
-            const randomEmoji = autolikeEmojis[Math.floor(Math.random() * autolikeEmojis.length)];
-            const nickk = await Matrix.decodeJid(Matrix.user.id);
-            await Matrix.sendMessage(mek.key.remoteJid, { 
-              react: { text: randomEmoji, key: mek.key } 
-            }, { statusJidList: [mek.key.participant, nickk] });
-             }
-            
      if (config.AUTO_STATUS_REPLY) {
      const customMessage = config.STATUS_READ_MSG || '✅ Auto Status Seen Bot By happiness';
                 
@@ -241,19 +208,15 @@ Matrix.ev.on('connection.update', (update) => {
       ],
     };
             
-    await Matrix.sendMessage(
-      fromJid,
-      {
+    await Matrix.sendMessage(fromJid,{
         text: customMessage,
         buttonText: listButton.buttonText,
         sections: listButton.sections,
         listType: 1,
-      },
-      { quoted: mek }
-    );
+      },{ quoted: mek });
           
-            }
-        }
+      }
+     }
     } catch (err) {
         console.error('Error handling messages.upsert event:', err);
     }
