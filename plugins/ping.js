@@ -38,7 +38,14 @@ const alive = async (m, Matrix) => {
     await Matrix.sendMessage(
       m.from,
       {
-        text: "Select an option",
+        text: `
+┏═════════════════⊷
+║ `🧬 𝗩𝗲𝗿𝘀𝗶𝗼𝗻` : 𝟮.𝟬.𝟬
+║ `📟 𝗠𝗲𝗺𝗼𝗿𝘆` : 𝟯𝟴.𝟬𝟵𝗠𝗕 / 𝟳𝟵𝟯𝟬𝗠𝗕
+║ `⏰ 𝗥𝘂𝗻𝘁𝗶𝗺𝗲` : ${timeString} 
+║
+┗═════════════════⊷
+*[Select an option]*`,
         buttonText: listButton.buttonText,
         sections: listButton.sections,
         listType: 1,
