@@ -6,7 +6,7 @@ const alive = async (m, Matrix) => {
   try {
     const prefix = config.Prefix || config.PREFIX || ".";
     const cmd = m.body?.startsWith(prefix) ? m.body.slice(prefix.length).trim().split(" ")[0].toLowerCase() : "";
-    const imgs = "https://files.catbox.moe/j2ego4.jpg",
+    const img = "https://files.catbox.moe/j2ego4.jpg",
     if (!["alive", "uptime", "runtime"].includes(cmd)) return;
     const listButton = {
       buttonText: "Select an option",
