@@ -142,44 +142,6 @@ const play = async (m, Matrix) => {
           }, { quoted: m });
         });
 
-        await Matrix.sendMessage(m.from, {
-          text: `*${song.title}* dropped by *Toxic-MD*! Blast it! 🎶`,
-        }, { quoted: m });
-      } catch (apiError) {
-        console.error(`API error:`, apiError.message);
-        return Matrix.sendMessage(m.from, {
-          text: `*Toxic-MD* couldn't hit the API for "${song.title}". Server's actin' up! 😡`,
-        }, { quoted: m });
-      }
-    } else if (m.listResponse) {
-      const selectedRowId = m.listResponse.singleSelectReply.selectedRowId;
-      switch (selectedRowId) {
-        case "play_audio":
-          // Handle play audio command
-          const audio = {
-            audio: {
-              url: "https://example.com/audio.mp3", // replace with your audio url
-            },
-            mimetype: "audio/mpeg",
-          };
-          await Matrix.sendMessage(m.from, audio, { quoted: m });
-          break;
-        case "send_document":
-          // Handle send document command
-          const document = {
-            document: {
-              url: "https://example.com/document.pdf", // replace with your document url
-            },
-            mimetype: "application/pdf",
-            fileName: "document.pdf",
-          };
-          await Matrix.sendMessage(m.from, document, { quoted: m });
-          break;
-        default:
-          await Matrix.sendMessage(m.from, { text: "Invalid option" }, { quoted: m });
-          break;
-      }
-    }
   } catch (error) {
     console.error(`❌ Play error: ${error.message}`);
     await Matrix.sendMessage(m.from, {
