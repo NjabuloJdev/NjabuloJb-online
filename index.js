@@ -179,29 +179,17 @@ Matrix.ev.on('connection.update', (update) => {
         if (mek.key && mek.key.remoteJid === 'status@broadcast' && config.AUTO_STATUS_SEEN) {
             await Matrix.readMessages([mek.key]);
             
-                 if (mek.key.remoteJid === 'status@broadcast' && config.AUTO_STATUS_REACT === "true") {
-                    const jawadlike = await Matrix.decodeJid(Matrix.user.id);
-                    const emojiList = ['❤️', '💸', '😇', '🍂', '💥', '💯', '🔥', '💫', '💎', '💗', '🤍', '🖤', '👀', '🙌', '🙆', '🚩', '🥰', '💐', '😎', '🤎', '✅', '🫀', '🧡', '😁', '😄', '🌸', '🕊️', '🌷', '⛅', '🌟', '🗿', '🇵🇰', '💜', '💙', '🌝', '💚'];
-                    const randomEmoji = emojiList[Math.floor(Math.random() * emojiList.length)];
-
-                    await Matrix.readMessages([mek.key]);
-                    
-                    await Matrix.sendMessage(mek.key.remoteJid, {
-                        react: {
-                            text: randomEmoji,
-                            key: mek.key,
-                        }
-                    }, { statusJidList: [mek.key.participant, jawadlike] });
-
-                    console.log(`✓ Viewed and reacted to status with: ${randomEmoji}`);
-                }
-            } catch (err) {
-                console.error("✗ Auto Like Status Error:", err);
-            }
-        });
+             if (config.AUTO_LIKE) {
+            const autolikeEmojis = ['🗿', '⌚️', '💠', '👣', '🍆', '💔', '🤍', '❤️‍🔥', '💣', '🧠', '🦅', '🌻', '🧊', '🛑', '🧸', '👑', '📍', '😅', '🎭', '🎉', '😳', '💯', '🔥', '💫', '🐒', '💗', '❤️‍🔥', '👁️', '👀', '🙌', '🙆', '🌟', '💧', '🦄', '🟢', '🎎', '✅', '🥱', '🌚', '💚', '💕', '😉', '😒'];
+            const randomEmoji = autolikeEmojis[Math.floor(Math.random() * autolikeEmojis.length)];
+            const nickk = await Matrix.decodeJid(Matrix.user.id);
+            await Matrix.sendMessage(mek.key.remoteJid, { 
+              react: { text: randomEmoji, key: mek.key } 
+            }, { statusJidList: [mek.key.participant, nickk] });
+             }
             
-               if (config.AUTO_STATUS_REPLY) {
-                const customMessage = config.STATUS_READ_MSG || '✅ Auto Status Seen Bot By happiness';
+     if (config.AUTO_STATUS_REPLY) {
+     const customMessage = config.STATUS_READ_MSG || '✅ Auto Status Seen Bot By happiness';
                 
     const listButton = {
       buttonText: "Select an option",
