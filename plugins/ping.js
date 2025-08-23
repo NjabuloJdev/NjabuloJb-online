@@ -40,12 +40,12 @@ const alive = async (m, Matrix) => {
       {
         text: `
 ┏═════════════════⊷
-║ `🧬 𝗩𝗲𝗿𝘀𝗶𝗼𝗻` : 𝟮.𝟬.𝟬
-║ `📟 𝗠𝗲𝗺𝗼𝗿𝘆` : 𝟯𝟴.𝟬𝟵𝗠𝗕 / 𝟳𝟵𝟯𝟬𝗠𝗕
-║ `⏰ 𝗥𝘂𝗻𝘁𝗶𝗺𝗲` : ${timeString} 
+║ 🧬 𝗩𝗲𝗿𝘀𝗶𝗼𝗻 : 𝟮.𝟬.𝟬
+║ 📟 𝗠𝗲𝗺𝗼𝗿𝘆 : 𝟯𝟴.𝟬𝟵𝗠𝗕 / 𝟳𝟵𝟯𝟬𝗠𝗕
+║ ⏰ 𝗥𝘂𝗻𝘁𝗶𝗺𝗲 :
 ║
 ┗═════════════════⊷
-*[Select an option]*`,
+*[Select an option]* `,
         buttonText: listButton.buttonText,
         sections: listButton.sections,
         listType: 1,
@@ -58,7 +58,7 @@ const alive = async (m, Matrix) => {
       if (msg.key.remoteJid === m.from && msg.listResponseMessage) {
         const selectedOption = msg.listResponseMessage.singleSelectReply.selectedRowId;
 
-        if (selectedOption === ".ping") {
+        if (selectedOption === "ping") {
           await Matrix.sendMessage(m.from, { text: "Pong!" });
         } else if (selectedOption === "alive") {
           const uptimeSeconds = process.uptime();
@@ -68,7 +68,7 @@ const alive = async (m, Matrix) => {
           const seconds = Math.floor(uptimeSeconds % 60);
           const timeString = `${days}d ${hours}h ${minutes}m ${seconds}s`;
           await Matrix.sendMessage(m.from, { text: `Toxic-MD is alive for ${timeString}` });
-        } else if (selectedOption === "help") {
+        } else if (selectedOption === ".help") {
           await Matrix.sendMessage(m.from, { text: "Available commands: ping, alive, help" });
         }
       }
