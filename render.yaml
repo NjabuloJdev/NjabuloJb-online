@@ -1,13 +1,13 @@
 services:
   - type: web
-    name: Toxic-MD
+    name: NjabuloJb-online
     env: docker
     region: Singapore
     plan: free
     buildCommand: "npm install"
     startCommand: "node index.js"
     dockerfilePath: ./Dockerfile
-    repo: https://github.com/xhclintohn/Toxic-Md
+    repo: https://github.com/NjabuloJdev/NjabuloJb-online
     autoDeploy: true
     envVars:
       - key: SESSION_ID
