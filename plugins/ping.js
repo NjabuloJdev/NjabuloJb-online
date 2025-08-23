@@ -6,7 +6,20 @@ const alive = async (m, Matrix) => {
   try {
     const prefix = config.Prefix || config.PREFIX || ".";
     const cmd = m.body?.startsWith(prefix) ? m.body.slice(prefix.length).trim().split(" ")[0].toLowerCase() : "";
-    const img = "https://files.catbox.moe/j2ego4.jpg";
+
+//System stats
+const totalMemoryBytes = os.totalmem();
+const freeMemoryBytes = os.freemem();
+const byteToKB = 1 / 1024;
+const byteToMB = byteToKB / 1024;
+const byteToGB = byteToMB / 1024;
+
+function formatBytes(bytes) {
+  if (bytes >= Math.pow(1024, 3)) return (bytes * byteToGB).toFixed(2) + " GB";
+  if (bytes >= Math.pow(1024, 2)) return (bytes * byteToMB).toFixed(2) + " MB";
+  if (bytes >= 1024) return (bytes * byteToKB).toFixed(2) + " KB";
+  return bytes.toFixed(2) + " bytes";
+}
     if (!["alive", "uptime", "runtime"].includes(cmd)) return;
 
     const listButton = { 
@@ -38,10 +51,11 @@ const alive = async (m, Matrix) => {
     await Matrix.sendMessage( m.from,{
         text: `
 *┏═⊷*
-*║  𝗩𝗲𝗿𝘀𝗶𝗼𝗻 : 𝟮.𝟬.𝟬*
-*║  𝗠𝗲𝗺𝗼𝗿𝘆 : 𝟯𝟴.𝟬𝟵𝗠𝗕 / 𝟳𝟵𝟯𝟬𝗠𝗕*
-*║  𝗥𝘂𝗻𝘁𝗶𝗺𝗲 :*
-*║ [Select an option]* 
+*║  Name: happiness*
+*║  Use:* *${m.pushName}*
+*║  𝗩𝗲𝗿𝘀𝗶𝗼𝗻 : (_1.𝟬.𝟬_)*
+*║  Button : baileys elit*
+*║  Memory*: ${formatBytes(freeMemoryBytes)} / ${formatBytes(totalMemoryBytes)}
 *┗═•⊷* `,
         buttonText: listButton.buttonText,
         sections: listButton.sections,
