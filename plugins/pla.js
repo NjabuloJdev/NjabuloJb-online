@@ -135,12 +135,6 @@ const play = async (m, Matrix) => {
           } catch (cleanupErr) {
             console.error('Error during file cleanup:', cleanupErr);
           }
-        
-  } catch (error) {
-    console.error(`❌ Play error: ${error.message}`);
-    await Matrix.sendMessage(m.from, {
-      text: `*Toxic-MD* hit a snag, fam! Try again or pick a better track! 😈`,
-    }, { quoted: m });
   }
 };
 
