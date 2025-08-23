@@ -8,6 +8,14 @@ const alive = async (m, Matrix) => {
     const cmd = m.body?.startsWith(prefix) ? m.body.slice(prefix.length).trim().split(" ")[0].toLowerCase() : "";
     const img = "https://files.catbox.moe/j2ego4.jpg";
     if (!["alive", "uptime", "runtime"].includes(cmd)) return;
+
+    const pingInfo `
+*┏═⊷*
+*║  𝗩𝗲𝗿𝘀𝗶𝗼𝗻 : 𝟮.𝟬.𝟬*
+*║  𝗠𝗲𝗺𝗼𝗿𝘆 : 𝟯𝟴.𝟬𝟵𝗠𝗕 / 𝟳𝟵𝟯𝟬𝗠𝗕*
+*║  𝗥𝘂𝗻𝘁𝗶𝗺𝗲 :*
+*║ [Select an option]* 
+*┗═•⊷* `;
     const listButton = {
       image: { url: img }, 
       buttonText: "Select an option",
@@ -36,13 +44,7 @@ const alive = async (m, Matrix) => {
     };
 
     await Matrix.sendMessage( m.from,{
-        text: `
-*┏═⊷*
-*║  𝗩𝗲𝗿𝘀𝗶𝗼𝗻 : 𝟮.𝟬.𝟬*
-*║  𝗠𝗲𝗺𝗼𝗿𝘆 : 𝟯𝟴.𝟬𝟵𝗠𝗕 / 𝟳𝟵𝟯𝟬𝗠𝗕*
-*║  𝗥𝘂𝗻𝘁𝗶𝗺𝗲 :*
-*║ [Select an option]* 
-*┗═•⊷* `,
+        text: pingInfo,
         buttonText: listButton.buttonText,
         sections: listButton.sections,
         listType: 1,
