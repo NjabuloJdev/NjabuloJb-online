@@ -1,7 +1,7 @@
 {
-  "name": "Caseyrhodes-AI",
+  "name": "NjabuloJb-online",
   "version": "10.8.1",
-  "description": "Caseyrhodes-AI latest multi device whatsapp bot",
+  "description": "NjabuloJb-online latest multi device whatsapp bot",
   "main": "index.js",
   "engines": {
   "node": ">=20.x",
@@ -9,11 +9,11 @@
   },
   "type": "module",
   "scripts": {
-    "start": "pm2 start index.js --deep-monitoring --attach --name Caseyrhodes-AI",
+    "start": "pm2 start index.js --deep-monitoring --attach --name NjabuloJb-online",
     "stop": "pm2 stop ",
-    "restart": "pm2 restart Caseyrhodes-AI"
+    "restart": "pm2 restart NjabuloJb-online"
   },
-  "keywords": ["Caseyrhodes-AI", "whatsapp-bot", "whatsapp md bot"],
+  "keywords": ["NjabuloJb-online", "whatsapp-bot", "whatsapp md bot"],
   "author": "NjabuloJ",
   "license": "ISC",
   "dependencies": {
