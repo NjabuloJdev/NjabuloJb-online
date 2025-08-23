@@ -85,17 +85,6 @@ async function downloadSessionData() {
     }
 }
 
-//Status reply messages
-const toxicReplies = [
-  "Yo, caught your status. Straight-up savage! 😈",
-  "Damn, that status tho! You out here wildin’! 🔥",
-  "Saw your status. Bruh, you’re on another level! 💀",
-  "What’s good? Your status is pure chaos! 😎",
-  "Status checked. You’re droppin’ bombs out here! 💣",
-  "Aight, peeped your status. Too lit! 😏",
-  "Your status? Absolute fire, no cap! 🚨",
-  "Just saw your status. Keep it 100, fam! 🖤",
-];
 
 async function start() {
     try {
@@ -126,14 +115,49 @@ Matrix.ev.on('connection.update', (update) => {
         }
     } else if (connection === 'open') {
         if (initialConnection) {
-            console.log(chalk.green("Connected Successfully JINX-XMD 🤍"));
-            Matrix.sendMessage(Matrix.user.id, { 
-                image: { url: "https://files.catbox.moe/j2ego4.jpg" }, 
-                caption: `
-┏──────⊷
+            console.log(chalk.green(`
+┏═⊷
+║  𝗩𝗲𝗿𝘀𝗶𝗼𝗻 : (_1.𝟬.𝟬_)
+║ [Welcome to WhatsApp bot]
+┗═•⊷`));
+     const listButton = {
+      buttonText: "Select an option",
+      sections: [
+        {
+          title: "Njabulo Jb Menu",
+          rows: [
+            {
+              title: "Ping",
+              rowId: "ping",
+              description: "Check bot's ping",
+            },
+            {
+              title: "Alive",
+              rowId: "alive",
+              description: "Check bot's uptime",
+            },
+            {
+              title: "Help",
+              rowId: "help",
+              description: "Get help with bot commands",
+            },
+          ],
+        },
+      ],
+    };
+            
+    await Matrix.sendMessage(
+      Matrix.user.id,
+      {
+        text: `┏──────⊷
 ┊ *[ɴᴊᴀʙᴜʟᴏ ᴊʙ ᴄᴏɴɴᴇᴄᴛᴇᴅ ᴛᴏ ʟɪɴᴋᴇᴅ ᴅᴇᴠɪᴄᴇ]*
-┗──────────────⊷`
-            });
+┗──────────────⊷`,
+        buttonText: listButton.buttonText,
+        sections: listButton.sections,
+        listType: 1,
+      },
+      { quoted: mek }
+    );
             initialConnection = false;
         } else {
             console.log(chalk.blue("♻️ Connection reestablished after restart."));
