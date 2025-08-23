@@ -1,9 +1,9 @@
 {
-  "name": "NjabuloJb-elite",
+  "name": "NjabuloJb-online",
   "description": "I am NjabuloJb WhatsApp MultiDevice Bot built in NodeJs to enhance the experience.",
   "logo": "https://files.catbox.moe/neni8p.jpg",
-  "keywords": ["NjabuloJb-elite"],
-  "repository": "https://github.com/NjabuloJ/NjabuloJb-elite",
+  "keywords": ["NjabuloJb-online"],
+  "repository": "https://github.com/NjabuloJbdev/NjabuloJb-online",
   "stack": "container",
   "env": { 
       "SESSION_ID": {
