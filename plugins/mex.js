@@ -98,7 +98,7 @@ const menu = async (m, Matrix) => {
       await Matrix.sendMessage(
         m.from,
         {
-         image: { url:menuImage }, 
+         image: menuImage, 
           caption: `
 ┌─❖
 │ Njabulo Jb    
