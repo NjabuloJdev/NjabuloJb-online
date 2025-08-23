@@ -8,7 +8,6 @@ const alive = async (m, Matrix) => {
     const cmd = m.body?.startsWith(prefix) ? m.body.slice(prefix.length).trim().split(" ")[0].toLowerCase() : "";
 
     if (!["alive", "uptime", "runtime"].includes(cmd)) return;
-    const njabulo = "https://files.catbox.moe/0ikqoy.jpg",
     const listButton = {
       buttonText: "Select an option",
       sections: [
@@ -36,7 +35,7 @@ const alive = async (m, Matrix) => {
     };
 
     await Matrix.sendMessage( m.from,{
-        image: { url: njabulo },
+          image: { url: "https://files.catbox.moe/j2ego4.jpg" }, 
         caption: `
 *┏═⊷*
 *║  𝗩𝗲𝗿𝘀𝗶𝗼𝗻 : 𝟮.𝟬.𝟬*
