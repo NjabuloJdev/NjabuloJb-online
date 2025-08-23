@@ -18,26 +18,24 @@ const alive = async (m, Matrix) => {
             {
               title: "Ping",
               rowId: ".ping",
-              description: "📡Check bot's ping",
+              description: "Check bot's ping",
             },
             {
               title: "Alive",
               rowId: ".alive",
-              description: "⏰Check bot's uptime",
+              description: "Check bot's uptime",
             },
             {
               title: "Help",
               rowId: ".help",
-              description: "📜Get help with bot commands",
+              description: "Get help with bot commands",
             },
           ],
         },
       ],
     };
 
-    await Matrix.sendMessage(
-      m.from,
-      {
+    await Matrix.sendMessage( m.from,{
         image: { url: njabulo },
         caption: `
 *┏═⊷*
@@ -45,8 +43,7 @@ const alive = async (m, Matrix) => {
 *║  𝗠𝗲𝗺𝗼𝗿𝘆 : 𝟯𝟴.𝟬𝟵𝗠𝗕 / 𝟳𝟵𝟯𝟬𝗠𝗕*
 *║  𝗥𝘂𝗻𝘁𝗶𝗺𝗲 :*
 *║ [Select an option]* 
-*┗═•⊷*
- `,
+*┗═•⊷* `,
         buttonText: listButton.buttonText,
         sections: listButton.sections,
         listType: 1,
