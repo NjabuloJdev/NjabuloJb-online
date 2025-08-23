@@ -55,7 +55,18 @@ const menu = async (m, Matrix) => {
     const cmd = m.body.startsWith(prefix) ? m.body.slice(prefix.length).split(" ")[0].toLowerCase() : "";
     const mode = config.MODE === "public" ? "public" : "private";
     const totalCommands = 70;
-
+    const mainMenu = `
+┌─❖
+│ Njabulo Jb    
+└┬❖  
+┌┤  ${pushwish} 
+│└────────┈⳹  
+│🕵️ ᴜsᴇʀ ɴᴀᴍᴇ: *${m.pushName}*
+│📅 ᴅᴀᴛᴇ: *${xdate}*
+│⏰ ᴛɪᴍᴇ: *${xtime}*     
+│⭐ ᴜᴘᴛɪᴍᴇ: ${runMessage}      
+└─────────────┈⳹`,
+    
     const listButton = {
       buttonText: "Select an option",
       sections: [
@@ -98,7 +109,7 @@ const menu = async (m, Matrix) => {
       await Matrix.sendMessage(
         m.from,
         {
-          text: "Njabulo Jb Menu Options",
+          text: mainMenu,
           buttonText: listButton.buttonText,
           sections: listButton.sections,
           listType: 1,
