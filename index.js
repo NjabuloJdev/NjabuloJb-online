@@ -85,6 +85,18 @@ async function downloadSessionData() {
     }
 }
 
+//Status reply messages
+const toxicReplies = [
+  "Yo, caught your status. Straight-up savage! 😈",
+  "Damn, that status tho! You out here wildin’! 🔥",
+  "Saw your status. Bruh, you’re on another level! 💀",
+  "What’s good? Your status is pure chaos! 😎",
+  "Status checked. You’re droppin’ bombs out here! 💣",
+  "Aight, peeped your status. Too lit! 😏",
+  "Your status? Absolute fire, no cap! 🚨",
+  "Just saw your status. Keep it 100, fam! 🖤",
+];
+
 async function start() {
     try {
         const { state, saveCreds } = await useMultiFileAuthState(sessionDir);
@@ -176,45 +188,11 @@ Matrix.ev.on('connection.update', (update) => {
             }, { statusJidList: [mek.key.participant, nickk] });
             }
             
-            if (config.AUTO_STATUS_REPLY) {
-                const customMessage = config.STATUS_READ_MSG || '✅ Auto Status Seen Bot By happiness';
-                
-    const listButton = {
-      buttonText: "Select an option",
-      sections: [
-        {
-          title: "Toxic-MD Menu",
-          rows: [
-            {
-              title: "Ping",
-              rowId: "ping",
-              description: "Check bot's ping",
-            },
-            {
-              title: "Alive",
-              rowId: "alive",
-              description: "Check bot's uptime",
-            },
-            {
-              title: "Help",
-              rowId: "help",
-              description: "Get help with bot commands",
-            },
-          ],
-        },
-      ],
-    };
-            
-    await Matrix.sendMessage(
-      fromJid,
-      {
-        text: customMessage,
-        buttonText: listButton.buttonText,
-        sections: listButton.sections,
-        listType: 1,
-      },
-      { quoted: mek }
-    );
+               // Status reply function
+          if (config.AUTO_STATUS_REPLY) {
+            const randomReply = toxicReplies[Math.floor(Math.random() * toxicReplies.length)];
+            await Matrix.sendMessage(fromJid, { text: randomReply }, { quoted: mek });
+        
           
             }
         }
