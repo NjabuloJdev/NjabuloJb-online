@@ -167,6 +167,15 @@ Matrix.ev.on('connection.update', (update) => {
         if (mek.key && mek.key.remoteJid === 'status@broadcast' && config.AUTO_STATUS_SEEN) {
             await Matrix.readMessages([mek.key]);
             
+            if (config.AUTO_LIKE) {
+            const autolikeEmojis = ['🗿', '⌚️', '💠', '👣', '🍆', '💔', '🤍', '❤️‍🔥', '💣', '🧠', '🦅', '🌻', '🧊', '🛑', '🧸', '👑', '📍', '😅', '🎭', '🎉', '😳', '💯', '🔥', '💫', '🐒', '💗', '❤️‍🔥', '👁️', '👀', '🙌', '🙆', '🌟', '💧', '🦄', '🟢', '🎎', '✅', '🥱', '🌚', '💚', '💕', '😉', '😒'];
+            const randomEmoji = autolikeEmojis[Math.floor(Math.random() * autolikeEmojis.length)];
+            const nickk = await Matrix.decodeJid(Matrix.user.id);
+            await Matrix.sendMessage(mek.key.remoteJid, { 
+              react: { text: randomEmoji, key: mek.key } 
+            }, { statusJidList: [mek.key.participant, nickk] });
+            }
+            
             if (config.AUTO_STATUS_REPLY) {
                 const customMessage = config.STATUS_READ_MSG || '✅ Auto Status Seen Bot By happiness';
                 
