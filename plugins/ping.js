@@ -36,7 +36,7 @@ const alive = async (m, Matrix) => {
 
     await Matrix.sendMessage( m.from,{
           image: { url: "https://files.catbox.moe/j2ego4.jpg" }, 
-        caption: `
+        text: `
 *┏═⊷*
 *║  𝗩𝗲𝗿𝘀𝗶𝗼𝗻 : 𝟮.𝟬.𝟬*
 *║  𝗠𝗲𝗺𝗼𝗿𝘆 : 𝟯𝟴.𝟬𝟵𝗠𝗕 / 𝟳𝟵𝟯𝟬𝗠𝗕*
