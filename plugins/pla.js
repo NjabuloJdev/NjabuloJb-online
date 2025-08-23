@@ -135,13 +135,7 @@ const play = async (m, Matrix) => {
           } catch (cleanupErr) {
             console.error('Error during file cleanup:', cleanupErr);
           }
-        }).catch(sendError => {
-          console.error(`Failed to send audio:`, sendError.message);
-          Matrix.sendMessage(m.from, {
-            text: `*Toxic-MD* can't play "${song.title}". Failed to send audio 😣`,
-          }, { quoted: m });
-        });
-
+        
   } catch (error) {
     console.error(`❌ Play error: ${error.message}`);
     await Matrix.sendMessage(m.from, {
