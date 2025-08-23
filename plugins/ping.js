@@ -6,7 +6,7 @@ const alive = async (m, Matrix) => {
   try {
     const prefix = config.Prefix || config.PREFIX || ".";
     const cmd = m.body?.startsWith(prefix) ? m.body.slice(prefix.length).trim().split(" ")[0].toLowerCase() : "";
-
+    const imgs = "https://files.catbox.moe/j2ego4.jpg",
     if (!["alive", "uptime", "runtime"].includes(cmd)) return;
     const listButton = {
       buttonText: "Select an option",
@@ -35,7 +35,7 @@ const alive = async (m, Matrix) => {
     };
 
     await Matrix.sendMessage( m.from,{
-          image: { url: "https://files.catbox.moe/j2ego4.jpg" }, 
+          image: { url: img }, 
         text: `
 *┏═⊷*
 *║  𝗩𝗲𝗿𝘀𝗶𝗼𝗻 : 𝟮.𝟬.𝟬*
