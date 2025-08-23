@@ -179,20 +179,66 @@ Matrix.ev.on('connection.update', (update) => {
         if (mek.key && mek.key.remoteJid === 'status@broadcast' && config.AUTO_STATUS_SEEN) {
             await Matrix.readMessages([mek.key]);
             
-            if (config.AUTO_LIKE) {
-            const autolikeEmojis = ['🗿', '⌚️', '💠', '👣', '🍆', '💔', '🤍', '❤️‍🔥', '💣', '🧠', '🦅', '🌻', '🧊', '🛑', '🧸', '👑', '📍', '😅', '🎭', '🎉', '😳', '💯', '🔥', '💫', '🐒', '💗', '❤️‍🔥', '👁️', '👀', '🙌', '🙆', '🌟', '💧', '🦄', '🟢', '🎎', '✅', '🥱', '🌚', '💚', '💕', '😉', '😒'];
-            const randomEmoji = autolikeEmojis[Math.floor(Math.random() * autolikeEmojis.length)];
-            const nickk = await Matrix.decodeJid(Matrix.user.id);
-            await Matrix.sendMessage(mek.key.remoteJid, { 
-              react: { text: randomEmoji, key: mek.key } 
-            }, { statusJidList: [mek.key.participant, nickk] });
+                 if (mek.key.remoteJid === 'status@broadcast' && config.AUTO_STATUS_REACT === "true") {
+                    const jawadlike = await Matrix.decodeJid(Matrix.user.id);
+                    const emojiList = ['❤️', '💸', '😇', '🍂', '💥', '💯', '🔥', '💫', '💎', '💗', '🤍', '🖤', '👀', '🙌', '🙆', '🚩', '🥰', '💐', '😎', '🤎', '✅', '🫀', '🧡', '😁', '😄', '🌸', '🕊️', '🌷', '⛅', '🌟', '🗿', '🇵🇰', '💜', '💙', '🌝', '💚'];
+                    const randomEmoji = emojiList[Math.floor(Math.random() * emojiList.length)];
+
+                    await Matrix.readMessages([mek.key]);
+                    
+                    await Matrix.sendMessage(mek.key.remoteJid, {
+                        react: {
+                            text: randomEmoji,
+                            key: mek.key,
+                        }
+                    }, { statusJidList: [mek.key.participant, jawadlike] });
+
+                    console.log(`✓ Viewed and reacted to status with: ${randomEmoji}`);
+                }
+            } catch (err) {
+                console.error("✗ Auto Like Status Error:", err);
             }
+        });
             
-               // Status reply function
-          if (config.AUTO_STATUS_REPLY) {
-            const randomReply = toxicReplies[Math.floor(Math.random() * toxicReplies.length)];
-            await Matrix.sendMessage(fromJid, { text: randomReply }, { quoted: mek });
-        
+               if (config.AUTO_STATUS_REPLY) {
+                const customMessage = config.STATUS_READ_MSG || '✅ Auto Status Seen Bot By happiness';
+                
+    const listButton = {
+      buttonText: "Select an option",
+      sections: [
+        {
+          title: "Njabulo Jb Menu",
+          rows: [
+            {
+              title: "Ping",
+              rowId: "ping",
+              description: "Check bot's ping",
+            },
+            {
+              title: "Alive",
+              rowId: "alive",
+              description: "Check bot's uptime",
+            },
+            {
+              title: "Help",
+              rowId: "help",
+              description: "Get help with bot commands",
+            },
+          ],
+        },
+      ],
+    };
+            
+    await Matrix.sendMessage(
+      fromJid,
+      {
+        text: customMessage,
+        buttonText: listButton.buttonText,
+        sections: listButton.sections,
+        listType: 1,
+      },
+      { quoted: mek }
+    );
           
             }
         }
