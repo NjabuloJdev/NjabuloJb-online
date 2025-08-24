@@ -1,4 +1,7 @@
 import config from '../config.cjs';
+import pkg, { prepareWAMessageMedia } from "@whiskeysockets/baileys";
+const { generateWAMessageFromContent, proto } = pkg;
+
 
 const ping = async (m, Matrix) => {
   const prefix = config.PREFIX;
@@ -22,11 +25,11 @@ const ping = async (m, Matrix) => {
 
     const end = new Date().getTime();
     const responseTime = (end - start) / 1000;
-   const some-image-url =  "https://files.catbox.moe/dfkh7t.jpg";
+  
     const text = `*JINX-XMD SPEED: ${responseTime.toFixed(2)}ms ${reactionEmoji}*`;
 
     const buttonMessage = {
-      caption: text,
+      text: text,
       templateButtons: [
         {
           index: 1,
@@ -39,8 +42,8 @@ const ping = async (m, Matrix) => {
     };
 
     await Matrix.sendMessage(m.from, { 
-      image: { url: 'some-image-url' }, // You might need an image here, or use a different type like text
-      caption: text,
+     // You might need an image here, or use a different type like text
+      text: text,
       footer: 'JINX-XMD',
       templateButtons: [
         {
