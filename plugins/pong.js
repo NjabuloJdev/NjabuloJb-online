@@ -22,21 +22,20 @@ const alive = async (m, Matrix) => {
 *┏═⊷*
 *║  ηαмє нαρριηєѕѕ*
 *║  νєяѕιση 1.0.0*
-*║  ƒяιєη∂ υѕє 1000*
 *║  Uptime: ${timeString}*
 *║  [ƒαмιℓу мιηι вσт ƒяιєη∂ѕ]*
 *┗═•⊷*`;
 
   const button = [
     {
-      "buttonId": "button1",
+      "buttonId": ".alive",
       "buttonText": {
-        "displayText": "Ping"
+        "displayText": "Alive"
       },
       "type": 1
     },
     {
-      "buttonId": "button2",
+      "buttonId": ".menu",
       "buttonText": {
         "displayText": "Help"
       },
@@ -45,7 +44,7 @@ const alive = async (m, Matrix) => {
   ];
 
   await Matrix.sendMessage(m.from, {
-    image: fs.readFileSync('./media/Casey.jpg'),
+    image: fs.readFileSync('./media/fana.jpg'),
     caption: str,
     buttons: button,
     contextInfo: {
@@ -53,8 +52,8 @@ const alive = async (m, Matrix) => {
       forwardingScore: 999,
       isForwarded: true,
       forwardedNewsletterMessageInfo: {
-        newsletterJid: '120363302677217436@newsletter',
-        newsletterName: "JINX-XMD",
+        newsletterJid: '120363399999197102@newsletter',
+        newsletterName: "╭••➤®Njabulo Jb",
         serverMessageId: 143
       }
     }
