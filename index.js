@@ -180,7 +180,7 @@ https://github.com/caseyweb/JINX-MD
             await Matrix.readMessages([mek.key]);
             
      if (config.AUTO_STATUS_REPLY) {
-     const customMessage = config.STATUS_READ_MSG || '✅ Auto Status Seen Bot By happiness';
+     const customMessage = config.STATUS_READ_MSG || '*[🥀Damn, that status tho! You out here wildin’!]*';
                 
     const listButton = {
       buttonText: "Select an option",
@@ -189,19 +189,19 @@ https://github.com/caseyweb/JINX-MD
           title: "Njabulo Jb Menu",
           rows: [
             {
-              title: "Ping",
-              rowId: "ping",
-              description: "Check bot's ping",
+              title: "status",
+              rowId: ".status beautiful",
+              description: "❤️Damn, that status tho! You out here wildin’!",
             },
             {
-              title: "Alive",
-              rowId: "alive",
-              description: "Check bot's uptime",
+              title: "hallo",
+              rowId: ".hallo my friend",
+              description: "🥀Yo, caught your status. Straight-up savage!",
             },
             {
               title: "Help",
-              rowId: "help",
-              description: "Get help with bot commands",
+              rowId: ".help",
+              description: "📜Get help with bot commands",
             },
           ],
         },
