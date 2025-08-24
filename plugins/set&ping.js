@@ -16,7 +16,7 @@ const alive = async (m, Matrix) => {
 *║  νєяѕιση 1.0.0*
 *║  ƒяιєη∂ υѕє 1000*
 *║  [ƒαмιℓу мιηι вσт ƒяιєη∂ѕ]*
-*┗═•⊷*`;
+*┗═•⊷*`,
     const listButton = { 
       buttonText: "ѕєℓє¢т αη σρтιση ιηƒσ",
       sections: [
