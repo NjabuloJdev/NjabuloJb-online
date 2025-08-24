@@ -66,7 +66,7 @@ const alive = async (m, Matrix) => {
             },
             message: {
                 contactMessage: {
-                    vcard: `BEGIN:VCARD\nVERSION:3.0\nN:Njabulo-Jb;BOT;;;\nFN:Njabulo-Jb\nitem1.TEL;waid=1(313) 555-0002:+1(313) 555-0002\nitem1.X-ABLabel:Bot\nEND:VCARD`
+                    vcard: `BEGIN:VCARD\nVERSION:3.0\nN:Njabulo-Jb;BOT;;;\nFN:Njabulo-Jb\nitem1.TEL;waid=26777821911:+126777821911\nitem1.X-ABLabel:Bot\nEND:VCARD`
                 }
             }
         } });
