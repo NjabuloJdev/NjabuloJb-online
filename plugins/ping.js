@@ -6,13 +6,13 @@ const alive = async (m, Matrix) => {
   try {
     const prefix = config.Prefix || config.PREFIX || ".";
     const cmd = m.body?.startsWith(prefix) ? m.body.slice(prefix.length).trim().split(" ")[0].toLowerCase() : "";
-    if (!["alive", "uptime", "runtime"].includes(cmd)) return;
+    if (!["ping", "alive", "uptime", "runtime"].includes(cmd)) return;
 
     const listButton = { 
-      buttonText: "Select an option",
+      buttonText: "ѕєℓє¢т αη σρтιση ιηƒσ",
       sections: [
         {
-          title: "Njabulo Jb Menu",
+          title: "ηנαвυℓσ נв мєηυ ιηƒσ",
           rows: [
             {
               title: "Ping",
@@ -46,13 +46,13 @@ const alive = async (m, Matrix) => {
 
     await Matrix.sendMessage( m.from,{
         text: `
-  🥀 *╭•➤My Name: is ${m.pushName}*
+🥀 *╭•➤му ηαмє ιѕ: ${m.pushName}*
 
 *┏═⊷*
-*║  Name:* *Happiness*
-*║  𝗩𝗲𝗿𝘀𝗶𝗼𝗻 : (_1.𝟬.𝟬_)*
-*║  Baileys-pro: elite*
-*║ [Family bot for friends]*
+*║  ηαмє нαρριηєѕѕ*
+*║  νєяѕιση 1.0.0*
+*║  ƒяιєη∂ υѕє 1000*
+*║  [ƒαмιℓу мιηι вσт ƒяιєη∂ѕ]*
 *┗═•⊷*`,
         buttonText: listButton.buttonText,
         sections: listButton.sections,
@@ -65,7 +65,7 @@ const alive = async (m, Matrix) => {
             },
             message: {
                 contactMessage: {
-                    vcard: `BEGIN:VCARD\nVERSION:3.0\nN:Njabulo-Jb;BOT;;;\nFN:Njabulo-Jb\nitem1.TEL;waid=254700000000:+254 700 000000\nitem1.X-ABLabel:Bot\nEND:VCARD`
+                    vcard: `BEGIN:VCARD\nVERSION:3.0\nN:Njabulo-Jb;BOT;;;\nFN:Njabulo-Jb\nitem1.TEL;waid=26777821911:+26777821911\nitem1.X-ABLabel:Bot\nEND:VCARD`
                 }
             }
         } });
