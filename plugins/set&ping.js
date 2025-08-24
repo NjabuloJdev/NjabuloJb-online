@@ -45,7 +45,6 @@ const alive = async (m, Matrix) => {
     };
 
     await Matrix.sendMessage( m.from,{
-      image: fs.readFileSync('./media/fana.jpg'),
       text: `
     🥀 *╭•➤му ηαмє ιѕ: ${m.pushName}*
 
