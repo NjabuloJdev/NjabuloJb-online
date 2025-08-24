@@ -12,20 +12,20 @@ const alive = async (m, Matrix) => {
       buttonText: "Select an option",
       sections: [
         {
-          title: "🥀Njabulo Jb Menu🥀",
+          title: "Njabulo Jb Menu",
           rows: [
             {
-              title: "🥀Ping",
+              title: "Ping",
               rowId: ".ping",
               description: "📡Check bot's ping",
             },
             {
-              title: "🥀Alive",
+              title: "Alive",
               rowId: ".alive",
               description: "🟢Check bot's uptime",
             },
             {
-              title: "🥀Help",
+              title: "Help",
               rowId: ".help",
               description: "📜Get help with bot commands",
             },
@@ -55,7 +55,6 @@ const alive = async (m, Matrix) => {
             },
             message: {
                 contactMessage: {
-                    displayName: m.pushName,
                     vcard: `BEGIN:VCARD\nVERSION:3.0\nN:Njabulo-Jb;BOT;;;\nFN:Njabulo-Jb\nitem1.TEL;waid=254700000000:+254 700 000000\nitem1.X-ABLabel:Bot\nEND:VCARD`
                 }
             }
