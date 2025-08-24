@@ -27,7 +27,7 @@ const play2 = async (m, gss) => {
         videoUrl = searchResults.videos[0].url;
       }
 
-      const apiUrl = `https://api.davidcyriltech.my.id/youtube/mp3?url=${encodeURIComponent(videoUrl)}`;
+      const apiUrl = `https://apis.davidcyriltech.my.id/play?query=${encodeURIComponent(videoUrl)}`;
       const { data } = await axios.get(apiUrl);
 
       if (!data.success) return m.reply("❌ Failed to download audio");
