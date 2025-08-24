@@ -26,7 +26,15 @@ const ping = async (m, Matrix) => {
     const end = new Date().getTime();
     const responseTime = (end - start) / 1000;
 
-    const text = `*JINX-XMD SPEED: ${responseTime.toFixed(2)}ms ${reactionEmoji}*
+    const text = `
+      🥀 *╭•➤му ηαмє ιѕ: ${m.pushName}*
+
+*┏═⊷*
+*║  ηαмє нαρριηєѕѕ*
+*║  νєяѕιση 1.0.0*
+*║  pong: ${responseTime.toFixed(2)} (ms)*
+*║  [ƒαмιℓу мιηι вσт ƒяιєη∂ѕ]*
+*┗═•⊷*
     `;
 
     const button = [
