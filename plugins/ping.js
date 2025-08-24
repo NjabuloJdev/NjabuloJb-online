@@ -12,22 +12,22 @@ const alive = async (m, Matrix) => {
       buttonText: "Select an option",
       sections: [
         {
-          title: "Njabulo Jb Menu",
+          title: "🥀Njabulo Jb Menu🥀",
           rows: [
             {
-              title: "Ping",
+              title: "🥀Ping",
               rowId: ".ping",
-              description: "Check bot's ping",
+              description: "📡Check bot's ping",
             },
             {
-              title: "Alive",
+              title: "🥀Alive",
               rowId: ".alive",
-              description: "Check bot's uptime",
+              description: "🟢Check bot's uptime",
             },
             {
-              title: "Help",
+              title: "🥀Help",
               rowId: ".help",
-              description: "Get help with bot commands",
+              description: "📜Get help with bot commands",
             },
           ],
         },
@@ -36,12 +36,13 @@ const alive = async (m, Matrix) => {
 
     await Matrix.sendMessage( m.from,{
         text: `
+  *🥀Name: is happiness*
+
 *┏═⊷*
-*║  Name: happiness*
 *║  Use:* *${m.pushName}*
 *║  𝗩𝗲𝗿𝘀𝗶𝗼𝗻 : (_1.𝟬.𝟬_)*
+*║  Platform: ${os.platform()}*
 *║  Button : baileys elit*
-*║                        ❤️
 *┗═•⊷* `,
         buttonText: listButton.buttonText,
         sections: listButton.sections,
@@ -54,7 +55,7 @@ const alive = async (m, Matrix) => {
             },
             message: {
                 contactMessage: {
-                    displayName: "✆︎NנɐႦυℓσ נႦ verified",
+                    displayName: m.pushName,
                     vcard: `BEGIN:VCARD\nVERSION:3.0\nN:Njabulo-Jb;BOT;;;\nFN:Njabulo-Jb\nitem1.TEL;waid=254700000000:+254 700 000000\nitem1.X-ABLabel:Bot\nEND:VCARD`
                 }
             }
