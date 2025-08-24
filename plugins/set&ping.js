@@ -16,7 +16,7 @@ const alive = async (m, Matrix) => {
 *║  νєяѕιση 1.0.0*
 *║  ƒяιєη∂ υѕє 1000*
 *║  [ƒαмιℓу мιηι вσт ƒяιєη∂ѕ]*
-*┗═•⊷*`,
+*┗═•⊷*`;
     const listButton = { 
       buttonText: "ѕєℓє¢т αη σρтιση ιηƒσ",
       sections: [
@@ -55,7 +55,7 @@ const alive = async (m, Matrix) => {
 
     await Matrix.sendMessage( m.from,{
       image: fs.readFileSync('./media/fana.jpg'),
-      caption: text,
+      text: text,
         buttonText: listButton.buttonText,
         sections: listButton.sections,
         listType: 1,
