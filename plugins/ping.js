@@ -16,7 +16,7 @@ const alive = async (m, Matrix) => {
           rows: [
             {
               title: "Ping",
-              rowId: ".ping",
+              rowId: ".pong",
               description: "📡Check bot's ping",
             },
             {
