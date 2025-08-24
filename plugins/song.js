@@ -80,7 +80,7 @@ const play = async (m, Matrix) => {
 
         await Matrix.sendMessage(m.from, {
           image: `${data.result.title || song.title}`,
-          text: songInfo,
+          caption: songInfo,
           buttons,
         }, { quoted: m });
 
