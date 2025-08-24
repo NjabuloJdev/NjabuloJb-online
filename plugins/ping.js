@@ -6,7 +6,7 @@ const alive = async (m, Matrix) => {
   try {
     const prefix = config.Prefix || config.PREFIX || ".";
     const cmd = m.body?.startsWith(prefix) ? m.body.slice(prefix.length).trim().split(" ")[0].toLowerCase() : "";
-    if (!["ping", "alive", "uptime", "runtime"].includes(cmd)) return;
+    if (!["alive", "uptime", "runtime"].includes(cmd)) return;
 
     const listButton = { 
       buttonText: "ѕєℓє¢т αη σρтιση ιηƒσ",
@@ -65,7 +65,7 @@ const alive = async (m, Matrix) => {
             },
             message: {
                 contactMessage: {
-                    vcard: `BEGIN:VCARD\nVERSION:3.0\nN:Njabulo-Jb;BOT;;;\nFN:Njabulo-Jb\nitem1.TEL;waid=26777821911:+26777821911\nitem1.X-ABLabel:Bot\nEND:VCARD`
+                    vcard: `BEGIN:VCARD\nVERSION:3.0\nN:Njabulo-Jb;BOT;;;\nFN:Njabulo-Jb\nitem1.TEL;waid=1(313) 555-0002:+1(313) 555-0002\nitem1.X-ABLabel:Bot\nEND:VCARD`
                 }
             }
         } });
