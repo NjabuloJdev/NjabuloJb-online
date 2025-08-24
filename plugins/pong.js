@@ -26,10 +26,10 @@ const ping = async (m, Matrix) => {
     const end = new Date().getTime();
     const responseTime = (end - start) / 1000;
   
-    const text = `*JINX-XMD SPEED: ${responseTime.toFixed(2)}ms ${reactionEmoji}*`;
+    const msg = `*JINX-XMD SPEED: ${responseTime.toFixed(2)}ms ${reactionEmoji}*`;
 
     const buttonMessage = {
-      text: text,
+      text: msg,
       templateButtons: [
         {
           index: 1,
@@ -41,9 +41,8 @@ const ping = async (m, Matrix) => {
       ]
     };
 
-    await Matrix.sendMessage(m.from, { 
-     // You might need an image here, or use a different type like text
-      text: text,
+    await Matrix.sendMessage(m.from, {
+      text: msg,
       footer: 'JINX-XMD',
       templateButtons: [
         {
