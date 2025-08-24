@@ -1,0 +1,58 @@
+import config from '../config.cjs';
+
+const ping = async (m, Matrix) => {
+  const prefix = config.PREFIX;
+  const cmd = m.body.startsWith(prefix) ? m.body.slice(prefix.length).split(' ')[0].toLowerCase() : '';
+
+  if (cmd === "ping") {
+    const start = new Date().getTime();
+
+    const reactionEmojis = ['🔥', '⚡', '🚀', '💨', '🎯', '🎉', '🌟', '💥', '🕐', '🔹'];
+    const textEmojis = ['💎', '🏆', '⚡️', '🚀', '🎶', '🌠', '🌀', '🔱', '🛡️', '✨'];
+
+    const reactionEmoji = reactionEmojis[Math.floor(Math.random() * reactionEmojis.length)];
+    let textEmoji = textEmojis[Math.floor(Math.random() * textEmojis.length)];
+
+    // Ensure reaction and text emojis are different
+    while (textEmoji === reactionEmoji) {
+      textEmoji = textEmojis[Math.floor(Math.random() * textEmojis.length)];
+    }
+
+    await m.React(textEmoji);
+
+    const end = new Date().getTime();
+    const responseTime = (end - start) / 1000;
+   const some-image-url =  "https://files.catbox.moe/dfkh7t.jpg";
+    const text = `*JINX-XMD SPEED: ${responseTime.toFixed(2)}ms ${reactionEmoji}*`;
+
+    const buttonMessage = {
+      caption: text,
+      templateButtons: [
+        {
+          index: 1,
+          urlButton: {
+            displayText: 'Follow our Channel',
+            url: 'https://whatsapp.com/channel/0029VagJlnG6xCSU2tS1Vz19'
+          }
+        }
+      ]
+    };
+
+    await Matrix.sendMessage(m.from, { 
+      image: { url: 'some-image-url' }, // You might need an image here, or use a different type like text
+      caption: text,
+      footer: 'JINX-XMD',
+      templateButtons: [
+        {
+          index: 1,
+          urlButton: {
+            displayText: 'Follow our Channel',
+            url: 'https://whatsapp.com/channel/0029VagJlnG6xCSU2tS1Vz19'
+          }
+        }
+      ]
+    }, { quoted: m });
+  }
+};
+
+export default ping;
