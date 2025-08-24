@@ -6,7 +6,7 @@ const alive = async (m, Matrix) => {
   try {
     const prefix = config.Prefix || config.PREFIX || ".";
     const cmd = m.body?.startsWith(prefix) ? m.body.slice(prefix.length).trim().split(" ")[0].toLowerCase() : "";
-    if (!["alive", "uptime", "runtime"].includes(cmd)) return;
+    if (!["ping","alive", "uptime", "runtime"].includes(cmd)) return;
 
     const listButton = { 
       buttonText: "ѕєℓє¢т αη σρтιση ιηƒσ",
@@ -16,12 +16,12 @@ const alive = async (m, Matrix) => {
           rows: [
             {
               title: "Ping",
-              rowId: ".pong",
+              rowId: ".pongx",
               description: "📡Check bot's ping",
             },
             {
               title: "Alive",
-              rowId: ".alive",
+              rowId: ".alivex",
               description: "🟢Check bot's uptime",
             },
             {
