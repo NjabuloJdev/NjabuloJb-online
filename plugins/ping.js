@@ -16,7 +16,7 @@ const alive = async (m, Matrix) => {
           rows: [
             {
               title: "Ping",
-              rowId: ".pongx",
+              rowId: ".pingx",
               description: "📡Check bot's ping",
             },
             {
@@ -45,7 +45,8 @@ const alive = async (m, Matrix) => {
     };
 
     await Matrix.sendMessage( m.from,{
-        text: `
+      image: fs.readFileSync('./media/fana.jpg'),
+      caption: `
 🥀 *╭•➤му ηαмє ιѕ: ${m.pushName}*
 
 *┏═⊷*
