@@ -87,13 +87,13 @@ const play = async (m, Matrix) => {
         }
 
         const songInfo = `
-*Toxic-MD* Song Intel 
-*Title*: ${data.result.title || song.title}
-*Views*: ${song.views.toLocaleString()}
-*Duration*: ${song.timestamp}
-*Channel*: ${song.author.name}
-*Uploaded*: ${song.ago}
-*URL*: ${data.result.video_url || song.url}
+*┏═⊷* 
+*║Title*: ${data.result.title || song.title}
+*║Views*: ${song.views.toLocaleString()}
+*║Duration*: ${song.timestamp}
+*║Channel*: ${song.author.name}
+*║Uploaded*: ${song.ago}
+*┗═•⊷*
 `;
         const buttons = [
           {
