@@ -41,7 +41,6 @@ const alive = async (m, Matrix) => {
 *┏═⊷*
 *║  Use:* *${m.pushName}*
 *║  𝗩𝗲𝗿𝘀𝗶𝗼𝗻 : (_1.𝟬.𝟬_)*
-*║  Platform: ${os.platform()}*
 *║  Button : baileys elit*
 *┗═•⊷* `,
         buttonText: listButton.buttonText,
