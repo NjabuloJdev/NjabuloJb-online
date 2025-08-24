@@ -79,7 +79,7 @@ const play = async (m, Matrix) => {
         ];
 
         await Matrix.sendMessage(m.from, {
-          image: fs.readFileSync('./media/fana.jpg'),
+          image: { url:safeTitle },
           caption: songInfo,
           buttons,
         }, { quoted: m });
