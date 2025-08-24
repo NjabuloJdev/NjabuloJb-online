@@ -79,7 +79,7 @@ const play = async (m, Matrix) => {
         ];
 
         await Matrix.sendMessage(m.from, {
-          image: { url:safeTitle },
+          image: {url: song.title},
           caption: songInfo,
           buttons,
         }, { quoted: m });
