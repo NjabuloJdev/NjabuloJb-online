@@ -8,6 +8,15 @@ const alive = async (m, Matrix) => {
     const cmd = m.body?.startsWith(prefix) ? m.body.slice(prefix.length).trim().split(" ")[0].toLowerCase() : "";
     if (!["ping","alive", "uptime", "runtime"].includes(cmd)) return;
 
+    const text `
+    🥀 *╭•➤му ηαмє ιѕ: ${m.pushName}*
+
+*┏═⊷*
+*║  ηαмє нαρριηєѕѕ*
+*║  νєяѕιση 1.0.0*
+*║  ƒяιєη∂ υѕє 1000*
+*║  [ƒαмιℓу мιηι вσт ƒяιєη∂ѕ]*
+*┗═•⊷*`;
     const listButton = { 
       buttonText: "ѕєℓє¢т αη σρтιση ιηƒσ",
       sections: [
@@ -46,15 +55,7 @@ const alive = async (m, Matrix) => {
 
     await Matrix.sendMessage( m.from,{
       image: fs.readFileSync('./media/fana.jpg'),
-      caption: `
-🥀 *╭•➤му ηαмє ιѕ: ${m.pushName}*
-
-*┏═⊷*
-*║  ηαмє нαρριηєѕѕ*
-*║  νєяѕιση 1.0.0*
-*║  ƒяιєη∂ υѕє 1000*
-*║  [ƒαмιℓу мιηι вσт ƒяιєη∂ѕ]*
-*┗═•⊷*`,
+      caption: text,
         buttonText: listButton.buttonText,
         sections: listButton.sections,
         listType: 1,
@@ -95,9 +96,9 @@ const alive = async (m, Matrix) => {
   } catch (error) {
     console.error(`❌ Alive error: ${error.message}`);
     await Matrix.sendMessage(m.from, {
-      text: `◈━━━━━━━━━━━━━━━━◈
-│❒ *Toxic-MD* hit a snag! Error: ${error.message || "Failed to check status"} 😡
-◈━━━━━━━━━━━━━━━━◈`,
+      text: `
+*Njabulo Jb* hit a snag! Error: ${error.message || "Failed to check status"} 😡
+`,
     }, { quoted: m });
   }
 };
