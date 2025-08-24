@@ -25,7 +25,6 @@ const play = async (m, Matrix) => {
       }
 
       const searchQuery = args.join(" ");
-      await Matrix.sendMessage(m.from, {
     
       const listButton = {
       buttonText: "Select an option",
