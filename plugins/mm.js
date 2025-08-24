@@ -19,9 +19,30 @@ const play = async (m, Matrix) => {
 
     if (cmd === "play") {
       if (args.length === 0 || !args.join(" ")) {
-        return Matrix.sendMessage(m.from, {
-          text: `Give me a song name or keywords to search `,
-        }, { quoted: m });
+        sections: [
+        {
+          title: "𝗡𝗷𝗮𝗯𝘂𝗹𝗼 𝗝𝗯 𝗺𝗲𝗻𝘂 𝗶𝗻𝗳𝗼",
+          rows: [
+            {
+              title: "play",
+              rowId: ".play Justin Bieber",
+              description: "play Justin Bieber",
+            },
+          ],
+        },
+      ],
+    };
+
+    await Matrix.sendMessage(
+      m.from,
+      {
+        text: `Give me a song name or keywords to search `,
+        buttonText: listButton.buttonText,
+        sections: listButton.sections,
+        listType: 1,
+      },
+      { quoted: m }
+    );
       }
 
       const searchQuery = args.join(" ");
@@ -30,22 +51,22 @@ const play = async (m, Matrix) => {
       buttonText: "Select an option",
       sections: [
         {
-          title: "Toxic-MD Menu",
+          title: "𝗡𝗷𝗮𝗯𝘂𝗹𝗼 𝗝𝗯 𝗺𝗲𝗻𝘂 𝗶𝗻𝗳𝗼",
           rows: [
             {
               title: "img",
               rowId: `.lyrics ${args.join(" ")}`,
-              description: "image search",
+              description: "📸image search",
             },
             {
               title: "lyrics",
               rowId: `.lyrics ${args.join(" ")}`,
-              description: "lyrics seach",
+              description: "🎻lyrics seach",
             },
             {
               title: "yts",
               rowId: `.yts ${args.join(" ")}`,
-              description: "yts seach",
+              description: "*🪗yts seach*",
             },
           ],
         },
