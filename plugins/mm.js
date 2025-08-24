@@ -19,6 +19,9 @@ const play = async (m, Matrix) => {
 
     if (cmd === "play") {
       if (args.length === 0 || !args.join(" ")) {
+
+      const listButton = {
+      buttonText: "Select an option",
         sections: [
         {
           title: "𝗡𝗷𝗮𝗯𝘂𝗹𝗼 𝗝𝗯 𝗺𝗲𝗻𝘂 𝗶𝗻𝗳𝗼",
