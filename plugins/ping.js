@@ -25,6 +25,16 @@ const alive = async (m, Matrix) => {
               description: "🟢Check bot's uptime",
             },
             {
+             title: "Repo",
+              rowId: ".repo",
+              description: "📎 Website repo",
+             },
+             {
+             title: "Website",
+              rowId: "site",
+              description: "🖇️For oll website Deploy",
+            },
+            {
               title: "Help",
               rowId: ".help",
               description: "📜Get help with bot commands",
@@ -36,13 +46,14 @@ const alive = async (m, Matrix) => {
 
     await Matrix.sendMessage( m.from,{
         text: `
-  *🥀Name: is happiness*
+  🥀 *╭•➤My Name: is ${m.pushName}*
 
 *┏═⊷*
-*║  Use:* *${m.pushName}*
+*║  Name:* *Happiness*
 *║  𝗩𝗲𝗿𝘀𝗶𝗼𝗻 : (_1.𝟬.𝟬_)*
-*║  Button : baileys elit*
-*┗═•⊷* `,
+*║  Baileys-pro: elite*
+*║ [Family bot for friends]*
+*┗═•⊷*`,
         buttonText: listButton.buttonText,
         sections: listButton.sections,
         listType: 1,
