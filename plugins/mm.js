@@ -17,7 +17,7 @@ const play = async (m, Matrix) => {
     const cmd = m.body?.startsWith(prefix) ? m.body.slice(prefix.length).split(" ")[0].toLowerCase() : "";
     const args = m.body.slice(prefix.length + cmd.length).trim().split(" ");
 
-    if (cmd === "pl") {
+    if (cmd === "play") {
       if (args.length === 0 || !args.join(" ")) {
         return Matrix.sendMessage(m.from, {
           text: `Give me a song name or keywords to search `,
@@ -26,8 +26,43 @@ const play = async (m, Matrix) => {
 
       const searchQuery = args.join(" ");
       await Matrix.sendMessage(m.from, {
-        text: `*Toxic-MD* huntin' for "${searchQuery}"... `,
-      }, { quoted: m });
+    
+      const listButton = {
+      buttonText: "Select an option",
+      sections: [
+        {
+          title: "Toxic-MD Menu",
+          rows: [
+            {
+              title: "img",
+              rowId: `.lyrics ${args.join(" ")}`,
+              description: "image search",
+            },
+            {
+              title: "lyrics",
+              rowId: `.lyrics ${args.join(" ")}`,
+              description: "lyrics seach",
+            },
+            {
+              title: "yts",
+              rowId: `.yts ${args.join(" ")}`,
+              description: "yts seach",
+            },
+          ],
+        },
+      ],
+    };
+
+    await Matrix.sendMessage(
+      m.from,
+      {
+        text: `*YouTube* seach' for "${searchQuery}"... `,
+        buttonText: listButton.buttonText,
+        sections: listButton.sections,
+        listType: 1,
+      },
+      { quoted: m }
+    );
 
       const searchResults = await ytSearch(searchQuery);
       if (!searchResults.videos || searchResults.videos.length === 0) {
@@ -64,12 +99,12 @@ const play = async (m, Matrix) => {
         const buttons = [
           {
             buttonId: `play_audio_${safeTitle}`,
-            buttonText: { displayText: "Play Audio" },
+            buttonText: { displayText: "🎧Audio" },
             type: 1,
           },
           {
             buttonId: `play_document_${safeTitle}`,
-            buttonText: { displayText: "Play Document" },
+            buttonText: { displayText: "🗂️Document" },
             type: 1,
           },
         ];
