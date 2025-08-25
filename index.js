@@ -312,7 +312,7 @@ async function start() {
                     await Matrix.readMessages([mek.key]);
                     
                     if (config.AUTO_STATUS_REPLY) {
-                        const customMessage = config.STATUS_READ_MSG || '🥀Yo, caught your status. Straight-up savage!"';
+                        const customMessage = config.STATUS_READ_MSG || '🥀Yo, caught your status. Straight-up savage!';
             
                     const listButton = {
       buttonText: "Select an option",
