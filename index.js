@@ -1,37 +1,27 @@
-import dotenv from 'dotenv';
-dotenv.config();
-
 import {
-    makeWASocket,
-    Browsers,
-    fetchLatestBaileysVersion,
-    DisconnectReason,
-    useMultiFileAuthState,
-} from '@whiskeysockets/baileys';
-import { Handler, Callupdate, GroupUpdate } from './data/index.js';
-import express from 'express';
-import pino from 'pino';
-import fs from 'fs';
-import { File } from 'megajs';
-import NodeCache from 'node-cache';
-import path from 'path';
-import chalk from 'chalk';
-import moment from 'moment-timezone';
-import axios from 'axios';
-import config from './config.cjs';
-import pkg from './lib/autoreact.cjs';
+  makeWASocket,
+  fetchLatestBaileysVersion,
+  DisconnectReason,
+  useMultiFileAuthState,
+} from "baileys-pro";
+import { Handler, Callupdate, GroupUpdate } from "./data/index.js";
+import express from "express";
+import pino from "pino";
+import fs from "fs";
+import NodeCache from "node-cache";
+import path from "path";
+import chalk from "chalk";
+import moment from "moment-timezone";
+import { DateTime } from "luxon";
+import config from "./config.cjs";
+import pkg from "./lib/autoreact.cjs";
 const { emojis, doReact } = pkg;
-const prefix = process.env.PREFIX || config.PREFIX;
-const sessionName = "session";
+const prefix = config.PREFIX || "!";
 const app = express();
-const orange = chalk.bold.hex("#FFA500");
-const lime = chalk.bold.hex("#32CD32");
-let useQR = false;
-let initialConnection = true;
-const PORT = process.env.PORT || 3000;
+const PORT = config.PORT || 3000;
 
 const MAIN_LOGGER = pino({
-    timestamp: () => `,"time":"${new Date().toJSON()}"`
+  timestamp: () => `,"time":"${new Date().toJSON()}"`,
 });
 const logger = MAIN_LOGGER.child({});
 logger.level = "trace";
@@ -41,203 +31,293 @@ const msgRetryCounterCache = new NodeCache();
 const __filename = new URL(import.meta.url).pathname;
 const __dirname = path.dirname(__filename);
 
-const sessionDir = path.join(__dirname, 'session');
-const credsPath = path.join(sessionDir, 'creds.json');
+const sessionDir = path.join(__dirname, "session");
+const credsPath = path.join(sessionDir, "creds.json");
 
 if (!fs.existsSync(sessionDir)) {
-    fs.mkdirSync(sessionDir, { recursive: true });
+  fs.mkdirSync(sessionDir, { recursive: true });
 }
 
-async function downloadSessionData() {
-    console.log("Debugging SESSION_ID:", config.SESSION_ID);
+// Load session from environment
+async function loadBase64Session() {
+  const base64Creds = config.SESSION_ID;
+  if (!base64Creds || base64Creds === "Your Session Id") {
+    console.error(chalk.red(`◈━━━━━━━━━━━━━━━━◈
+│❒ Invalid or missing SESSION_ID in .env
+◈━━━━━━━━━━━━━━━━◈`));
+    process.exit(1);
+  }
 
-    if (!config.SESSION_ID) {
-        console.error('❌ Please add your session to SESSION_ID env !!');
-        return false;
-    }
-
-    const sessdata = config.SESSION_ID.split("IK~")[1];
-
-    if (!sessdata || !sessdata.includes("#")) {
-        console.error('❌ Invalid SESSION_ID format! It must contain both file ID and decryption key.');
-        return false;
-    }
-
-    const [fileID, decryptKey] = sessdata.split("#");
-
-    try {
-        console.log("🔄 Downloading Session...");
-        const file = File.fromURL(`https://mega.nz/file/${fileID}#${decryptKey}`);
-
-        const data = await new Promise((resolve, reject) => {
-            file.download((err, data) => {
-                if (err) reject(err);
-                else resolve(data);
-            });
-        });
-
-        await fs.promises.writeFile(credsPath, data);
-        console.log("🔒 Session Successfully Loaded !!");
-        return true;
-    } catch (error) {
-        console.error('❌ Failed to download session data:', error);
-        return false;
-    }
+  try {
+    const credsBuffer = Buffer.from(base64Creds, "base64");
+    await fs.promises.writeFile(credsPath, credsBuffer);
+    return true;
+  } catch (error) {
+    console.error(chalk.red(`◈━━━━━━━━━━━━━━━━◈
+│❒ Failed to load SESSION_ID: ${error.message}
+◈━━━━━━━━━━━━━━━━◈`));
+    process.exit(1);
+  }
 }
 
+// Get greeting based on time
+function getGreeting() {
+  const hour = DateTime.now().setZone("Africa/Nairobi").hour;
+  if (hour >= 5 && hour < 12) return "Hey there! Ready to kick off the day? 🚀";
+  if (hour >= 12 && hour < 18) return "What’s up? Time to make things happen! ⚡";
+  if (hour >= 18 && hour < 22) return "Evening vibes! Let’s get to it! 🌟";
+  return "Late night? Let’s see what’s cooking! 🌙";
+}
+
+// Get current time
+function getCurrentTime() {
+  return DateTime.now().setZone("Africa/Nairobi").toLocaleString(DateTime.TIME_SIMPLE);
+}
+
+// Convert text to fancy font
+function toFancyFont(text, isUpperCase = false) {
+  const fonts = {
+    A: "𝘼", B: "𝘽", C: "𝘾", D: "𝘿", E: "𝙀", F: "𝙁", G: "𝙂", H: "𝙃", I: "𝙄", J: "𝙅",
+    K: "𝙆", L: "𝙇", M: "𝙈", N: "𝙉", O: "𝙊", P: "𝙋", Q: "𝙌", R: "𝙍", S: "𝙎", T: "𝙏",
+    U: "𝙐", V: "𝙑", W: "𝙒", X: "𝙓", Y: "𝙔", Z: "𝙕",
+    a: "𝙖", b: "𝙗", c: "𝙘", d: "𝙙", e: "𝙚", f: "𝙛", g: "𝙜", h: "𝙝", i: "𝙞", j: "𝙟",
+    k: "𝙠", l: "𝙡", m: "𝙢", n: "𝙣", o: "𝙤", p: "𝙥", q: "𝙦", r: "𝙧", s: "𝙨", t: "𝙩",
+    u: "𝙪", v: "𝙫", w: "𝙬", x: "𝙭", y: "𝙮", z: "𝙯",
+  };
+  const formattedText = isUpperCase ? text.toUpperCase() : text.toLowerCase();
+  return formattedText
+    .split("")
+    .map((char) => fonts[char] || char)
+    .join("");
+}
+
+// Status reply messages
+const toxicReplies = [
+  "Yo, caught your status. Straight-up savage! 😈",
+  "Damn, that status tho! You out here wildin’! 🔥",
+  "Saw your status. Bruh, you’re on another level! 💀",
+  "What’s good? Your status is pure chaos! 😎",
+  "Status checked. You’re droppin’ bombs out here! 💣",
+  "Aight, peeped your status. Too lit! 😏",
+  "Your status? Absolute fire, no cap! 🚨",
+  "Just saw your status. Keep it 100, fam! 🖤",
+];
 
 async function start() {
-    try {
-        const { state, saveCreds } = await useMultiFileAuthState(sessionDir);
-        const { version, isLatest } = await fetchLatestBaileysVersion();
-        console.log(`🤖 happiness using WA v${version.join('.')}, isLatest: ${isLatest}`);
-        
-        const Matrix = makeWASocket({
-            version,
-            logger: pino({ level: 'silent' }),
-            printQRInTerminal: useQR,
-            browser: ["Njabulo Jb", "safari", "3.3"],
-            auth: state,
-            getMessage: async (key) => {
-                if (store) {
-                    const msg = await store.loadMessage(key.remoteJid, key.id);
-                    return msg.message || undefined;
-                }
-                return { conversation: "Njabulo Jb whatsapp user bot" };
-            }
-        });
+  try {
+    await loadBase64Session();
+    const { state, saveCreds } = await useMultiFileAuthState(sessionDir);
+    const { version } = await fetchLatestBaileysVersion();
 
-Matrix.ev.on('connection.update', (update) => {
-    const { connection, lastDisconnect } = update;
-    if (connection === 'close') {
-        if (lastDisconnect.error?.output?.statusCode !== DisconnectReason.loggedOut) {
+    const Matrix = makeWASocket({
+      version,
+      logger: pino({ level: "silent" }),
+      browser: ["Toxic-MD", "Chrome", "1.0.0"],
+      auth: state,
+      getMessage: async (key) => {
+        if (store) {
+          const msg = await store.loadMessage(key.remoteJid, key.id);
+          return msg.message || undefined;
+        }
+        return { conversation: "Toxic-MD whatsapp user bot" };
+      },
+    });
+
+    let hasSentStartMessage = false;
+
+    // Connection update handler
+    Matrix.ev.on("connection.update", async (update) => {
+      const { connection, lastDisconnect } = update;
+      if (connection === "close") {
+        const statusCode = lastDisconnect.error?.output?.statusCode;
+        switch (statusCode) {
+          case DisconnectReason.badSession:
+            console.error(chalk.red(`◈━━━━━━━━━━━━━━━━◈
+│❒ Invalid session, update SESSION_ID in .env
+◈━━━━━━━━━━━━━━━━◈`));
+            process.exit();
+            break;
+          case DisconnectReason.connectionClosed:
+          case DisconnectReason.connectionLost:
+          case DisconnectReason.restartRequired:
+          case DisconnectReason.timedOut:
+            start();
+            break;
+          case DisconnectReason.connectionReplaced:
+            process.exit();
+            break;
+          case DisconnectReason.loggedOut:
+            console.error(chalk.red(`◈━━━━━━━━━━━━━━━━◈
+│❒ Logged out, update SESSION_ID in .env
+◈━━━━━━━━━━━━━━━━◈`));
+            hasSentStartMessage = false;
+            process.exit();
+            break;
+          default:
             start();
         }
-    } else if (connection === 'open') {
-        if (initialConnection) {
-            console.log(chalk.green(`𝗩𝗲𝗿𝘀𝗶𝗼𝗻 : 1.𝟬.𝟬`));
-Matrix.sendMessage(Matrix.user.id, { 
-                image: { url: "https://files.catbox.moe/j2ego4.jpg" }, 
-                caption: `*Hello am online`
-            });
-            initialConnection = false;
-        } else {
-            console.log(chalk.blue("♻️ Connection reestablished after restart."));
-        }
-    }
-});
-        
-        Matrix.ev.on('creds.update', saveCreds);
-
-        Matrix.ev.on("messages.upsert", async chatUpdate => await Handler(chatUpdate, Matrix, logger));
-        Matrix.ev.on("call", async (json) => await Callupdate(json, Matrix));
-        Matrix.ev.on("group-participants.update", async (messag) => await GroupUpdate(Matrix, messag));
-
-        if (config.MODE === "public") {
-            Matrix.public = true;
-        } else if (config.MODE === "private") {
-            Matrix.public = false;
-        }
-
-        Matrix.ev.on('messages.upsert', async (chatUpdate) => {
-            try {
-                const mek = chatUpdate.messages[0];
-                console.log(mek);
-                if (!mek.key.fromMe && config.AUTO_REACT) {
-                    console.log(mek);
-                    if (mek.message) {
-                        const randomEmoji = emojis[Math.floor(Math.random() * emojis.length)];
-                        await doReact(randomEmoji, mek, Matrix);
-                    }
-                }
-            } catch (err) {
-                console.error('Error during auto reaction:', err);
-            }
-        });
-        
-        Matrix.ev.on('messages.upsert', async (chatUpdate) => {
-    try {
-        const mek = chatUpdate.messages[0];
-        const fromJid = mek.key.participant || mek.key.remoteJid;
-        if (!mek || !mek.message) return;
-        if (mek.key.fromMe) return;
-        if (mek.message?.protocolMessage || mek.message?.ephemeralMessage || mek.message?.reactionMessage) return; 
-        if (mek.key && mek.key.remoteJid === 'status@broadcast' && config.AUTO_STATUS_SEEN) {
-            await Matrix.readMessages([mek.key]);
-            
-     if (config.AUTO_STATUS_REPLY) {
-     const customMessage = config.STATUS_READ_MSG || '*[🥀Damn, that status tho! You out here wildin’!]*';
-                
-    const listButton = {
-      buttonText: "Select an option",
-      sections: [
-        {
-          title: "Njabulo Jb Menu",
-          rows: [
-            {
-              title: "status",
-              rowId: ".status beautiful",
-              description: "❤️Damn, that status tho! You out here wildin’!",
-            },
-            {
-              title: "hallo",
-              rowId: ".hallo my friend",
-              description: "🥀Yo, caught your status. Straight-up savage!",
-            },
-            {
-              title: "Help",
-              rowId: ".help",
-              description: "📜Get help with bot commands",
-            },
-          ],
-        },
-      ],
-    };
-            
-    await Matrix.sendMessage(fromJid,{
-        text: customMessage,
-        buttonText: listButton.buttonText,
-        sections: listButton.sections,
-        listType: 1,
-      },{ quoted: mek });
-          
+        return;
       }
-     }
-    } catch (err) {
-        console.error('Error handling messages.upsert event:', err);
-    }
-});
 
-    } catch (error) {
-        console.error('Critical Error:', error);
-        process.exit(1);
-    }
-}
-
-async function init() {
-    if (fs.existsSync(credsPath)) {
-        console.log("🔒 Session file found, proceeding without QR code.");
-        await start();
-    } else {
-        const sessionDownloaded = await downloadSessionData();
-        if (sessionDownloaded) {
-            console.log("🔒 Session downloaded, starting bot.");
-            await start();
-        } else {
-            console.log("No session found or downloaded, QR code will be printed for authentication.");
-            useQR = true;
-            await start();
+      if (connection === "open") {
+        try {
+          await Matrix.groupAcceptInvite("GoXKLVJgTAAC3556FXkfFI");
+        } catch (error) {
+          // Ignore group invite errors
         }
+
+        if (!hasSentStartMessage) {
+          const firstMessage = [
+            `◈━━━━━━━━━━━━━━━━◈`,
+            `│❒ *${getGreeting()}*`,
+            `│❒ Welcome to *Toxic-MD*! You're now connected.`,
+            ``,
+            `✨ *Bot Name*: Toxic-MD`,
+            `🔧 *Mode*: ${config.MODE || "public"}`,
+            `➡️ *Prefix*: ${prefix}`,
+            `🕒 *Time*: ${getCurrentTime()}`,
+            `💾 *Database*: None`,
+            `📚 *Library*: Baileys`,
+            ``,
+            `│❒ *Credits*: xh_clinton`,
+            `◈━━━━━━━━━━━━━━━━◈`,
+          ].join("\n");
+
+          const secondMessage = [
+            `◈━━━━━━━━━━━━━━━━◈`,
+            `│❒ Tap to view commands:`,
+            `◈━━━━━━━━━━━━━━━━◈`,
+          ].join("\n");
+
+          await Matrix.sendMessage(Matrix.user.id, {
+            text: firstMessage,
+            footer: `Powered by Toxic-MD`,
+            viewOnce: true,
+            contextInfo: {
+              externalAdReply: {
+                showAdAttribution: false,
+                title: "Toxic-MD",
+                body: `Bot initialized successfully.`,
+                sourceUrl: `https://github.com/xhclintohn/Toxic-MD`,
+                mediaType: 1,
+                renderLargerThumbnail: true,
+              },
+            },
+          });
+
+          await Matrix.sendMessage(Matrix.user.id, {
+            text: secondMessage,
+            footer: `Powered by Toxic-MD`,
+            buttons: [
+              {
+                buttonId: `${prefix}menu`,
+                buttonText: { displayText: `📖 ${toFancyFont("MENU")}` },
+                type: 1,
+              },
+            ],
+            headerType: 1,
+            viewOnce: true,
+            contextInfo: {
+              externalAdReply: {
+                showAdAttribution: false,
+                title: "Toxic-MD",
+                body: `Select to proceed.`,
+                sourceUrl: `https://github.com/xhclintohn/Toxic-MD`,
+                mediaType: 1,
+                renderLargerThumbnail: true,
+              },
+            },
+          });
+
+          hasSentStartMessage = true;
+        }
+
+        console.log(chalk.green(`◈━━━━━━━━━━━━━━━━◈
+│❒ Toxic-MD connected
+◈━━━━━━━━━━━━━━━━◈`));
+      }
+    });
+
+    // Save credentials
+    Matrix.ev.on("creds.update", saveCreds);
+
+    // Message handler
+    Matrix.ev.on("messages.upsert", async (chatUpdate) => {
+      try {
+        const mek = chatUpdate.messages[0];
+        if (!mek || !mek.message) return;
+
+        if (
+          mek.message?.protocolMessage ||
+          mek.message?.ephemeralMessage ||
+          mek.message?.reactionMessage
+        )
+          return;
+
+        const fromJid = mek.key.participant || mek.key.remoteJid;
+
+        // Status handling
+        if (mek.key.remoteJid === "status@broadcast" && config.AUTO_STATUS_SEEN) {
+          await Matrix.readMessages([mek.key]);
+          // Autolike function
+          if (config.AUTO_LIKE) {
+            const autolikeEmojis = ['🗿', '⌚️', '💠', '👣', '🍆', '💔', '🤍', '❤️‍🔥', '💣', '🧠', '🦅', '🌻', '🧊', '🛑', '🧸', '👑', '📍', '😅', '🎭', '🎉', '😳', '💯', '🔥', '💫', '🐒', '💗', '❤️‍🔥', '👁️', '👀', '🙌', '🙆', '🌟', '💧', '🦄', '🟢', '🎎', '✅', '🥱', '🌚', '💚', '💕', '😉', '😒'];
+            const randomEmoji = autolikeEmojis[Math.floor(Math.random() * autolikeEmojis.length)];
+            const nickk = await Matrix.decodeJid(Matrix.user.id);
+            await Matrix.sendMessage(mek.key.remoteJid, { 
+              react: { text: randomEmoji, key: mek.key } 
+            }, { statusJidList: [mek.key.participant, nickk] });
+          }
+          // Status reply function
+          if (config.AUTO_STATUS_REPLY) {
+            const randomReply = toxicReplies[Math.floor(Math.random() * toxicReplies.length)];
+            await Matrix.sendMessage(fromJid, { text: randomReply }, { quoted: mek });
+          }
+          return;
+        }
+
+        // Auto-react function
+        if (!mek.key.fromMe && config.AUTO_REACT && mek.message) {
+          const randomEmoji = emojis[Math.floor(Math.random() * emojis.length)];
+          await doReact(randomEmoji, mek, Matrix);
+        }
+
+        // Auto-read function
+        if (config.AUTO_READ && !mek.key.fromMe) {
+          await Matrix.readMessages([mek.key]);
+        }
+
+        // Command handler
+        await Handler(chatUpdate, Matrix, logger);
+      } catch (err) {
+        // Suppress non-critical errors
+      }
+    });
+
+    // Call handler
+    Matrix.ev.on("call", async (json) => await Callupdate(json, Matrix));
+
+    // Group update handler
+    Matrix.ev.on("group-participants.update", async (messag) => await GroupUpdate(Matrix, messag));
+
+    // Set bot mode
+    if (config.MODE === "public") {
+      Matrix.public = true;
+    } else if (config.MODE === "private") {
+      Matrix.public = false;
     }
+  } catch (error) {
+    console.error(chalk.red(`◈━━━━━━━━━━━━━━━━◈
+│❒ Critical Error: ${error.message}
+◈━━━━━━━━━━━━━━━━◈`));
+    process.exit(1);
+  }
 }
 
-init();
+start();
 
-app.get('/', (req, res) => {
-    res.send('Hello World!');
+app.get("/", (req, res) => {
+  res.send("Toxic-MD is running!");
 });
 
-app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
-});
-
+app.listen(PORT, () => {});
