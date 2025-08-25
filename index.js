@@ -56,24 +56,39 @@ if (!fs.existsSync(sessionDir)) {
 
 // Chatbot Functions
 async function handleChatbotToggle(m, Matrix) {
-    const buttons = [
+    
+const listButton = {
+      buttonText: "Select an option",
+      sections: [
         {
-            buttonId: 'enable_chatbot',
-            buttonText: { displayText: CHATBOT_ENABLED ? '❌ Disable' : '✅ Enable' },
-            type: 1
+          title: "Toxic-MD Menu",
+          rows: [
+            {
+              title: "on and off",
+              rowId: "enable_chatbot",
+              description:  { displayText: CHATBOT_ENABLED ? '❌ Disable' : '✅ Enable' },
+            },
+            {
+              title: "Help",
+              rowId: "chatbot_status",
+              description: { displayText: '📊 Status' },
+            },
+          ],
         },
-        {
-            buttonId: 'chatbot_status',
-            buttonText: { displayText: '📊 Status' },
-            type: 1
-        }
-    ];
+      ],
+    };
 
-    await Matrix.sendMessage(m.key.remoteJid, {
+    await Matrix.sendMessage(
+      m.from,
+      {
         text: `🤖 *Chatbot Status:* ${CHATBOT_ENABLED ? '🟢 ACTIVE' : '🔴 DISABLED'}\n\n_Powered by Groq AI_`,
-        buttons,
-        footer: config.BOT_NAME || 'Mercedes'
-    }, { quoted: m });
+        buttonText: listButton.buttonText,
+        sections: listButton.sections,
+        listType: 1,
+      },
+      { quoted: m }
+    );
+    
 }
 
 async function handleChatbotResponse(m, Matrix) {
