@@ -118,11 +118,10 @@ async function handleChatbotResponse(m, Matrix) {
       ],
     };
 
-    await Matrix.sendMessage(m.key.remoteJid, {
+    await Matrix.sendMessage(
       m.from,
       {
         text: aiResponse,
-        mentions: [m.key.participant || m.key.remoteJid],
         buttonText: listButton.buttonText,
         sections: listButton.sections,
         listType: 1,
