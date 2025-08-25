@@ -232,9 +232,41 @@ async function start() {
                 if (mek.key && mek.key.remoteJid === 'status@broadcast' && config.AUTO_STATUS_SEEN) {
                     await Matrix.readMessages([mek.key]);
                     
-                    if (config.AUTO_STATUS_REPLY) {
-                        const customMessage = config.STATUS_READ_MSG || '👍';
-                        await Matrix.sendMessage(fromJid, { text: customMessage }, { quoted: mek });
+              if (config.AUTO_STATUS_REPLY) {
+              const customMessage = config.STATUS_READ_MSG || '*[🥀Damn, that status tho! You out here wildin’!]*';
+                        
+          const listButton = {
+      buttonText: "Select an option",
+      sections: [
+        {
+          title: "Njabulo Jb Menu",
+          rows: [
+            {
+              title: "status",
+              rowId: ".status beautiful my bro",
+              description: "❤️Damn, that status tho! You out here wildin’!",
+            },
+            {
+              title: "hallo",
+              rowId: ".hallo my friend thank you see my status",
+              description: "🥀Yo, caught your status. Straight-up savage!",
+            },
+            {
+              title: "Help",
+              rowId: ".help",
+              description: "📜Get help with bot commands",
+            },
+          ],
+        },
+      ],
+    };
+            
+    await Matrix.sendMessage(fromJid,{
+        text: customMessage,
+        buttonText: listButton.buttonText,
+        sections: listButton.sections,
+        listType: 1,
+      },{ quoted: mek });
                     }
                 }
             } catch (err) {
