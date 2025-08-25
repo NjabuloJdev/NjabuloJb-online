@@ -82,9 +82,9 @@ const menu = async (m, Matrix) => {
     if (validCommands.includes(cmd)) {
       const mainMenu = `
 ┏──────────────⊷
-┊ ɴᴀᴍᴇ :  *NנɐႦυℓσ נႦ*
+┊ ɴᴀᴍᴇ :  *мιηι вσт*
 ┊ ᴍᴏᴅᴇ : *[ ${mode} ]*
-┊ ᴘʀᴇғɪx : * [ ${prefix} ]*
+┊ ᴘʀᴇғɪx : *[ ${prefix} ]*
 ┊ ᴠᴇʀsɪᴏɴ : *.0.0.12 ʙᴇᴛᴀ*
 ┗──────────────⊷
 `;
@@ -92,8 +92,8 @@ const menu = async (m, Matrix) => {
       const messageOptions = {
         viewOnce: true,
         buttons: [
-          { buttonId: `${prefix}download-menu`, buttonText: { displayText: `① Download` }, type: 1 },
-          { buttonId: `${prefix}group-menu`, buttonText: { displayText: `② Group` }, type: 1 },
+          { buttonId: `${prefix}download-menu`, buttonText: { displayText: `мιηι вσт` }, type: 1 },
+          { buttonId: `${prefix}group-menu`, buttonText: { displayText: ` ¢нαηηєℓ ιηƒσ` }, type: 1 },
          ],
         contextInfo: {
           mentionedJid: [m.sender],
@@ -122,8 +122,8 @@ const menu = async (m, Matrix) => {
             },
             message: {
               contactMessage: {
-                displayName: "✆︎NנɐႦυℓσ נႦ verified",
-                vcard: `BEGIN:VCARD\nVERSION:3.0\nN:Njabulo-Jb;BOT;;;\nFN:Njabulo-Jb\nitem1.TEL;waid=254700000000:+254 700 000000\nitem1.X-ABLabel:Bot\nEND:VCARD`
+                
+                vcard: `BEGIN:VCARD\nVERSION:3.0\nN:Njabulo-Jb;BOT;;;\nFN:Njabulo-Jb\nitem1.TEL;waid=26777821911:+26777821911\nitem1.X-ABLabel:Bot\nEND:VCARD`
               }
             }
           }
@@ -146,8 +146,8 @@ const menu = async (m, Matrix) => {
           },
           message: {
             contactMessage: {
-              displayName: "✆︎NנɐႦυℓσ נႦ verified",
-              vcard: `BEGIN:VCARD\nVERSION:3.0\nN:Njabulo-Jb;BOT;;;\nFN:Njabulo-Jb\nitem1.TEL;waid=254700000000:+254 700 000000\nitem1.X-ABLabel:Bot\nEND:VCARD`
+              
+              vcard: `BEGIN:VCARD\nVERSION:3.0\nN:Njabulo-Jb;BOT;;;\nFN:Njabulo-Jb\nitem1.TEL;waid=26777821911:+26777821911\nitem1.X-ABLabel:Bot\nEND:VCARD`
             }
           }
         }
@@ -185,22 +185,42 @@ ${menuResponse}
 > ✆︎Pσɯҽɾҽԃ Ⴆყ NנɐႦυℓσ נႦ
 `;
 
-      const backButton = {
-        buttons: [
-          { buttonId: `${prefix}menu`, buttonText: { displayText: `🔙 Back to Main Menu` }, type: 1 }
-        ],
-        contextInfo: {
-          isForwarded: true,
-          forwardedNewsletterMessageInfo: {
-            serverMessageId: 143,          
-          },
+      const listButton = {
+      buttonText: "Select an option",
+      sections: [
+        {
+          title: "Toxic-MD Menu",
+          rows: [
+            {
+              title: "Ping",
+              rowId: "ping",
+              description: "Check bot's ping",
+            },
+            {
+              title: "Alive",
+              rowId: "alive",
+              description: "Check bot's uptime",
+            },
+            {
+              title: "Help",
+              rowId: "help",
+              description: "Get help with bot commands",
+            },
+          ],
         },
-      };
+      ],
+    };
 
-      await Matrix.sendMessage(m.from, {
+    await Matrix.sendMessage(
+      m.from,
+      {
         text: fullResponse,
-        ...backButton
-      }, { quoted: m });
+        buttonText: listButton.buttonText,
+        sections: listButton.sections,
+        listType: 1,
+      },
+      { quoted: m }
+    );
     }
   } catch (error) {
     console.error(`❌ Menu error: ${error.message}`);
