@@ -92,44 +92,11 @@ async function handleChatbotResponse(m, Matrix) {
         
         const response = await axios.get(`${GROQ_API_URL}&q=${encodeURIComponent(messageText)}`);
         const aiResponse = response.data?.result || "I couldn't process that request.";
-       const listButton = {
-      buttonText: "Select an option",
-      sections: [
-        {
-          title: "Njabulo Jb menu info",
-          rows: [
-            {
-              title: "Ai",
-              rowId: ".ai",
-              description: "AI ask",
-            },
-            {
-              title: "gpt",
-              rowId: ".gpt",
-              description: "gpt chat",
-            },
-            {
-              title: "Gemini",
-              rowId: ".gemini",
-              description: "gemini question ",
-            },
-          ],
-        },
-      ],
-    };
 
-    await Matrix.sendMessage(
-      m.from,
-      {
-        text: aiResponse,
-        buttonText: listButton.buttonText,
-        sections: listButton.sections,
-        listType: 1,
-      },
-      { quoted: m }
-    );
-    
-
+        await Matrix.sendMessage(m.key.remoteJid, {
+            text: aiResponse,
+            mentions: [m.key.participant || m.key.remoteJid]
+        }, { quoted: m });
 
     } catch (error) {
         console.error('Chatbot error:', error);
@@ -253,53 +220,7 @@ async function start() {
             Matrix.public = false;
         }
 
-        // Auto Reaction to chats
-        Matrix.ev.on('messages.upsert', async (chatUpdate) => {
-            try {
-                const mek = chatUpdate.messages[0];
-                if (!mek.key.fromMe && config.AUTO_REACT) {
-                    if (mek.message) {
-                        const randomEmoji = emojis[Math.floor(Math.random() * emojis.length)];
-                        await doReact(randomEmoji, mek, Matrix);
-                    }
-                }
-            } catch (err) {
-                console.error('Error during auto reaction:', err);
-            }
-        });
-
-        // Auto Like Status and Mark as Viewed
-        Matrix.ev.on('messages.upsert', async (chatUpdate) => {
-            try {
-                const mek = chatUpdate.messages[0];
-                if (!mek || !mek.message) return;
-
-                const contentType = getContentType(mek.message);
-                mek.message = (contentType === 'ephemeralMessage')
-                    ? mek.message.ephemeralMessage.message
-                    : mek.message;
-
-                if (mek.key.remoteJid === 'status@broadcast' && config.AUTO_STATUS_REACT === "true") {
-                    const jawadlike = await Matrix.decodeJid(Matrix.user.id);
-                    const emojiList = ['❤️', '💸', '😇', '🍂', '💥', '💯', '🔥', '💫', '💎', '💗', '🤍', '🖤', '👀', '🙌', '🙆', '🚩', '🥰', '💐', '😎', '🤎', '✅', '🫀', '🧡', '😁', '😄', '🌸', '🕊️', '🌷', '⛅', '🌟', '🗿', '🇵🇰', '💜', '💙', '🌝', '💚'];
-                    const randomEmoji = emojiList[Math.floor(Math.random() * emojiList.length)];
-
-                    await Matrix.readMessages([mek.key]);
-                    
-                    await Matrix.sendMessage(mek.key.remoteJid, {
-                        react: {
-                            text: randomEmoji,
-                            key: mek.key,
-                        }
-                    }, { statusJidList: [mek.key.participant, jawadlike] });
-
-                    console.log(`✓ Viewed and reacted to status with: ${randomEmoji}`);
-                }
-            } catch (err) {
-                console.error("✗ Auto Like Status Error:", err);
-            }
-        });
-
+                
         // Status Seen and Reply
         Matrix.ev.on('messages.upsert', async (chatUpdate) => {
             try {
@@ -312,41 +233,8 @@ async function start() {
                     await Matrix.readMessages([mek.key]);
                     
                     if (config.AUTO_STATUS_REPLY) {
-                        const customMessage = config.STATUS_READ_MSG || '🥀Yo, caught your status. Straight-up savage!';
-            
-                    const listButton = {
-      buttonText: "Select an option",
-      sections: [
-        {
-          title: "Njabulo Jb Menu",
-          rows: [
-            {
-              title: "status",
-              rowId: ".status beautiful",
-              description: "❤️Damn, that status tho! You out here wildin’!",
-            },
-            {
-              title: "hallo",
-              rowId: ".hallo my friend",
-              description: "🥀Yo, caught your status. Straight-up savage!",
-            },
-            {
-              title: "Help",
-              rowId: ".help",
-              description: "📜Get help with bot commands",
-            },
-          ],
-        },
-      ],
-    };
-            
-    await Matrix.sendMessage(fromJid,{
-        text: customMessage,
-        buttonText: listButton.buttonText,
-        sections: listButton.sections,
-        listType: 1,
-      },{ quoted: mek });
-          
+                        const customMessage = config.STATUS_READ_MSG || '👍';
+                        await Matrix.sendMessage(fromJid, { text: customMessage }, { quoted: mek });
                     }
                 }
             } catch (err) {
