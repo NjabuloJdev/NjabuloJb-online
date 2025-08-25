@@ -43,7 +43,7 @@ function toFancyFont(text, isUpperCase = false) {
 
 // Image fetch utility
 async function fetchMenuImage() {
-  const imageUrl = "https://files.catbox.moe/omgszj.jpg";
+  const imageUrl = "https://files.catbox.moe/f0au80.jpg";
   for (let i = 0; i < 3; i++) {
     try {
       const response = await axios.get(imageUrl, { responseType: "arraybuffer" });
@@ -95,17 +95,7 @@ const menu = async (m, Matrix) => {
           { buttonId: `${prefix}download-menu`, buttonText: { displayText: `мιηι вσт` }, type: 1 },
           { buttonId: `${prefix}group-menu`, buttonText: { displayText: ` ¢нαηηєℓ ιηƒσ` }, type: 1 },
          ],
-        contextInfo: {
-          mentionedJid: [m.sender],
-          forwardingScore: 999,
-          isForwarded: true,
-          forwardedNewsletterMessageInfo: {
-            newsletterJid: '120363399999197102@newsletter',
-            newsletterName: "╭••➤®Njabulo Jb",
-            serverMessageId: 143
-          },
-        },
-      };
+      }
 
       // Send menu with or without image
       if (menuImage) {
