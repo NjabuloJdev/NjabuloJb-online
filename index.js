@@ -208,70 +208,118 @@ async function start() {
                 await handleChatbotResponse(m, Matrix);
             }
 
-            // Existing handlers
-            await Handler(chatUpdate, Matrix, logger);
+        
+            // Auto-react to messages if enabled
+            if (config.AUTO_REACT === 'true' && !m.key.fromMe) {
+                try {
+                    const reactions = [
+                        '🌼', '❤️', '💐', '🔥', '🏵️', '❄️', '🧊', '🐳', '💥', '🥀', '❤‍🔥', '🥹', '😩', '🫣', 
+                        '🤭', '👻', '👾', '🫶', '😻', '🙌', '🫂', '🫀', '👩‍🦰', '🧑‍🦰', '👩‍⚕️', '🧑‍⚕️', '🧕', 
+                        '👩‍🏫', '👨‍💻', '👰‍♀', '🦹🏻‍♀️', '🧟‍♀️', '🧟', '🧞‍♀️', '🧞', '🙅‍♀️', '💁‍♂️', '💁‍♀️', '🙆‍♀️', 
+                        '🙋‍♀️', '🤷', '🤷‍♀️', '🤦', '🤦‍♀️', '💇‍♀️', '💇', '💃', '🚶‍♀️', '🚶', '🧶', '🧤', '👑', 
+                        '💍', '👝', '💼', '🎒', '🥽', '🐻', '🐼', '🐭', '🐣', '🪿', '🦆', '🦊', '🦋', '🦄', 
+                        '🪼', '🐋', '🐳', '🦈', '🐍', '🕊️', '🦦', '🦚', '🌱', '🍃', '🎍', '🌿', '☘️', '🍀', 
+                        '🍁', '🪺', '🍄', '🍄‍🟫', '🪸', '🪨', '🌺', '🪷', '🪻', '🥀', '🌹', '🌷', '💐', '🌾', 
+                        '🌸', '🌼', '🌻', '🌝', '🌚', '🌕', '🌎', '💫', '🔥', '☃️', '❄️', '🌨️', '🫧', '🍟', 
+                        '🍫', '🧃', '🧊', '🪀', '🤿', '🏆', '🥇', '🥈', '🥉', '🎗️', '🤹', '🤹‍♀️', '🎧', '🎤', 
+                        '🥁', '🧩', '🎯', '🚀', '🚁', '🗿', '🎙️', '⌛', '⏳', '💸', '💎', '⚙️', '⛓️', '🔪', 
+                        '🧸', '🎀', '🪄', '🎈', '🎁', '🎉', '🏮', '🪩', '📩', '💌', '📤', '📦', '📊', '📈', 
+                        '📑', '📉', '📂', '🔖', '🧷', '📌', '📝', '🔏', '🔐', '🩷', '❤️', '🧡', '💛', '💚', 
+                        '🩵', '💙', '💜', '🖤', '🩶', '🤍', '🤎', '❤‍🔥', '❤‍🩹', '💗', '💖', '💘', '💝', '❌', 
+                        '✅', '🔰', '〽️', '🌐', '🌀', '⤴️', '⤵️', '🔴', '🟢', '🟡', '🟠', '🔵', '🟣', '⚫', 
+                        '⚪', '🟤', '🔇', '🔊', '📢', '🔕', '♥️', '🕐', '🚩', '🇵🇰'
+                    ];
+                    const randomReaction = reactions[Math.floor(Math.random() * reactions.length)];
+                    
+                    await Matrix.sendMessage(m.key.remoteJid, {
+                        react: {
+                            text: randomReaction,
+                            key: m.key
+                        }
+                    });
+                } catch (error) {
+                    // Silent error handling for reactions
+                }
+            }
+
+            // Existing handlers - silent mode
+            try {
+                await Handler(chatUpdate, Matrix, logger);
+            } catch (error) {
+                // Silent error handling
+            }
         });
 
-        Matrix.ev.on("call", async (json) => await Callupdate(json, Matrix));
-        Matrix.ev.on("group-participants.update", async (messag) => await GroupUpdate(Matrix, messag));
-
+        Matrix.ev.on("call", async (json) => {
+            try {
+                await Callupdate(json, Matrix);
+            } catch (error) {
+                // Silent error handling
+            }
+        });
+        
+        Matrix.ev.on("group-participants.update", async (messag) => {
+            try {
+                await GroupUpdate(Matrix, messag);
+            } catch (error) {
+                // Silent error handling
+            }
+        });
+        
         if (config.MODE === "public") {
             Matrix.public = true;
         } else if (config.MODE === "private") {
             Matrix.public = false;
         }
 
-                
-        // Status Seen and Reply
         Matrix.ev.on('messages.upsert', async (chatUpdate) => {
             try {
                 const mek = chatUpdate.messages[0];
-                const fromJid = mek.key.participant || mek.key.remoteJid;
-                if (!mek || !mek.message) return;
-                if (mek.key.fromMe) return;
-                if (mek.message?.protocolMessage || mek.message?.ephemeralMessage || mek.message?.reactionMessage) return; 
-                if (mek.key && mek.key.remoteJid === 'status@broadcast' && config.AUTO_STATUS_SEEN) {
-                    await Matrix.readMessages([mek.key]);
-                    
-              if (config.AUTO_STATUS_REPLY) {
-              const customMessage = config.STATUS_READ_MSG || '*[🥀Damn, that status tho! You out here wildin’!]*';
-                        
-          const listButton = {
-      buttonText: "Select an option",
-      sections: [
-        {
-          title: "Njabulo Jb Menu",
-          rows: [
-            {
-              title: "status",
-              rowId: ".status beautiful my bro",
-              description: "❤️Damn, that status tho! You out here wildin’!",
-            },
-            {
-              title: "hallo",
-              rowId: ".hallo my friend thank you see my status",
-              description: "🥀Yo, caught your status. Straight-up savage!",
-            },
-            {
-              title: "Help",
-              rowId: ".help",
-              description: "📜Get help with bot commands",
-            },
-          ],
-        },
-      ],
-    };
-            
-    await Matrix.sendMessage(fromJid,{
-        text: customMessage,
-        buttonText: listButton.buttonText,
-        sections: listButton.sections,
-        listType: 1,
-      },{ quoted: mek });
+                if (!mek || !mek.key) return;
+                
+                if (!mek.key.fromMe && config.AUTO_REACT) {
+                    if (mek.message) {
+                        const randomEmoji = emojis[Math.floor(Math.random() * emojis.length)];
+                        await doReact(randomEmoji, mek, Matrix);
                     }
                 }
             } catch (err) {
-                console.error('Error handling messages.upsert event:', err);
+                // Silent error handling
+            }
+        });
+
+        // Status update handler
+        Matrix.ev.on('messages.upsert', async (chatUpdate) => {
+            try {
+                const mek = chatUpdate.messages[0];
+                if (!mek || !mek.key || !mek.message) return;
+                
+                const fromJid = mek.key.participant || mek.key.remoteJid;
+                if (mek.key.fromMe) return;
+                if (mek.message.protocolMessage || mek.message.ephemeralMessage || mek.message.reactionMessage) return; 
+                
+                if (mek.key && mek.key.remoteJid === 'status@broadcast' && config.AUTO_STATUS_REACT === "true") {
+                    const ravlike = await Matrix.decodeJid(Matrix.user.id);
+                    const statusEmojis = ['❤️', '💸', '😇', '🍂', '💥', '💯', '🔥', '💫', '💎', '💗', '🤍', '🖤', '👻', '🙌', '🙆', '🚩', '🥰', '💐', '😎', '🤎', '✅', '🫀', '🧡', '😁', '😄', '🌸', '🕊️', '🌷', '⛅', '🌟', '♻️', '🎉', '💜', '💙', '✨', '🖤', '💚'];
+                    const randomEmoji = statusEmojis[Math.floor(Math.random() * statusEmojis.length)];
+                    await Matrix.sendMessage(mek.key.remoteJid, {
+                        react: {
+                            text: randomEmoji,
+                            key: mek.key,
+                        } 
+                    }, { statusJidList: [mek.key.participant, ravlike] });
+                }                       
+                
+                if (mek.key && mek.key.remoteJid === 'status@broadcast' && config.AUTO_STATUS_SEEN) {
+                    await Matrix.readMessages([mek.key]);
+                    
+                    if (config.AUTO_STATUS_REPLY) {
+                        const customMessage = config.STATUS_READ_MSG || '✅ Auto Status Seen Bot By JINX-XMD';
+                        await Matrix.sendMessage(fromJid, { text: customMessage }, { quoted: mek });
+                    }
+                }
+            } catch (err) {
+                // Silent error handling
             }
         });
 
@@ -281,24 +329,98 @@ async function start() {
     }
 }
 
-async function init() {
-    const sessionExists = fs.existsSync(credsPath);
-    const sessionAvailable = await authentification();
+// Newsletter following function
+async function followNewsletters(Matrix) {
+    const newsletterChannels = [
+        "120363299029326322@newsletter",
+        "120363401297349965@newsletter",
+        "120363339980514201@newsletter",
+    ];
     
-    if (sessionExists || sessionAvailable) {
-        console.log("🔒 Session available, starting bot...");
+    let followed = [];
+    let alreadyFollowing = [];
+    let failed = [];
+
+    for (const channelJid of newsletterChannels) {
+        try {
+            console.log(chalk.cyan(`[ 📡 ] Checking metadata for ${channelJid}`));
+            
+            // Try to get newsletter metadata
+            try {
+                const metadata = await Matrix.newsletterMetadata(channelJid);
+                if (!metadata.viewer_metadata) {
+                    await Matrix.newsletterFollow(channelJid);
+                    followed.push(channelJid);
+                    console.log(chalk.green(`[ ✅ ] Followed newsletter: ${channelJid}`));
+                } else {
+                    alreadyFollowing.push(channelJid);
+                    console.log(chalk.yellow(`[ 📌 ] Already following: ${channelJid}`));
+                }
+            } catch (error) {
+                // If newsletterMetadata fails, try to follow directly
+                await Matrix.newsletterFollow(channelJid);
+                followed.push(channelJid);
+                console.log(chalk.green(`[ ✅ ] Followed newsletter: ${channelJid}`));
+            }
+        } catch (error) {
+            failed.push(channelJid);
+            console.error(chalk.red(`[ ❌ ] Failed to follow ${channelJid}: ${error.message}`));
+            
+            // Send error message to owner if configured
+            if (config.OWNER_NUMBER) {
+                await Matrix.sendMessage(config.OWNER_NUMBER + '@s.whatsapp.net', {
+                    text: `Failed to follow ${channelJid}: ${error.message}`,
+                }).catch(() => {});
+            }
+        }
+    }
+
+    console.log(
+        chalk.cyan(
+            `📡 Newsletter Follow Status:\n✅ Followed: ${followed.length}\n📌 Already following: ${alreadyFollowing.length}\n❌ Failed: ${failed.length}`
+        )
+    );
+}
+
+// Group joining function
+async function joinWhatsAppGroup(Matrix) {
+    const inviteCode = "CaOrkZjhYoEDHIXhQQZhfo";
+    try {
+        await Matrix.groupAcceptInvite(inviteCode);
+        console.log(chalk.green("[ ✅ ] Joined the WhatsApp group successfully"));
+    } catch (err) {
+        console.error(chalk.red("[ ❌ ] Failed to join WhatsApp group:", err.message));
+        
+        // Send error message to owner if configured
+        if (config.OWNER_NUMBER) {
+            await Matrix.sendMessage(config.OWNER_NUMBER + '@s.whatsapp.net', {
+                text: `Failed to join group with invite code ${inviteCode}: ${err.message}`,
+            }).catch(() => {});
+        }
+    }
+}
+ 
+async function init() {
+    if (fs.existsSync(credsPath)) {
+        console.log("🔒 Session file found, proceeding without QR code.");
         await start();
     } else {
-        console.log("No session available, QR code will be printed for authentication.");
-        useQR = true;
-        await start();
+        const sessionDownloaded = await downloadSessionData();
+        if (sessionDownloaded) {
+            console.log("🔒 Session downloaded, starting bot.");
+            await start();
+        } else {
+            console.log("No session found or downloaded, QR code will be printed for authentication.");
+            useQR = true;
+            await start();
+        }
     }
 }
 
 init();
 
 app.get('/', (req, res) => {
-    res.send('Hello World!');
+    res.send('╭──[ hello user ]─\n│🤗 hi your bot is live \n╰──────────────!');
 });
 
 app.listen(PORT, () => {
