@@ -90,20 +90,20 @@ async function start() {
     try {
         const { state, saveCreds } = await useMultiFileAuthState(sessionDir);
         const { version, isLatest } = await fetchLatestBaileysVersion();
-        console.log(`🤖 JINX-MD using WA v${version.join('.')}, isLatest: ${isLatest}`);
+        console.log(`🤖 happiness using WA v${version.join('.')}, isLatest: ${isLatest}`);
         
         const Matrix = makeWASocket({
             version,
             logger: pino({ level: 'silent' }),
             printQRInTerminal: useQR,
-            browser: ["JINX-MD", "safari", "3.3"],
+            browser: ["Njabulo Jb", "safari", "3.3"],
             auth: state,
             getMessage: async (key) => {
                 if (store) {
                     const msg = await store.loadMessage(key.remoteJid, key.id);
                     return msg.message || undefined;
                 }
-                return { conversation: "JINX-MD whatsapp user bot" };
+                return { conversation: "Njabulo Jb whatsapp user bot" };
             }
         });
 
@@ -118,21 +118,7 @@ Matrix.ev.on('connection.update', (update) => {
             console.log(chalk.green(`𝗩𝗲𝗿𝘀𝗶𝗼𝗻 : 1.𝟬.𝟬`));
 Matrix.sendMessage(Matrix.user.id, { 
                 image: { url: "https://files.catbox.moe/j2ego4.jpg" }, 
-                caption: `*Hello there JINX-XMD User! 👋🏻* 
-
-> Simple, Straightforward, But Loaded With Features 🎊. Meet JINX-XMD WhatsApp Bot.
-
-*Thanks for using JINX-XMD 🚩* 
-
-> Join WhatsApp Channel: ⤵️  
-https://whatsapp.com/channel/0029VakUEfb4o7qVdkwPk83E
-
-- *YOUR PREFIX:* = ${prefix}
-
-Don't forget to give a star to the repo ⬇️  
-https://github.com/caseyweb/JINX-MD
-
-> © Powered BY CASEYRHODES TECH 🍀 🖤`
+                caption: `*Hello am online`
             });
             initialConnection = false;
         } else {
