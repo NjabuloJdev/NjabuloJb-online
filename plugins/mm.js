@@ -89,8 +89,21 @@ const play = async (m, Matrix) => {
 
       const searchResults = await ytSearch(searchQuery);
       if (!searchResults.videos || searchResults.videos.length === 0) {
-        return Matrix.sendMessage(m.from, {
+      const buttons = [
+          {
+            buttonId: ".download",
+            buttonText: { displayText: "🎧 seach menu" },
+            type: 1,
+          },
+          {
+            buttonId: ".download",
+            buttonText: { displayText: "🗂️ download menu" },
+            type: 1,
+          },
+        ];
+          await Matrix.sendMessage(m.from, {
           text: `No tracks found for "${searchQuery}". You slippin'! `,
+          buttons,
         }, { quoted: m });
       }
 
@@ -180,14 +193,14 @@ const play = async (m, Matrix) => {
       } catch (apiError) {
         console.error(`API error:`, apiError.message);
         return Matrix.sendMessage(m.from, {
-          text: `*Toxic-MD* couldn't hit the API for "${song.title}". Server's actin' up! `,
+          text: `*happiness* couldn't hit the API for "${song.title}". Server's actin' up! `,
         }, { quoted: m });
       }
     }
   } catch (error) {
     console.error(` Play error: ${error.message}`);
     await Matrix.sendMessage(m.from, {
-      text: `*Toxic-MD* hit a snag, fam! Try again or pick a better track! `,
+      text: `*happiness* hit a snag, fam! Try again or pick a better track! `,
     }, { quoted: m });
   }
 };
