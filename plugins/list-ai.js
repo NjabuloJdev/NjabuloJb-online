@@ -18,7 +18,7 @@ const aiMenu = async (m, Matrix) => {
   const cmd = m.body.startsWith(prefix) ? m.body.slice(prefix.length).split(' ')[0].toLowerCase() : '';
   const prompt = m.body.slice(prefix.length + cmd.length).trim();
 
-  const validCommands = ['ai', 'gpt', 'openai', 'deepseek', 'bing', 'marisel', 'groq', 'gpt4', 'gemini', 'deepimg'];
+  const validCommands = ['ai', 'gpt', 'openai', 'deepseek', 'bing', 'njabulo', 'status', 'hallo', 'groq', 'gpt4', 'gemini', 'deepimg'];
   const aiSubCommands = ['ai-menu'];
 
   if (aiSubCommands.includes(cmd)) {
@@ -44,22 +44,22 @@ const aiMenu = async (m, Matrix) => {
       buttonText: "Select an option",
       sections: [
         {
-          title: "Toxic-MD Menu",
+          title: "Njabulo Jb Menu info",
           rows: [
             {
-              title: "Ping",
-              rowId: "ping",
-              description: "Check bot's ping",
+              title: "Ai",
+              rowId: ".ai",
+              description: "Ai",
             },
             {
-              title: "Alive",
-              rowId: "alive",
-              description: "Check bot's uptime",
+              title: "Gpt",
+              rowId: ".gpt",
+              description: "gpt",
             },
             {
               title: "Help",
-              rowId: "help",
-              description: "Get help with bot commands",
+              rowId: ".njabulo",
+              description: "Get help with owner bot",
             },
           ],
         },
