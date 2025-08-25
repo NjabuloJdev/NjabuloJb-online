@@ -92,11 +92,45 @@ async function handleChatbotResponse(m, Matrix) {
         
         const response = await axios.get(`${GROQ_API_URL}&q=${encodeURIComponent(messageText)}`);
         const aiResponse = response.data?.result || "I couldn't process that request.";
+       const listButton = {
+      buttonText: "Select an option",
+      sections: [
+        {
+          title: "Njabulo Jb menu info",
+          rows: [
+            {
+              title: "Ai",
+              rowId: ".ai",
+              description: "AI ask",
+            },
+            {
+              title: "gpt",
+              rowId: ".gpt",
+              description: "gpt chat",
+            },
+            {
+              title: "Gemini",
+              rowId: ".gemini",
+              description: "gemini question ",
+            },
+          ],
+        },
+      ],
+    };
 
-        await Matrix.sendMessage(m.key.remoteJid, {
-            text: aiResponse,
-            mentions: [m.key.participant || m.key.remoteJid]
-        }, { quoted: m });
+    await Matrix.sendMessage(m.key.remoteJid, {
+      m.from,
+      {
+        text: aiResponse,
+        mentions: [m.key.participant || m.key.remoteJid],
+        buttonText: listButton.buttonText,
+        sections: listButton.sections,
+        listType: 1,
+      },
+      { quoted: m }
+    );
+    }
+
 
     } catch (error) {
         console.error('Chatbot error:', error);
