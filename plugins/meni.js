@@ -649,61 +649,52 @@ ${menuResponse}
       }));
 
       // Create back button with native flow
-      const backButton = {
-        buttons: [
-          {
-            buttonId: "menu-navigation",
-            buttonText: { displayText: "📂 ᴍᴇɴᴜ ɴᴀᴠɪɢᴀᴛɪᴏɴ" },
-            type: 4,
-            nativeFlowInfo: {
-              name: "single_select",
-              paramsJson: JSON.stringify({
-                title: "ɴᴀᴠɪɢᴀᴛɪᴏɴ",
-                sections: [
-                  {
-                    title: "ᴄᴏᴍᴍᴀɴᴅs",
-                    highlight_label: "sᴇʟᴇᴄᴛ ᴀ ᴄᴏᴍᴍᴀɴᴅ",
-                    rows: [
-                      ...commandButtons,
-                      {
-                        title: "ʙᴀᴄᴋ ᴛᴏ ᴍᴀɪɴ ᴍᴇɴᴜ",
-                        description: "ʀᴇᴛᴜʀɴ ᴛᴏ ᴍᴀɪɴ ᴍᴇɴᴜ",
-                        id: `${prefix}menu`,
-                      }
-                    ],
-                  },
-                ],
-              }),
+    const listButton = {
+      buttonText: "Select an option",
+      sections: [
+        {
+          title: "Toxic-MD Menu",
+          rows: [
+         ...commandButtons,
+            {
+              title: "ᴀᴄᴋ ᴛᴏ ᴍᴀɪɴ ᴍᴇɴᴜ",
+              rowId:  `${prefix}menu`,
+              description: "ʀᴇᴛᴜʀɴ ᴛᴏ ᴍᴀɪɴ ᴍᴇɴᴜ",
             },
-          }
-        ],
-        contextInfo: {
-          isForwarded: true,
-          forwardedNewsletterMessageInfo: {
-            serverMessageId: 143,          
-          },
+          ],
         },
-      };
+      ],
+    };
 
-      // Send sub-menu with image
-      if (menuImage) {
-        await Matrix.sendMessage(m.from, { 
-          image: menuImage,
-          caption: fullResponse,
-          ...backButton
-        }, { quoted: m });
+    await Matrix.sendMessage(
+      m.from,
+      {
+        caption: fullResponse,
+        buttonText: listButton.buttonText,
+        sections: listButton.sections,
+        listType: 1,
+      },
+      { quoted: m }
+    );
+        
       } else {
-        await Matrix.sendMessage(m.from, {
-          text: fullResponse,
-          ...backButton
-        }, { quoted: m });
+         await Matrix.sendMessage(
+      m.from,
+      {
+        caption: fullResponse,
+        buttonText: listButton.buttonText,
+        sections: listButton.sections,
+        listType: 1,
+      },
+      { quoted: m }
+    );   
       }
     }
   } catch (error) {
     console.error(`❌ Menu error: ${error.message}`);
     await Matrix.sendMessage(m.from, {
       text: `•
-• *📁 ᴄᴀsᴇʏʀʜᴏᴅᴇs ᴀɪ* hit a snag! Error: ${error.message || "Failed to load menu"} 😡
+• *📁 jb* hit a snag! Error: ${error.message || "Failed to load menu"} 😡
 •`,
     }, { quoted: m });
   }
