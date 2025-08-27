@@ -1,9 +1,9 @@
 import moment from "moment-timezone";
 import fs from "fs";
 import os from "os";
-import pkg from "baileys-pro";
-const { generateWAMessageFromContent, proto } = pkg;
 import config from "../config.cjs";
+import pkg, { prepareWAMessageMedia } from "@whiskeysockets/baileys";
+const { generateWAMessageFromContent, proto } = pkg;
 import axios from "axios";
 
 // System stats
