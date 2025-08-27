@@ -162,6 +162,7 @@ const menu = async (m, Matrix) => {
         image: menuImage,
         caption: str,
         buttonText: listButton.buttonText,
+        sections: listButton.sections,
         listType: 1,
       },
       { quoted: m }
