@@ -482,16 +482,6 @@ const menu = async (m, Matrix) => {
       const messageOptions = {
         viewOnce: true,
         buttons: buttons,
-        contextInfo: {
-          mentionedJid: [m.sender],
-          forwardingScore: 999,
-          isForwarded: true,
-          forwardedNewsletterMessageInfo: {
-            newsletterJid: '120363302677217436@newsletter',
-            newsletterName: "ᴄᴀsᴇʏʀʜᴏᴅᴇs ᴀɪ 🌟",
-            serverMessageId: 143
-          },
-        },
       };
 
       // Send menu with or without image
