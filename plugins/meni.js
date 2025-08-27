@@ -642,10 +642,10 @@ ${menuResponse}
 `;
 
       // Create command selection buttons
-      const commandButtons = categoryData.commands.map(cmdObj => ({
+      const commandlistButton = categoryData.commands.map(cmdObj => ({
         title: cmdObj.command,
         description: cmdObj.desc,
-        id: `${prefix}${cmdObj.command}`,
+        rowId: `${prefix}${cmdObj.command}`,
       }));
 
       // Create back button with native flow
@@ -655,7 +655,6 @@ ${menuResponse}
         {
           title: "Toxic-MD Menu",
           rows: [
-         ...commandButtons,
             {
               title: "ᴀᴄᴋ ᴛᴏ ᴍᴀɪɴ ᴍᴇɴᴜ",
               rowId:  `${prefix}menu`,
@@ -669,7 +668,7 @@ ${menuResponse}
     await Matrix.sendMessage(
       m.from,
       {
-        caption: fullResponse,
+        text: fullResponse,
         buttonText: listButton.buttonText,
         sections: listButton.sections,
         listType: 1,
@@ -681,7 +680,7 @@ ${menuResponse}
          await Matrix.sendMessage(
       m.from,
       {
-        caption: fullResponse,
+        text: fullResponse,
         buttonText: listButton.buttonText,
         sections: listButton.sections,
         listType: 1,
