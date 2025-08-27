@@ -43,7 +43,7 @@ function toFancyFont(text, isUpperCase = false) {
 
 // Image fetch utility
 async function fetchMenuImage() {
-  const imageUrl = "https://files.catbox.moe/y3j3kl.jpg";
+  const imageUrl = "https://files.catbox.moe/f0au80.jpg";
   for (let i = 0; i < 3; i++) {
     try {
       const response = await axios.get(imageUrl, { 
@@ -515,26 +515,61 @@ const menu = async (m, Matrix) => {
       sections: [
         {
           title: "Toxic-MD Menu",
-          rows: [
-            {
-              title: "Ping",
-              rowId: "ping",
-              description: "Check bot's ping",
-            },
-            {
-              title: "Alive",
-              rowId: "alive",
-              description: "Check bot's uptime",
-            },
-            {
-              title: "Help",
-              rowId: "help",
-              description: "Get help with bot commands",
-            },
-          ],
-        },
-      ],
-    };
+              rows: [
+                    {
+                      title: "📥 ᴅᴏᴡɴʟᴏᴀᴅ",                   
+                      rowId: `${prefix}download-menu`,
+                      description: "ᴅᴏᴡɴʟᴏᴀᴅ ᴄᴏᴍᴍᴀɴᴅs",
+                    },
+                    {
+                      title: "👥 ɢʀᴏᴜᴘ",
+                      rowId: `${prefix}group-menu`,
+                      description: "ɢʀᴏᴜᴘ ᴍᴀɴᴀɢᴇᴍᴇɴᴛ",
+                    },
+                    {
+                      title: "🎉 ғᴜɴ",
+                      rowId: `${prefix}fun-menu`,
+                      description: "ғᴜɴ ᴄᴏᴍᴍᴀɴᴅs",
+                    },
+                    {
+                      title: "👑 ᴏᴡɴᴇʀ",
+                      rowId: `${prefix}owner-menu`,
+                      description: "ᴏᴡɴᴇʀ ᴄᴏᴍᴍᴀɴᴅs",
+                    },
+                    {
+                      title: "🤖 ᴀɪ",
+                      rowId: `${prefix}ai-menu`,
+                      description: "ᴀɪ ᴄᴏᴍᴍᴀɴᴅs",
+                    },
+                    {
+                      title: "🌸 ᴀɴɪᴍᴇ",
+                      rowId: `${prefix}anime-menu`,
+                      description: "ᴀɴɪᴍᴇ ᴄᴏᴍᴍᴀɴᴅs",
+                    },
+                    {
+                      title: "🔄 ᴄᴏɴᴠᴇʀᴛᴇʀ",
+                      rowId: `${prefix}converter-menu`,
+                      description: "ᴄᴏɴᴠᴇʀᴛᴇʀ ᴛᴏᴏʟs",
+                    },
+                    {
+                      title: "🌟 ᴏᴛʜᴇʀ",
+                      rowId: `${prefix}other-menu`,
+                      description: "ᴏᴛʜᴇʀ ᴄᴏᴍᴍᴀɴᴅs",
+                    },
+                    {
+                      title: "🎭 ʀᴇᴀᴄᴛɪᴏɴs",
+                      rowId: `${prefix}reactions-menu`,
+                      description: "ʀᴇᴀᴄᴛɪᴏɴ ᴄᴏᴍᴍᴀɴᴅs",
+                    },
+                    {
+                      title: "📂 ᴍᴀɪɴ",
+                      id: `${prefix}main-menu`,
+                      description: "ᴍᴀɪɴ ᴄᴏᴍᴍᴀɴᴅs",
+                   },
+                 ],
+               },
+             ],
+          };
 
     await Matrix.sendMessage(
       m.from,
