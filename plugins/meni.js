@@ -484,6 +484,18 @@ const menu = async (m, Matrix) => {
       const messageOptions = {
         viewOnce: true,
         buttons: buttons,
+        contextInfo: {
+          mentionedJid: [m.sender],
+          externalAdReply: {
+            showAdAttribution: true, // Marks as an ad
+            title: `${toFancyFont("world minibot")} Menu`,
+            body: `${pushwish} Explore minibot's features!`,
+            sourceUrl: "https://github.com/xhclintohn/Toxic-MD",
+            mediaType: 1,
+            renderLargerThumbnail: true,
+            mediaUrl: "https://files.catbox.moe/zaqn1j.jpg",
+          },
+        },
       };
 
       // Send menu with or without image
