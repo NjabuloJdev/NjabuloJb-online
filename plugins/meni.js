@@ -407,81 +407,37 @@ const menu = async (m, Matrix) => {
 `;
 
       // Create button select menu using nativeFlowInfo
-      const buttons = [
+const listButton = {
+      buttonText: "Select an option",
+      sections: [
         {
-          buttonId: "menu-options",
-          buttonText: { displayText: "📂 ᴍᴇɴᴜ ᴏᴘᴛɪᴏɴs" },
-          type: 4, // Native Flow type
-          nativeFlowInfo: {
-            name: "single_select",
-            paramsJson: JSON.stringify({
-              title: "ᴄᴀsᴇʏʀʜᴏᴅᴇs ᴀɪ ᴍᴇɴᴜ",
-              sections: [
-                {
-                  title: "ᴄᴀᴛᴇɢᴏʀɪᴇs",
-                  highlight_label: "sᴇʟᴇᴄᴛ ᴀ ᴄᴀᴛᴇɢᴏʀʏ",
-                  rows: [
-                    {
-                      title: "📥 ᴅᴏᴡɴʟᴏᴀᴅ",
-                      description: "ᴅᴏᴡɴʟᴏᴀᴅ ᴄᴏᴍᴍᴀɴᴅs",
-                      id: `${prefix}download-menu`,
-                    },
-                    {
-                      title: "👥 ɢʀᴏᴜᴘ",
-                      description: "ɢʀᴏᴜᴘ ᴍᴀɴᴀɢᴇᴍᴇɴᴛ",
-                      id: `.ping`,
-                    },
-                    {
-                      title: "🎉 ғᴜɴ",
-                      description: "ғᴜɴ ᴄᴏᴍᴍᴀɴᴅs",
-                      id: `${prefix}fun-menu`,
-                    },
-                    {
-                      title: "👑 ᴏᴡɴᴇʀ",
-                      description: "ᴏᴡɴᴇʀ ᴄᴏᴍᴍᴀɴᴅs",
-                      id: `${prefix}owner-menu`,
-                    },
-                    {
-                      title: "🤖 ᴀɪ",
-                      description: "ᴀɪ ᴄᴏᴍᴍᴀɴᴅs",
-                      id: `${prefix}ai-menu`,
-                    },
-                    {
-                      title: "🌸 ᴀɴɪᴍᴇ",
-                      description: "ᴀɴɪᴍᴇ ᴄᴏᴍᴍᴀɴᴅs",
-                      id: `${prefix}anime-menu`,
-                    },
-                    {
-                      title: "🔄 ᴄᴏɴᴠᴇʀᴛᴇʀ",
-                      description: "ᴄᴏɴᴠᴇʀᴛᴇʀ ᴛᴏᴏʟs",
-                      id: `${prefix}converter-menu`,
-                    },
-                    {
-                      title: "🌟 ᴏᴛʜᴇʀ",
-                      description: "ᴏᴛʜᴇʀ ᴄᴏᴍᴍᴀɴᴅs",
-                      id: `${prefix}other-menu`,
-                    },
-                    {
-                      title: "🎭 ʀᴇᴀᴄᴛɪᴏɴs",
-                      description: "ʀᴇᴀᴄᴛɪᴏɴ ᴄᴏᴍᴍᴀɴᴅs",
-                      id: `${prefix}reactions-menu`,
-                    },
-                    {
-                      title: "📂 ᴍᴀɪɴ",
-                      description: "ᴍᴀɪɴ ᴄᴏᴍᴍᴀɴᴅs",
-                      id: `${prefix}main-menu`,
-                    }
-                  ],
-                },
-              ],
-            }),
-          },
+          title: "Toxic-MD Menu",
+          rows: [
+            {
+              title: "Ping",
+              rowId: "ping",
+              description: "Check bot's ping",
+            },
+            {
+              title: "Alive",
+              rowId: "alive",
+              description: "Check bot's uptime",
+            },
+            {
+              title: "Help",
+              rowId: "help",
+              description: "Get help with bot commands",
+            },
+          ],
         },
-      ];
+      ],
+    };
 
       const messageOptions = {
         viewOnce: true,
-        buttons: buttons,
+        buttonText: listButton.buttonText,
+        sections: listButton.sections,
+        listType: 1,
         contextInfo: {
           mentionedJid: [m.sender],
           forwardingScore: 999,
