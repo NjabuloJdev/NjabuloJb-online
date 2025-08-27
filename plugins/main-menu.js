@@ -130,24 +130,45 @@ const menu = async (m, Matrix) => {
       menuImage = fs.readFileSync("./media/toxic.jpg");
     }
 
+    const listButton = {
+      buttonText: "Select an option",
+      sections: [
+        {
+          title: "Toxic-MD Menu",
+          rows: [
+            {
+              title: "Ping",
+              rowId: "ping",
+              description: "Check bot's ping",
+            },
+            {
+              title: "Alive",
+              rowId: "alive",
+              description: "Check bot's uptime",
+            },
+            {
+              title: "Help",
+              rowId: "help",
+              description: "Get help with bot commands",
+            },
+          ],
+        },
+      ],
+    };
+
     await Matrix.sendMessage(
       m.from,
       {
         image: menuImage,
         caption: str,
-        contextInfo: {
-          mentionedJid: [m.sender],
-          forwardingScore: 999,
-          isForwarded: true,
-          forwardedNewsletterMessageInfo: {
-            newsletterJid: "120363398040175935@newsletter",
-            newsletterName: "Toxic-MD",
-            serverMessageId: 143,
-          },
-        },
+        buttonText: listButton.buttonText,
+        sections: listButton.sections,
+        listType: 1,
       },
       { quoted: m }
     );
+
+    
 
     await Matrix.sendMessage(
       m.from,
