@@ -1,9 +1,9 @@
 import moment from "moment-timezone";
 import fs from "fs";
 import os from "os";
-import pkg from "baileys-pro";
-const { generateWAMessageFromContent, proto } = pkg;
 import config from "../config.cjs";
+import pkg, { prepareWAMessageMedia } from "@whiskeysockets/baileys";
+const { generateWAMessageFromContent, proto } = pkg;
 import axios from "axios";
 
 // Time logic
@@ -149,69 +149,33 @@ ${pushwish} @*${m.pushName}*! Tap a button to select a menu category:
 > Pσɯҽɾҽԃ Ⴆყ Tσxιƈ-ɱԃȥ
 `;
 
+    
       const messageOptions = {
-        viewOnce: true,
-        buttons: [
-          {
-            buttonId: `${prefix}download-menu`,
-            buttonText: { displayText: `📥 ${toFancyFont("Download")}` },
-            type: 1,
-          },
-          {
-            buttonId: `${prefix}converter-menu`,
-            buttonText: { displayText: `🔄 ${toFancyFont("Converter")}` },
-            type: 1,
-          },
-          {
-            buttonId: `${prefix}ai-menu`,
-            buttonText: { displayText: `🤖 ${toFancyFont("AI")}` },
-            type: 1,
-          },
-          {
-            buttonId: `${prefix}tools-menu`,
-            buttonText: { displayText: `🛠 ${toFancyFont("Tools")}` },
-            type: 1,
-          },
-          {
-            buttonId: `${prefix}group-menu`,
-            buttonText: { displayText: `👥 ${toFancyFont("Group")}` },
-            type: 1,
-          },
-          {
-            buttonId: `${prefix}search-menu`,
-            buttonText: { displayText: `🔍 ${toFancyFont("Search")}` },
-            type: 1,
-          },
-          {
-            buttonId: `${prefix}main-menu`,
-            buttonText: { displayText: `⚙ ${toFancyFont("Main")}` },
-            type: 1,
-          },
-          {
-            buttonId: `${prefix}owner-menu`,
-            buttonText: { displayText: `🔒 ${toFancyFont("Owner")}` },
-            type: 1,
-          },
-          {
-            buttonId: `${prefix}stalk-menu`,
-            buttonText: { displayText: `🕵 ${toFancyFont("Stalk")}` },
-            type: 1,
-          },
-        ],
-        contextInfo: {
-          mentionedJid: [m.sender],
-          externalAdReply: {
-            showAdAttribution: true, // Marks as an ad
-            title: `${toFancyFont("Toxic-MD")} Menu`,
-            body: `${pushwish} Explore Toxic-MD's features!`,
-            sourceUrl: "https://github.com/xhclintohn/Toxic-MD",
-            mediaType: 1,
-            renderLargerThumbnail: true,
-            mediaUrl: "https://files.catbox.moe/zaqn1j.jpg",
-          },
+      buttonText: "Select an option",
+      sections: [
+        {
+          title: "Toxic-MD Menu",
+          rows: [
+            {
+              title: "Ping",
+              rowId: "ping",
+              description: "Check bot's ping",
+            },
+            {
+              title: "Alive",
+              rowId: "alive",
+              description: "Check bot's uptime",
+            },
+            {
+              title: "Help",
+              rowId: "help",
+              description: "Get help with bot commands",
+            },
+          ],
         },
-      };
-
+      ],
+    };
+      
       // Send menu with or without image
       if (menuImage) {
         await Matrix.sendMessage(
