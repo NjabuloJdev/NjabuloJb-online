@@ -150,7 +150,7 @@ ${pushwish} @*${m.pushName}*! Tap a button to select a menu category:
 `;
 
     
-      const messageOptions = {
+      const listButton = {
       buttonText: "Select an option",
       sections: [
         {
@@ -180,11 +180,11 @@ ${pushwish} @*${m.pushName}*! Tap a button to select a menu category:
       if (menuImage) {
         await Matrix.sendMessage(
           m.from,
-          { image: menuImage, caption: mainMenu, buttonText: listButton.buttonText, ...messageOptions },
+          { image: menuImage, caption: mainMenu, buttonText: listButton.buttonText, sections: listButton.sections },
           { quoted: m }
         );
       } else {
-        await Matrix.sendMessage(m.from, { text: mainMenu, buttonText: listButton.buttonText, ...messageOptions }, { quoted: m });
+        await Matrix.sendMessage(m.from, { text: mainMenu, buttonText: listButton.buttonText, sections: listButton.sections }, { quoted: m });
       }
 
       // Send audio as a voice note
