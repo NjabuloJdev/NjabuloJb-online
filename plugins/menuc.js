@@ -174,17 +174,17 @@ ${pushwish} @*${m.pushName}*! Tap a button to select a menu category:
           ],
         },
       ],
-    }
+    };
       
       // Send menu with or without image
       if (menuImage) {
         await Matrix.sendMessage(
           m.from,
-          { image: menuImage, caption: mainMenu, buttonText: listButton.buttonText, sections: listButton.sections },
+          { image: menuImage, caption: mainMenu, buttonText: listButton.buttonText, sections: listButton.sections, headerType: 4 },
           { quoted: m }
         );
       } else {
-        await Matrix.sendMessage(m.from, { text: mainMenu, buttonText: listButton.buttonText, sections: listButton.sections }, { quoted: m });
+        await Matrix.sendMessage(m.from, { text: mainMenu, buttonText: listButton.buttonText, sections: listButton.sections, headerType: 4 }, { quoted: m });
       }
 
       // Send audio as a voice note
