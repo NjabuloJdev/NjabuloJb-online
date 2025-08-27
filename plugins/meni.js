@@ -381,26 +381,26 @@ const menu = async (m, Matrix) => {
     // Handle main menu
     if (validCommands.includes(cmd) || cmd === "") {
       const mainMenu = `╭━━━━━━━━━━━━━━━━⊷
-┊ ┏────────────⊷
-┊ ┊▢ʙᴏᴛ ɴᴀᴍᴇ :  *ɴᴊᴀʙᴜʟᴏ ᴊʙ*
-┊ ┊▢HI *${pushwish}*
-┊ ┊▢ᴛɪᴍᴇ : *${xtime}*
-┊ ┊▢ᴅᴀᴛᴇ : *${xdate}*
-┊ ┊▢ᴛᴏᴛᴀʟ ᴄᴍᴅs :* *${totalCommands}*
-┊ ┊▢ᴘʀᴇғɪx : *[ ${prefix} ]*
-┊ ┗────────────⊷
-┊      ┏─────────⊷
-┊      【①】• *ᴅᴏᴡɴʟᴏᴀᴅ ᴍᴇɴᴜ*
-┊      【②】• *ɢʀᴏᴜᴘ ᴍᴇɴᴜ*
-┊      【③】• *ғᴜɴ ᴍᴇɴᴜ*
-┊      【④】• *ᴏᴡɴᴇʀ ᴍᴇɴᴜ*
-┊      【⑤】• *ᴀɪ ᴍᴇɴᴜ*
-┊      【⑥】• *ᴀɴɪᴍᴇ ᴍᴇɴᴜ*
-┊      【⑦】• *ᴄᴏɴᴠᴇʀᴛ ᴍᴇɴᴜ*
-┊      【⑧】• *ᴏᴛʜᴇʀ ᴍᴇɴᴜ* 
-┊      【⑨】• *ʀᴇᴀᴄᴛɪᴏɴs ᴍᴇɴᴜ*
-┊      【⑩】• *ᴍᴀɪɴ ᴍᴇɴᴜ*
-┊      ┗─────────⊷
+┋ ┏────────────⊷
+┋ ┊▢ʙᴏᴛ ɴᴀᴍᴇ :  *ɴᴊᴀʙᴜʟᴏ ᴊʙ*
+┋ ┊▢HI *${pushwish}*
+┋ ┊▢ᴛɪᴍᴇ : *${xtime}*
+┋ ┊▢ᴅᴀᴛᴇ : *${xdate}*
+┋ ┊▢ᴛᴏᴛᴀʟ ᴄᴍᴅs : *${totalCommands}*
+┋ ┊▢ᴘʀᴇғɪx : *[ ${prefix} ]*
+┋ ┗────────────⊷
+┋      ┏─────────⊷
+┋      【①】• *ᴅᴏᴡɴʟᴏᴀᴅ ᴍᴇɴᴜ*
+┋      【②】• *ɢʀᴏᴜᴘ ᴍᴇɴᴜ*
+┋      【③】• *ғᴜɴ ᴍᴇɴᴜ*
+┋      【④】• *ᴏᴡɴᴇʀ ᴍᴇɴᴜ*
+┋      【⑤】• *ᴀɪ ᴍᴇɴᴜ*
+┋      【⑥】• *ᴀɴɪᴍᴇ ᴍᴇɴᴜ*
+┋      【⑦】• *ᴄᴏɴᴠᴇʀᴛ ᴍᴇɴᴜ*
+┋      【⑧】• *ᴏᴛʜᴇʀ ᴍᴇɴᴜ* 
+┋      【⑨】• *ʀᴇᴀᴄᴛɪᴏɴs ᴍᴇɴᴜ*
+┋      【⑩】• *ᴍᴀɪɴ ᴍᴇɴᴜ*
+┋      ┗─────────⊷
 ╰┬━━━━━━━━━━━━⊷⳹
 ┌┤ *Hallo my family mini to ${pushwish}*
 ┊╰─────────────⊷
@@ -490,7 +490,7 @@ const menu = async (m, Matrix) => {
             showAdAttribution: true, // Marks as an ad
             title: `${toFancyFont("world minibot")} Menu`,
             body: `${pushwish} Explore minibot's features!`,
-            sourceUrl: "https://github.com/xhclintohn/Toxic-MD",
+            sourceUrl: "https://files.catbox.moe/rixvc7.jpg",
             mediaType: 1,
             renderLargerThumbnail: true,
             mediaUrl: "https://files.catbox.moe/zaqn1j.jpg",
@@ -698,13 +698,41 @@ ${menuResponse}
         await Matrix.sendMessage(m.from, { 
           image: menuImage,
           caption: fullResponse,
-          ...backButton
-        }, { quoted: m });
+          ...backButton,
+           contextInfo: {
+              mentionedJid: [m.sender],
+              externalAdReply: {
+                showAdAttribution: true, // Marks as an ad
+                title: `${toFancyFont("minibot")} ${toFancyFont(menuTitle)}`,
+                body: `Explore minibot world's ${menuTitle.toLowerCase()} commands!`,
+                sourceUrl: "https://github.com/xhclintohn/Toxic-MD",
+                mediaType: 1,
+                renderLargerThumbnail: true,
+                mediaUrl: "https://files.catbox.moe/zaqn1j.jpg",
+              },
+            },
+          },
+          { quoted: m }
+        );
       } else {
         await Matrix.sendMessage(m.from, {
           text: fullResponse,
-          ...backButton
-        }, { quoted: m });
+          ...backButton,
+        contextInfo: {
+              mentionedJid: [m.sender],
+              externalAdReply: {
+                showAdAttribution: true, // Marks as an ad
+                title: `${toFancyFont("minibot cmd worl")} ${toFancyFont(menuTitle)}`,
+                body: `Explore Minibot's ${menuTitle.toLowerCase()} commands!`,
+                sourceUrl: "https://github.com/xhclintohn/Toxic-MD",
+                mediaType: 1,
+                renderLargerThumbnail: true,
+                mediaUrl: "https://files.catbox.moe/zaqn1j.jpg",
+              },
+            },
+          },
+          { quoted: m }
+        );
       }
     }
   } catch (error) {
