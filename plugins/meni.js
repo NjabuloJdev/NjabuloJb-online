@@ -316,7 +316,7 @@ const menu = async (m, Matrix) => {
     const mode = config.MODE === "public" ? "public" : "private";
     const totalCommands = Object.values(commandCategories).reduce((acc, category) => acc + category.commands.length, 0);
 
-    const validCommands = ["listk", "helpk", "menuk"];
+    const validCommands = ["list", "minibot", "menu"];
     const subMenuCommands = Object.keys(commandCategories).map(cat => `${cat}-menu`);
 
     // Check if this is a native flow response (menu selection)
@@ -380,13 +380,12 @@ const menu = async (m, Matrix) => {
 
     // Handle main menu
     if (validCommands.includes(cmd) || cmd === "") {
-      const mainMenu = `
-╭━━━━━━━━━━━━━━━━⊷
+      const mainMenu = `╭━━━━━━━━━━━━━━━━⊷
 ┊ ┏────────────⊷
 ┊ ┊▢ʙᴏᴛ ɴᴀᴍᴇ :  *ɴᴊᴀʙᴜʟᴏ ᴊʙ*
 ┊ ┊▢HI *${pushwish}*
-┊ ┊▢ᴛɪᴍᴇ :* *${xtime}*
-┊ ┊▢ᴅᴀᴛᴇ :* *${xdate}*
+┊ ┊▢ᴛɪᴍᴇ : *${xtime}*
+┊ ┊▢ᴅᴀᴛᴇ : *${xdate}*
 ┊ ┊▢ᴛᴏᴛᴀʟ ᴄᴍᴅs :* *${totalCommands}*
 ┊ ┊▢ᴘʀᴇғɪx : *[ ${prefix} ]*
 ┊ ┗────────────⊷
@@ -502,7 +501,6 @@ const menu = async (m, Matrix) => {
             },
             message: {
                 contactMessage: {
-                    displayName: "CASEYRHODES VERIFIED ✅",
                     vcard: "BEGIN:VCARD\nVERSION:3.0\nFN: Caseyrhodes VERIFIED ✅\nORG:CASEYRHODES-TECH BOT;\nTEL;type=CELL;type=VOICE;waid=13135550002:+13135550002\nEND:VCARD"
                 }
             }
@@ -601,7 +599,6 @@ const menu = async (m, Matrix) => {
             },
             message: {
               contactMessage: {
-                displayName: "ᴄᴀsᴇʏʀʜᴏᴅᴇs ᴀɪ ✅",
                 vcard: `BEGIN:VCARD\nVERSION:3.0\nFN: Caseyrhodes VERIFIED ✅\nORG:CASEYRHODES-TECH BOT;\nTEL;type=CELL;type=VOICE;waid=13135550002:+13135550002\nEND:VCARD`
               }
             }
@@ -641,52 +638,59 @@ ${menuResponse}
 > ✆︎Pσɯҽɾҽԃ Ⴆყ ᴄᴀsᴇʏʀʜᴏᴅᴇs ᴀɪ 🌟
 `;
 
-      // Create command selection buttons
-      const commandlistButton = categoryData.commands.map(cmdObj => ({
+      const commandButtons = categoryData.commands.map(cmdObj => ({
         title: cmdObj.command,
         description: cmdObj.desc,
-        rowId: `${prefix}${cmdObj.command}`,
+        id: `${prefix}${cmdObj.command}`,
       }));
 
       // Create back button with native flow
-    const listButton = {
-      buttonText: "Select an option",
-      sections: [
-        {
-          title: "Toxic-MD Menu",
-          rows: [
-            {
-              title: "ᴀᴄᴋ ᴛᴏ ᴍᴀɪɴ ᴍᴇɴᴜ",
-              rowId:  `${prefix}menu`,
-              description: "ʀᴇᴛᴜʀɴ ᴛᴏ ᴍᴀɪɴ ᴍᴇɴᴜ",
+      const backButton = {
+        buttons: [
+          {
+            buttonId: "menu-navigation",
+            buttonText: { displayText: "📂 ᴍᴇɴᴜ ɴᴀᴠɪɢᴀᴛɪᴏɴ" },
+            type: 4,
+            nativeFlowInfo: {
+              name: "single_select",
+              paramsJson: JSON.stringify({
+                title: "ɴᴀᴠɪɢᴀᴛɪᴏɴ",
+                sections: [
+                  {
+                    title: "ᴄᴏᴍᴍᴀɴᴅs",
+                    highlight_label: "sᴇʟᴇᴄᴛ ᴀ ᴄᴏᴍᴍᴀɴᴅ",
+                    rows: [
+                      ...commandButtons,
+                      {
+                        title: "ʙᴀᴄᴋ ᴛᴏ ᴍᴀɪɴ ᴍᴇɴᴜ",
+                        description: "ʀᴇᴛᴜʀɴ ᴛᴏ ᴍᴀɪɴ ᴍᴇɴᴜ",
+                        id: `${prefix}menu`,
+                      }
+                    ],
+                  },
+                ],
+              }),
             },
-          ],
+          }
+        ],
+        contextInfo: {
+          isForwarded: true,
+          forwardedNewsletterMessageInfo: {
+            serverMessageId: 143,          
+          },
         },
-      ],
-    };
+      };
 
-    await Matrix.sendMessage(
-      m.from,
-      {
-        text: fullResponse,
-        buttonText: listButton.buttonText,
-        sections: listButton.sections,
-        listType: 1,
-      },
-      { quoted: m }
-    );
-        
+      // Send sub-menu with imag
+        await Matrix.sendMessage(m.from, { 
+          text: fullResponse,
+          ...backButton
+        }, { quoted: m });
       } else {
-         await Matrix.sendMessage(
-      m.from,
-      {
-        text: fullResponse,
-        buttonText: listButton.buttonText,
-        sections: listButton.sections,
-        listType: 1,
-      },
-      { quoted: m }
-    );   
+        await Matrix.sendMessage(m.from, {
+          text: fullResponse,
+          ...backButton
+        }, { quoted: m });
       }
     }
   } catch (error) {
