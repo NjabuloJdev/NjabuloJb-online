@@ -429,7 +429,7 @@ const menu = async (m, Matrix) => {
                     {
                       title: "👥 ɢʀᴏᴜᴘ",
                       description: "ɢʀᴏᴜᴘ ᴍᴀɴᴀɢᴇᴍᴇɴᴛ",
-                      id: `${prefix}group-menu`,
+                      id: `.ping`,
                     },
                     {
                       title: "🎉 ғᴜɴ",
