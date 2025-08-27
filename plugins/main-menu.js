@@ -124,10 +124,10 @@ const menu = async (m, Matrix) => {
         menuImage = Buffer.from(response.data, "binary");
       } catch (error) {
         console.error("Error fetching menu image:", error.message);
-        menuImage = fs.readFileSync("./media/toxic.jpg");
+        menuImage = fs.readFileSync("./media/fana.jpg");
       }
     } else {
-      menuImage = fs.readFileSync("./media/toxic.jpg");
+      menuImage = fs.readFileSync("./media/fana.jpg");
     }
 
     const listButton = {
