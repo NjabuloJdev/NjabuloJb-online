@@ -37,34 +37,20 @@ const ping = async (m, Matrix) => {
 *┗═•⊷*
     `;
 
-    const button = [
-      {
-        "buttonId": ".alive",
-        "buttonText": {
-          "displayText": "Bot Status"
-        },
-        "type": 1
-      },
-      {
-        "buttonId": ".help",
-        "buttonText": {
-          "displayText": "Help"
-        },
-        "type": 1
-      },
-      {
-        "buttonId": ".channel",
-        "buttonText": {
-          "displayText": "Follow/Join Channel"
-        },
-        "type": 1
-      }
-    ];
+    const buttons = [
+    {
+      name: "cta_url",
+      buttonParamsJson: JSON.stringify({
+        display_text: "Follow our Channel",
+        url: `https://whatsapp.com/channel/0029VagJlnG6xCSU2tS1Vz19`
+      })
+    }
+  ];
 
     await Matrix.sendMessage(m.from, {
       image: fs.readFileSync('./media/fana.jpg'),
       caption: text,
-      buttons: button,
+      buttons: buttons,
       contextInfo: {
         mentionedJid: [m.sender],
         forwardingScore: 999,
