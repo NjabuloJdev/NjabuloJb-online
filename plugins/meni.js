@@ -682,8 +682,10 @@ ${menuResponse}
       };
 
       // Send sub-menu with imag
+      if (menuImage) {
         await Matrix.sendMessage(m.from, { 
-          text: fullResponse,
+          image: menuImage,
+          caption: fullResponse,
           ...backButton
         }, { quoted: m });
       } else {
