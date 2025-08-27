@@ -37,15 +37,30 @@ const ping = async (m, Matrix) => {
 *┗═•⊷*
     `;
 
-    const buttons = [
-    {
-      name: "cta_url",
-      buttonParamsJson: JSON.stringify({
-        display_text: "Follow our Channel",
-        url: `https://whatsapp.com/channel/0029VagJlnG6xCSU2tS1Vz19`
-      })
-    }
-  ];
+  let buttons = [
+          {
+            name: "cta_copy",
+            buttonParamsJson: JSON.stringify({
+              display_text: "📋 ᴄᴏᴘʏ ʟʏʀɪᴄs",
+              id: "copy_code",
+              copy_code: lyrics
+            })
+          },
+          {
+            name: "cta_url",
+            buttonParamsJson: JSON.stringify({
+              display_text: "Follow our Channel",
+              url: `https://whatsapp.com/channel/0029VagJlnG6xCSU2tS1Vz19`
+            })
+          },
+          {
+            name: "quick_reply",
+            buttonParamsJson: JSON.stringify({
+              display_text: "ᴍᴀɪɴ ᴍᴇɴᴜ",
+              id: ".menu"
+            })
+          }
+        ];
 
     await Matrix.sendMessage(m.from, {
       image: fs.readFileSync('./media/fana.jpg'),
