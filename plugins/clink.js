@@ -12,28 +12,25 @@ const alive = async (m, Matrix) => {
   const prefix = config.PREFIX;
   const cmd = m.body.startsWith(prefix) ? m.body.slice(prefix.length).split(' ')[0].toLowerCase() : '';
 
-  if (!['al', 'upme', 'ruime'].includes(cmd)) return;
-  
+  if (!['ave', 'ume', 'rume'].includes(cmd)) return;
+
   const str = `*🤖 Bot Status: Online*\n*⏳ Uptime: ${timeString}*`;
 
   const buttons = [
     {
-      buttonId: `tel:${config.OWNER_NUMBER}`,
-      buttonText: { displayText: 'Call Owner' },
-      type: 1
-    },
-    {
-      buttonId: config.GITHUB_URL,
-      buttonText: { displayText: 'GitHub' },
-      type: 1
+      name: "cta_url",
+      buttonParamsJson: JSON.stringify({
+        display_text: "Follow our Channel",
+        url: `https://whatsapp.com/channel/0029VagJlnG6xCSU2tS1Vz19`
+      })
     }
   ];
 
   const buttonMessage = {
     image: fs.readFileSync('./media/fana.jpg'),
     caption: str,
-    footer: 'Select an option',
-    buttons: buttons,
+    footer: "Select an option",
+    templateButtons: buttons,
     headerType: 4,
     contextInfo: {
       mentionedJid: [m.sender],
