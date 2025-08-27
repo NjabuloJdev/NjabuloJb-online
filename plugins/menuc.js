@@ -174,7 +174,7 @@ ${pushwish} @*${m.pushName}*! Tap a button to select a menu category:
           ],
         },
       ],
-    };
+    }
       
       // Send menu with or without image
       if (menuImage) {
