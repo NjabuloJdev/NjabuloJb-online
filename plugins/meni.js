@@ -510,6 +510,44 @@ const menu = async (m, Matrix) => {
         await Matrix.sendMessage(m.from, { text: mainMenu, ...messageOptions }, { quoted: m });
       }
 
+      const listButton = {
+      buttonText: "Select an option",
+      sections: [
+        {
+          title: "Toxic-MD Menu",
+          rows: [
+            {
+              title: "Ping",
+              rowId: "ping",
+              description: "Check bot's ping",
+            },
+            {
+              title: "Alive",
+              rowId: "alive",
+              description: "Check bot's uptime",
+            },
+            {
+              title: "Help",
+              rowId: "help",
+              description: "Get help with bot commands",
+            },
+          ],
+        },
+      ],
+    };
+
+    await Matrix.sendMessage(
+      m.from,
+      {
+        text: "Select an option",
+        buttonText: listButton.buttonText,
+        sections: listButton.sections,
+        listType: 1,
+      },
+      { quoted: m }
+    );
+              
+
       // Send audio as a voice note
       try {
         await Matrix.sendMessage(m.from, { 
