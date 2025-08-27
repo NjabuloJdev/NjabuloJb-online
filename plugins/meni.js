@@ -685,10 +685,19 @@ ${menuResponse}
             },
           }
         ],
-        contextInfo: {
-          isForwarded: true,
-          forwardedNewsletterMessageInfo: {
-            serverMessageId: 143,          
+     const messageOptionss = {
+        viewOnce: true,
+        buttons: backButton,
+          contextInfo: {
+          mentionedJid: [m.sender],
+          externalAdReply: {
+            showAdAttribution: true, // Marks as an ad
+            title: `${toFancyFont("world minibot")} Menu`,
+            body: `${pushwish} Explore minibot's features!`,
+            sourceUrl: "https://files.catbox.moe/rixvc7.jpg",
+            mediaType: 1,
+            renderLargerThumbnail: true,
+            mediaUrl: "https://files.catbox.moe/zaqn1j.jpg",
           },
         },
       };
@@ -698,38 +707,14 @@ ${menuResponse}
         await Matrix.sendMessage(m.from, { 
           image: menuImage,
           caption: fullResponse,
-          ...backButton,
-           contextInfo: {
-              mentionedJid: [m.sender],
-              externalAdReply: {
-                showAdAttribution: true, // Marks as an ad
-                title: `${toFancyFont("minibot")} ${toFancyFont(menuTitle)}`,
-                body: `Explore minibot world's ${menuTitle.toLowerCase()} commands!`,
-                sourceUrl: "https://github.com/xhclintohn/Toxic-MD",
-                mediaType: 1,
-                renderLargerThumbnail: true,
-                mediaUrl: "https://files.catbox.moe/zaqn1j.jpg",
-              },
-            },
+          ...messageOptionss
           },
           { quoted: m }
         );
       } else {
         await Matrix.sendMessage(m.from, {
           text: fullResponse,
-          ...backButton,
-        contextInfo: {
-              mentionedJid: [m.sender],
-              externalAdReply: {
-                showAdAttribution: true, // Marks as an ad
-                title: `${toFancyFont("minibot cmd worl")} ${toFancyFont(menuTitle)}`,
-                body: `Explore Minibot's ${menuTitle.toLowerCase()} commands!`,
-                sourceUrl: "https://github.com/xhclintohn/Toxic-MD",
-                mediaType: 1,
-                renderLargerThumbnail: true,
-                mediaUrl: "https://files.catbox.moe/zaqn1j.jpg",
-              },
-            },
+          ...messageOptionss
           },
           { quoted: m }
         );
