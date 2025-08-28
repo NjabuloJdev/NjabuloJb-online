@@ -78,7 +78,7 @@ const test = async (m, Matrix) => {
 
 let mode = ethix.public ? 'public' : 'private';
 
-        const validCommands = ['list', 'help', 'menu'];
+        const validCommands = ['listm', 'help', 'menum'];
 
   if (validCommands.includes(cmd)) {
     let msg = generateWAMessageFromContent(m.from, {
