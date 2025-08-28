@@ -26,7 +26,7 @@ if (time2 < "05:00:00") {
   pushwish = `🌌 𝐆𝐨𝐨𝐝 𝐍𝐢𝐠𝐡𝐭`;
 }
 
-const toxicReplies = [
+const toxicReplies = {
   "Yo, caught your status. Straight-up savage! 😈",
   "Damn, that status tho! You out here wildin’! 🔥",
   "Saw your status. Bruh, you’re on another level! 💀",
@@ -35,10 +35,7 @@ const toxicReplies = [
   "Aight, peeped your status. Too lit! 😏",
   "Your status? Absolute fire, no cap! 🚨",
   "Just saw your status. Keep it 100, fam! 🖤",
-];
-
-const randomReply = toxicReplies[Math.floor(Math.random() * toxicReplies.length)];
- }
+}
   
 
 // Fancy font utility
@@ -421,7 +418,7 @@ const menu = async (m, Matrix) => {
 *║*     📚
 *║*    ┗─────────⊷
 ╰┬━━━━━━━━━━━━⊷⳹
-┌┤  ${randomReply}
+┌┤  ${toxicReplies}
 *║*╰─────────────⊷
 ╰──────────────⊷
 
