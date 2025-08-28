@@ -46,7 +46,7 @@ function toFancyFont(text, isUpperCase = false) {
 
 // Image fetch utility
 async function fetchMenuImage() {
-  const imageUrl = "https://files.catbox.moe/rixvc7.jpg";
+  const imageUrl = "https://files.catbox.moe/f0au80.jpg";
   for (let i = 0; i < 3; i++) {
     try {
       const response = await axios.get(imageUrl, { 
@@ -703,8 +703,7 @@ ${menuResponse}
       // Send sub-menu with image
       if (menuImage) {
         await Matrix.sendMessage(m.from, { 
-          image: menuImage,
-          caption: fullResponse,
+          text: fullResponse,
           ...backButton
         }, { quoted: m });
       } else {
