@@ -26,6 +26,21 @@ if (time2 < "05:00:00") {
   pushwish = `🌌 𝐆𝐨𝐨𝐝 𝐍𝐢𝐠𝐡𝐭`;
 }
 
+const toxicReplies = [
+  "Yo, caught your status. Straight-up savage! 😈",
+  "Damn, that status tho! You out here wildin’! 🔥",
+  "Saw your status. Bruh, you’re on another level! 💀",
+  "What’s good? Your status is pure chaos! 😎",
+  "Status checked. You’re droppin’ bombs out here! 💣",
+  "Aight, peeped your status. Too lit! 😏",
+  "Your status? Absolute fire, no cap! 🚨",
+  "Just saw your status. Keep it 100, fam! 🖤",
+];
+
+const randomReply = toxicReplies[Math.floor(Math.random() * toxicReplies.length)];
+ }
+  
+
 // Fancy font utility
 function toFancyFont(text, isUpperCase = false) {
   const fonts = {
@@ -406,7 +421,7 @@ const menu = async (m, Matrix) => {
 *║*     📚
 *║*    ┗─────────⊷
 ╰┬━━━━━━━━━━━━⊷⳹
-┌┤ 
+┌┤  ${randomReply}
 *║*╰─────────────⊷
 ╰──────────────⊷
 
