@@ -49,6 +49,7 @@ _______powered by silva tech____________
         },
         interactiveMessage: proto.Message.InteractiveMessage.create({
           body: proto.Message.InteractiveMessage.Body.create({
+           image: fs.readFileSync('./media/fana.jpg'),
             caption: uptimeMessage
           }),
           footer: proto.Message.InteractiveMessage.Footer.create({
@@ -63,7 +64,7 @@ _______powered by silva tech____________
           nativeFlowMessage: proto.Message.InteractiveMessage.NativeFlowMessage.create({
             buttons
           }),
-          image: fs.readFileSync('./media/fana.jpg'),
+          
           contextInfo: {
                   mentionedJid: [m.sender], 
                   forwardingScore: 999,
