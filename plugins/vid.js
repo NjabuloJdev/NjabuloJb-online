@@ -239,9 +239,8 @@ const video = async (message, client) => {
         
         await client.sendMessage(message.from, { 
           document: videoData, 
-          mimetype: 'video/avi',
+          mimetype: 'video/quicktime',
           caption: video.title,
-          fileName: fileName + ".mp4"
         }, { quoted: message });
         
         // Clean up temp file
