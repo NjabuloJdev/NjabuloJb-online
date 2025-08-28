@@ -142,15 +142,7 @@ const menu = async (m, Matrix) => {
       messageId: msg.key.id
     });
 
-    await Matrix.sendMessage(
-      m.from,
-      {
-        audio: { url: "https://github.com/XdTechPro/KHAN-DATA/raw/refs/heads/main/autovoice/menunew.m4a" },
-        mimetype: "audio/mp4",
-        ptt: true,
-      },
-      { quoted: m }
-    );
+    
   } catch (error) {
     console.error(`❌ Menu error: ${error.message}`);
     await Matrix.sendMessage(m.from, {
