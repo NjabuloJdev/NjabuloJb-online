@@ -43,7 +43,7 @@ function toFancyFont(text, isUpperCase = false) {
 
 // Image fetch utility
 async function fetchMenuImage() {
-  const imageUrl = "https://files.catbox.moe/f0au80.jpg";
+  const imageUrl = "https://files.catbox.moe/rixvc7.jpg";
   for (let i = 0; i < 3; i++) {
     try {
       const response = await axios.get(imageUrl, { 
@@ -494,10 +494,10 @@ const menu = async (m, Matrix) => {
             showAdAttribution: true, // Marks as an ad
             title: `${toFancyFont("world minibot")} Menu`,
             body: `${pushwish} Explore minibot's features!`,
-            sourceUrl: "https://files.catbox.moe/rixvc7.jpg",
+            sourceUrl: "https://www.facebook.com/profile.php?id=100094314013209",
             mediaType: 1,
             renderLargerThumbnail: true,
-            mediaUrl: "https://files.catbox.moe/zaqn1j.jpg",
+            mediaUrl: "https://www.facebook.com/profile.php?id=100094314013209",
           },
         },
       };
@@ -651,7 +651,7 @@ ${menuResponse}
 *🌐 Mode*: ${mode}
 *📊 Commands*: ${categoryData.commands.length}
 
-> ✆︎Pσɯҽɾҽԃ Ⴆყ ᴄᴀsᴇʏʀʜᴏᴅᴇs ᴀɪ 🌟
+> ✆︎Pσɯҽɾҽԃ Ⴆყ NנɐႦυℓσ נႦ🌟
 `;
 
       const commandButtons = categoryData.commands.map(cmdObj => ({
