@@ -41,8 +41,6 @@ const alive = async (m, Matrix) => {
         footer: proto.Message.InteractiveMessage.Footer.create({
           text: "© Powered By 🇸🇮🇱🇻🇦",
         }),
-        header: proto.Message.InteractiveMessage.Header.create({
-          ...(await prepareWAMessageMedia({ image: fs.readFileSync('./media/fana.jpg') }, { upload: Matrix.waUploadToServer })),
           title: ``,
           gifPlayback: true,
           subtitle: "",
