@@ -10,16 +10,16 @@ const alive = async (m, Matrix) => {
   
   const prefix = /^[\\/!#.]/gi.test(m.body) ? m.body.match(/^[\\/!#.]/gi)[0] : '/';
   const cmd = m.body.startsWith(prefix) ? m.body.slice(prefix.length).toLowerCase() : '';
-    if (['lo', 'uptilllme', 'runlllltime'].includes(cmd)) {
+    if (['alive', 'uptime'].includes(cmd)) {
 
-  const uptimeMessage = `*🤖 ETHIX-MD Status Overview*
+  const uptimeMessage = `*🤖 mini bot Status Overview*
 _______________________________________
 
 *📆 ${days} Day*
 *🕰️ ${hours} Hour*
 *⏳ ${minutes} Minute*
 *⏲️ ${seconds} Second*
-_______powered by silva tech____________
+_______________________________________
 `;
 
   const buttons = [
@@ -40,8 +40,8 @@ _______powered by silva tech____________
           {
             name: "cta_url",
             buttonParamsJson: JSON.stringify({
-              display_text: "Follow our Channel",
-              url: `https://whatsapp.com/channel/0029VagJlnG6xCSU2tS1Vz19`
+              display_text: "Follow Channel",
+              url: `https://whatsapp.com/channel/0029VbAckOZ7tkj92um4KN3u`
             })
         }
         ];
@@ -58,7 +58,7 @@ _______powered by silva tech____________
             text: uptimeMessage
           }),
           footer: proto.Message.InteractiveMessage.Footer.create({
-            text: "© Powered By 𝕊𝕀𝕃𝕍𝔸"
+            text: "✆︎Pσɯҽɾҽԃ Ⴆყ NנɐႦυℓσ נႦ"
           }),
           header: proto.Message.InteractiveMessage.Header.create({
             title: "",
@@ -74,8 +74,8 @@ _______powered by silva tech____________
                   forwardingScore: 999,
                   isForwarded: true,
                 forwardedNewsletterMessageInfo: {
-                  newsletterJid: '120363249960769123@newsletter',
-                  newsletterName: "Ethix-MD",
+                  newsletterJid: '120363399999197102@newsletter',
+                  newsletterName: "╭••➤®Njabulo Jb",
                   serverMessageId: 143
                 }
               }
