@@ -24,11 +24,10 @@ _______powered by silva tech____________
 
   const buttons = [
         {
-          name: "cta_message",
+          name: "cta_call",
             buttonParamsJson: JSON.stringify({
-              display_text: "📋 ᴄᴏᴘʏ ʟʏʀɪᴄs",
-              id: "copy_code",
-              copy_code: +26777821911
+              display_text: "call owner",
+              id: "+26777821911",
             })
           },
           {
