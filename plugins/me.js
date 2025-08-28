@@ -36,11 +36,13 @@ const alive = async (m, Matrix) => {
     const msg = await Matrix.sendMessage(m.from, {
       interactiveMessage: proto.Message.InteractiveMessage.create({
         body: proto.Message.InteractiveMessage.Body.create({
-          text: message,
+          caption: message,
         }),
         footer: proto.Message.InteractiveMessage.Footer.create({
           text: "© Powered By 🇸🇮🇱🇻🇦",
         }),
+        header: proto.Message.InteractiveMessage.Header.create({
+          ...(await prepareWAMessageMedia({ image: fs.readFileSync('./media/fana.jpg') }, { upload: Matrix.waUploadToServer })),
           title: ``,
           gifPlayback: true,
           subtitle: "",
