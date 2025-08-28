@@ -62,6 +62,7 @@ _______________________________________
           }),
           header: proto.Message.InteractiveMessage.Header.create({
             title: "",
+            viewOnce: true,
             gifPlayback: true,
             subtitle: "",
             hasMediaAttachment: false 
