@@ -13,17 +13,17 @@ const time2 = moment().tz("Africa/Nairobi").format("HH:mm:ss");
 let pushwish = "";
 
 if (time2 < "05:00:00") {
-  pushwish = `Good Morning 🌄`;
+  pushwish = `🌄 𝐆𝐨𝐨𝐝 𝐌𝐨𝐫𝐧𝐢𝐧𝐠`;
 } else if (time2 < "11:00:00") {
-  pushwish = `Good Morning 🌄`;
+  pushwish = `🌄 𝐆𝐨𝐨𝐝 𝐌𝐨𝐫𝐧𝐢𝐧𝐠`;
 } else if (time2 < "15:00:00") {
-  pushwish = `Good Afternoon 🌅`;
+  pushwish = `🌅𝐆𝐨𝐨𝐝 𝐀𝐟𝐭𝐞𝐫𝐧𝐨𝐨𝐧`;
 } else if (time2 < "18:00:00") {
-  pushwish = `Good Evening 🌃`;
+  pushwish = `🌃 𝐆𝐨𝐨𝐝 𝐄𝐯𝐞𝐧𝐢𝐧𝐠`;
 } else if (time2 < "19:00:00") {
-  pushwish = `Good Evening 🌃`;
+  pushwish = `🌃𝐆𝐨𝐨𝐝 𝐄𝐯𝐞𝐧𝐢𝐧𝐠`;
 } else {
-  pushwish = `Good Night 🌌`;
+  pushwish = `🌌 𝐆𝐨𝐨𝐝 𝐍𝐢𝐠𝐡𝐭`;
 }
 
 // Fancy font utility
@@ -380,7 +380,7 @@ const menu = async (m, Matrix) => {
 
     // Handle main menu
     if (validCommands.includes(cmd) || cmd === "") {
-      const mainMenu = `*╰► ☀️ 𝐆ood 𝐀fternoon!* ${pushwish}
+      const mainMenu = `*╰► ${pushwish}*
 
 ╭───•••〔  *𝐌𝐈𝐍𝐈-𝐁𝐎𝐓* 〕•••──┈⊷𑲭𑲭𑲭𑲭𑲭𑲭𑲭𑲭𑲭𑲭𑲭𑲭𑲭𑲭𑲭𑲭𑲭𑲭𑲭𑲭𑲭𑲭𑲭𑲭𑲭𑲭𑲭𑲭𑲭𑲭𑲭𑲭𑲭𑲭𑲭𑲭𑲭𑲭𑲭𑲭𑲭𑲭𑲭
 *║* ┏────────────⊷
