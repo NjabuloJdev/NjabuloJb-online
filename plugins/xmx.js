@@ -77,21 +77,21 @@ const menu = async (m, Matrix) => {
       {
         name: "quick_reply",
        buttonParamsJson: JSON.stringify({
-       display_text: "Menu cmd",
-        id: ".menu"
+       display_text: "💬message",
+        id: "message"
         })
       },
       {
         name: "cta_call",
         buttonParamsJson: JSON.stringify({
-          display_text: "call owner",
+          display_text: "📞call owner",
           id: "+26777821911",
             })
           },
       {
       name: "cta_copy",
        buttonParamsJson: JSON.stringify({
-      display_text: "Copy message",
+      display_text: "📋Copy message",
         id: "copy_code",
         copy_code: +26777821911  
         })
@@ -99,7 +99,7 @@ const menu = async (m, Matrix) => {
       {
         name: "cta_url",
         buttonParamsJson: JSON.stringify({
-          display_text: "Follow Channel",
+          display_text: "📚Follow Channel",
           url: `https://whatsapp.com/channel/0029VbAckOZ7tkj92um4KN3u`
         }),
       },
@@ -141,21 +141,11 @@ const menu = async (m, Matrix) => {
       messageId: msg.key.id,
     });
 
-    await Matrix.sendMessage(
-      m.from,
-      {
-        audio: { url: "https://github.com/XdTechPro/KHAN-DATA/raw/refs/heads/main/autovoice/menunew.m4a" },
-        mimetype: "audio/mp4",
-        ptt: true,
-      },
-      { quoted: m }
-    );
+    
   } catch (error) {
     console.error(`❌ Menu error: ${error.message}`);
     await Matrix.sendMessage(m.from, {
-      text: `◈━━━━━━━━━━━━━━━━◈
-│❒ *Toxic-MD* hit a snag, fam! Try again! 😈
-◈━━━━━━━━━━━━━━━━◈`,
+      text: `*Njabulo Jb* hit a snag, fam! Try again! 😈`,
     }, { quoted: m });
   }
 };
