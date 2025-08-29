@@ -140,6 +140,8 @@ const menu = async (m, Matrix) => {
            },
          },
         }),
+        },            
+      },
   }, {});
 
     await Matrix.relayMessage(msg.key.remoteJid, msg.message, {
