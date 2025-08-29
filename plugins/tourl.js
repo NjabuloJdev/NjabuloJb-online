@@ -1,8 +1,6 @@
 import fetch from 'node-fetch';
 import FormData from 'form-data';
 import { fileTypeFromBuffer } from 'file-type';
-import pkg from "@whiskeysockets/baileys";
-const { generateWAMessageFromContent, proto } = pkg;
 
 const MAX_FILE_SIZE_MB = 200;
 
@@ -30,7 +28,7 @@ async function uploadMedia(buffer) {
   }
 }
 
-const tourl = async (m, Matrix) => {
+const tourl = async (m, bot) => {
   const prefixMatch = m.body.match(/^[\\/!#.]/);
   const prefix = prefixMatch ? prefixMatch[0] : '/';
   const cmd = m.body.startsWith(prefix) ? m.body.slice(prefix.length).split(' ')[0].toLowerCase() : '';
@@ -53,67 +51,80 @@ const tourl = async (m, Matrix) => {
       const mediaUrl = await uploadMedia(media);
 
       const mediaType = getMediaType(m.quoted.mtype);
+      const contextInfo = {
+        mentionedJid: [m.sender],
+        forwardingScore: 999,
+        isForwarded: true,
+        forwardedNewsletterMessageInfo: {
+          newsletterJid: '120363302677217436@newsletter',
+          newsletterName: 'CASEYRHODES-XMD',
+          serverMessageId: 143
+        }
+      };
 
+      // Create buttons with copy functionality
       const buttons = [
         {
-          name: "cta_url",
-          buttonParamsJson: JSON.stringify({
-            display_text: "Open URL",
-            url: mediaUrl
-          })
+          buttonId: `id-copy-${Date.now()}`,
+          buttonText: { displayText: '📋 Copy URL' },
+          type: 2  // Type 2 is for URL buttons which can copy to clipboard
         },
         {
-          name: "cta_copy",
-          buttonParamsJson: JSON.stringify({
-            display_text: "Copy URL",
-            id: "copy_url",
-            copy_code: mediaUrl
-          })
+          buttonId: `${prefix}download`,
+          buttonText: { displayText: '⬇️ Download' },
+          type: 1
         }
       ];
 
-      const msg = generateWAMessageFromContent(m.from, {
-        viewOnceMessage: {
-          message: {
-            interactiveMessage: proto.Message.InteractiveMessage.create({
-              body: proto.Message.InteractiveMessage.Body.create({
-                text: `*Hey ${m.pushName} Here Is Your Media URL*\n\n*URL:* ${mediaUrl}`,
-              }),
-              footer: proto.Message.InteractiveMessage.Footer.create({
-                text: "Click the buttons below to interact",
-              }),
-              header: proto.Message.InteractiveMessage.Header.create({
-                ...(mediaType !== 'audio' ? {
-                  [mediaType + 'Message']: {
-                    url: mediaUrl
-                  }
-                } : {}),
-                hasMediaAttachment: mediaType !== 'audio',
-              }),
-              nativeFlowMessage: proto.Message.InteractiveMessage.NativeFlowMessage.create({
-                buttons
-              }),
-              contextInfo: {
-                mentionedJid: [m.sender],
-                forwardingScore: 999,
-                isForwarded: true,
-                forwardedNewsletterMessageInfo: {
-                  newsletterJid: "120363399999197102@newsletter",
-                  newsletterName: "╭••➤®Njabulo Jb",
-                  serverMessageId: 143,
-                },
-              },
-            }),
-          },
-        },
-      }, {});
+      // For the copy button, we need to use a URL button with the copy action
+      const buttonMessage = {
+        text: `*Hey ${m.pushName} Here Is Your Media URL*\n\n*URL:* ${mediaUrl}`,
+        footer: 'Click the buttons below to interact',
+        buttons: buttons,
+        headerType: 1,
+        contextInfo: contextInfo
+      };
 
-      await Matrix.relayMessage(msg.key.remoteJid, msg.message, {
-        messageId: msg.key.id
-      });
+      if (mediaType === 'audio') {
+        await bot.sendMessage(m.from, buttonMessage, { quoted: m });
+      } else {
+        const message = {
+          [mediaType]: { url: mediaUrl },
+          caption: `*Hey ${m.pushName} Here Is Your Media*\n*URL:* ${mediaUrl}`,
+          footer: 'Click the buttons below to interact',
+          buttons: buttons,
+          headerType: 4,
+          contextInfo: contextInfo
+        };
+        await bot.sendMessage(m.from, message, { quoted: m });
+      }
+
     } catch (error) {
       console.error('Error processing media:', error);
       m.reply('Error processing media.');
+    }
+  }
+};
+
+// Handle the copy button callback
+export const handleCopyButton = async (m, bot) => {
+  if (m.type === 'buttonsResponseMessage' && m.body.startsWith('id-copy-')) {
+    try {
+      // Extract the URL from the message text
+      const urlMatch = m.message.conversation.match(/\*URL:\* (\S+)/) || 
+                       m.message.extendedTextMessage?.text.match(/\*URL:\* (\S+)/);
+      
+      if (urlMatch && urlMatch[1]) {
+        const mediaUrl = urlMatch[1];
+        
+        // Create a message with the URL that can be easily copied
+        await bot.sendMessage(m.from, {
+          text: `Here's your URL to copy:\n${mediaUrl}\n\nLong press to copy the text.`,
+          mentions: [m.sender]
+        }, { quoted: m });
+      }
+    } catch (error) {
+      console.error('Error handling copy button:', error);
     }
   }
 };
