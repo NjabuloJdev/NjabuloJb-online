@@ -132,7 +132,8 @@ const play = async (m, Matrix) => {
 *║Uploaded*: ${song.ago}
 *┗═•⊷*
 `;
-        const buttons = [
+       const messageOptions = {
+        buttons = [
           {
             buttonId: `play_audio_${safeTitle}`,
             buttonText: { displayText: "🎧Audio" },
@@ -143,7 +144,20 @@ const play = async (m, Matrix) => {
             buttonText: { displayText: "🗂️Document" },
             type: 1,
           },
-        ];
+        ],  
+           contextInfo: {
+          mentionedJid: [m.sender],
+          externalAdReply: {
+          title: "Ⴆყ NנɐႦυℓσ נႦ",
+          body: `${pushwish}`,
+          thumbnailUrl: "https://whatsapp.com/channel/0029VbAckOZ7tkj92um4KN3u",
+           sourceUrl: "https://whatsapp.com/channel/0029VbAckOZ7tkj92um4KN3u",
+           mediaType: 1,
+           showAdAttribution: true
+        },
+      },
+    };
+        
 
         // Fetch the song's thumbnail image
         const imageResponse = await fetch(song.thumbnail);
@@ -153,19 +167,8 @@ const play = async (m, Matrix) => {
         await Matrix.sendMessage(m.from, {
           image: image,
           caption: songInfo,
-          buttons,
+           ...messageOptions,
           contextInfo: {
-          mentionedJid: [m.sender],
-          externalAdReply: {
-            showAdAttribution: false, // Marks as an ad
-            title: `${data.result.title || song.title}`,
-            body: ` ${song.author.name}`,
-            sourceUrl: "https://www.facebook.com/profile.php?id=100094314013209",
-            mediaType: 1,
-            renderLargerThumbnail: true,
-            mediaUrl: "https://www.facebook.com/profile.php?id=100094314013209",
-          },
-      };
      }, { quoted: m });
 
         const downloadResponse = await fetch(data.result.download_url);
