@@ -154,6 +154,19 @@ const play = async (m, Matrix) => {
           image: image,
           caption: songInfo,
           buttons,
+          contextInfo: {
+          mentionedJid: [m.sender],
+          externalAdReply: {
+            showAdAttribution: false, // Marks as an ad
+            title: `${data.result.title || song.title}`,
+            body: ` ${song.author.name}`,
+            sourceUrl: "https://www.facebook.com/profile.php?id=100094314013209",
+            mediaType: 1,
+            renderLargerThumbnail: true,
+            mediaUrl: "https://www.facebook.com/profile.php?id=100094314013209",
+          },
+        },
+      };
         }, { quoted: m });
 
         const downloadResponse = await fetch(data.result.download_url);
