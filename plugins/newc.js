@@ -124,27 +124,25 @@ const menu = async (m, Matrix) => {
           interactiveMessage: proto.Message.InteractiveMessage.create({
             body: proto.Message.InteractiveMessage.Body.create({
               text: str,
+              contextInfo: {
+          mentionedJid: [m.sender],
+          externalAdReply: {
+            showAdAttribution: true, // Marks as an ad
+            title: `${toFancyFont("Toxic-MD")} Menu`,
+            body: `${pushwish} Explore Toxic-MD's features!`,
+            sourceUrl: "https://github.com/xhclintohn/Toxic-MD",
+            mediaType: 1,
+            renderLargerThumbnail: true,
+            mediaUrl: "https://files.catbox.moe/zaqn1j.jpg",
+             },
+             },
+             },
             }),
             footer: proto.Message.InteractiveMessage.Footer.create({
               text: "✆︎Pσɯҽɾҽԃ Ⴆყ NנɐႦυℓσ נႦ"
             }),
             header: proto.Message.InteractiveMessage.Header.create({
-              ...(await prepareWAMessageMedia({ 
-                image: menuImage,
-             contextInfo: {
-              mentionedJid: [m.sender],
-              externalAdReply: {
-              showAdAttribution: true, // Marks as an ad
-              title: `${toFancyFont("Toxic-MD")} Menu`,
-               body: `${pushwish} Explore Toxic-MD's features!`,
-               sourceUrl: "https://github.com/xhclintohn/Toxic-MD",
-               mediaType: 1,
-               renderLargerThumbnail: true,
-               mediaUrl: "https://files.catbox.moe/zaqn1j.jpg",
-              }
-              }
-             }
-            }, { upload: Matrix.waUploadToServer })),
+              ...(await prepareWAMessageMedia({image: menuImage }, { upload: Matrix.waUploadToServer })),
               title: "",
               gifPlayback: true,
               subtitle: "",
