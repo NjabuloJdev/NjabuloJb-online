@@ -62,13 +62,7 @@ const menu = async (m, Matrix) => {
     if (!validCommands.includes(cmd)) return;
 
     const mode = config.MODE === "public" && config.MODE !== "public" ? "private" : "public";
-    const str = `
-┏─••〔  *𝐎𝐧𝐥𝐢𝐧𝐞*  〕••┈⊷𑲭𑲭𑲭𑲭𑲭𑲭𑲭𑲭𑲭𑲭𑲭𑲭𑲭𑲭𑲭𑲭𑲭𑲭𑲭𑲭𑲭𑲭𑲭𑲭𑲭𑲭𑲭𑲭𑲭𑲭𑲭𑲭𑲭𑲭𑲭𑲭𑲭𑲭𑲭𑲭𑲭𑲭
-│ *Owner*: ${config.OWNER_NAME}
-│ *Bot*: ${config.BOT_NAME}
-│ *Mode*: ${mode}
-│ *Prefix*: [${prefix}]
-┗─────────⊷
+    const str = `*𝐎𝐧𝐥𝐢𝐧𝐞*
 `;
 
     let menuImage;
