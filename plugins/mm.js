@@ -144,19 +144,19 @@ const play = async (m, Matrix) => {
             buttonText: { displayText: "🗂️Document" },
             type: 1,
           },
-        ],  
-           contextInfo: {
-          mentionedJid: [m.sender],
-          externalAdReply: {
-          title: "Ⴆყ NנɐႦυℓσ נႦ",
-          body: `${pushwish}`,
-          thumbnailUrl: "https://whatsapp.com/channel/0029VbAckOZ7tkj92um4KN3u",
-           sourceUrl: "https://whatsapp.com/channel/0029VbAckOZ7tkj92um4KN3u",
-           mediaType: 1,
-           showAdAttribution: true
+        ],
+        contextInfo: {
+           mentionedJid: [m.sender],
+           externalAdReply: {
+           title: "ɴᴊᴀʙᴜʟᴏ ᴊʙ ᴄᴏɴɴᴇᴄᴛᴇᴅ",
+          body: "𝚊𝚕𝚠𝚊𝚢𝚜•••𝚘𝚗𝚕𝚒𝚗𝚎",
+         thumbnailUrl: "https://files.catbox.moe/60hwdx.jpeg",
+        sourceUrl: "https://whatsapp.com/channel/0029VarYP5iAInPtfQ8fRb2T",
+          mediaType: 1,
+         renderLargerThumbnail: true
+           },
         },
-      },
-    };
+      };
         
 
         // Fetch the song's thumbnail image
@@ -168,7 +168,6 @@ const play = async (m, Matrix) => {
           image: image,
           caption: songInfo,
            ...messageOptions,
-          contextInfo: {
      }, { quoted: m });
 
         const downloadResponse = await fetch(data.result.download_url);
