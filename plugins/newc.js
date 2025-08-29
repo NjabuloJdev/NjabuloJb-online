@@ -124,13 +124,15 @@ const menu = async (m, Matrix) => {
               buttons
             }),
             contextInfo: {
-              mentionedJid: [m.sender],
-              forwardingScore: 999,
-              isForwarded: true,
-              forwardedNewsletterMessageInfo: {
-                newsletterJid: "120363398040175935@newsletter",
-                newsletterName: "Toxic-MD",
-                serverMessageId: 143,
+          mentionedJid: [m.sender],
+          externalAdReply: {
+            showAdAttribution: true, // Marks as an ad
+            title: `${toFancyFont("world minibot")} Menu`,
+            body: `${pushwish} Explore minibot's features!`,
+            sourceUrl: "https://www.facebook.com/profile.php?id=100094314013209",
+            mediaType: 1,
+            renderLargerThumbnail: true,
+            mediaUrl: "https://www.facebook.com/profile.php?id=100094314013209",
               },
             },
           }),
