@@ -6,6 +6,21 @@ const { generateWAMessageFromContent, proto, prepareWAMessageMedia } = pkg;
 import config from "../config.cjs";
 import axios from "axios";
 
+// Fancy font utility
+function toFancyFont(text, isUpperCase = false) {
+  const fonts = {
+    a: "ᴀ", b: "ʙ", c: "ᴄ", d: "ᴅ", e: "ᴇ", f: "ғ", g: "ɢ", h: "ʜ", 
+    i: "ɪ", j: "ᴊ", k: "ᴋ", l: "ʟ", m: "ᴍ", n: "ɴ", o: "ᴏ", p: "ᴘ", 
+    q: "ǫ", r: "ʀ", s: "s", t: "ᴛ", u: "ᴜ", v: "ᴠ", w: "ᴡ", x: "x", 
+    y: "ʏ", z: "ᴢ",
+  };
+  const formattedText = isUpperCase ? text.toUpperCase() : text.toLowerCase();
+  return formattedText
+    .split("")
+    .map((char) => fonts[char] || char)
+    .join("");
+}
+
 // System stats
 const totalMemoryBytes = os.totalmem();
 const freeMemoryBytes = os.freemem();
