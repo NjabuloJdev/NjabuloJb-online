@@ -138,16 +138,21 @@ const menu = async (m, Matrix) => {
             nativeFlowMessage: proto.Message.InteractiveMessage.NativeFlowMessage.create({
               buttons
             }),
-            contextInfo: {
-          mentionedJid: [m.sender],
-          externalAdReply: {
-            showAdAttribution: true, // Marks as an ad
-            title: `${toFancyFont("world minibot")} Menu`,
-            body: `${pushwish} Explore minibot's features!`,
-            sourceUrl: "https://www.facebook.com/profile.php?id=100094314013209",
-            mediaType: 1,
-            renderLargerThumbnail: true,
-            mediaUrl: "https://www.facebook.com/profile.php?id=100094314013209",
+             contextInfo: {
+                isForwarded: true,
+                forwardedNewsletterMessageInfo: {
+                    newsletterJid: "120363288304618280@newsletter",
+                    newsletterName: "NJABULO JB",
+                    serverMessageId: -1,
+                },
+                forwardingScore: 999,
+                externalAdReply: {
+                    title: "Njabulo Jb GitHub",
+                    body: "Official Repository",
+                    thumbnailUrl: menuImage,
+                    sourceUrl: "https://whatsapp.com/channel/0029VbAckOZ7tkj92um4KN3u",
+                    mediaType: 1,
+                    renderLargerThumbnail: true
               },
             },
           }),
