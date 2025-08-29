@@ -84,10 +84,10 @@ const menu = async (m, Matrix) => {
         menuImage = Buffer.from(response.data, "binary");
       } catch (error) {
         console.error("Error fetching menu image:", error.message);
-        menuImage = fs.readFileSync("./media/toxic.jpg");
+        menuImage = fs.readFileSync("./media/fana.jpg");
       }
     } else {
-      menuImage = fs.readFileSync("./media/toxic.jpg");
+      menuImage = fs.readFileSync("./media/fana.jpg");
     }
 
     const buttons = [
@@ -138,21 +138,14 @@ const menu = async (m, Matrix) => {
             nativeFlowMessage: proto.Message.InteractiveMessage.NativeFlowMessage.create({
               buttons
             }),
-             contextInfo: {
-                isForwarded: true,
-                forwardedNewsletterMessageInfo: {
-                    newsletterJid: "120363288304618280@newsletter",
-                    newsletterName: "NJABULO JB",
-                    serverMessageId: -1,
-                },
-                forwardingScore: 999,
-                externalAdReply: {
-                    title: "Njabulo Jb GitHub",
-                    body: "Official Repository",
-                    thumbnailUrl: menuImage,
-                    sourceUrl: "https://whatsapp.com/channel/0029VbAckOZ7tkj92um4KN3u",
-                    mediaType: 1,
-                    renderLargerThumbnail: true
+            contextInfo: {
+            externalAdReply: {
+            title: "Njabulo Jb",
+            body: "Message via ad !",
+             thumbnailUrl: "https://whatsapp.com/channel/0029VbAckOZ7tkj92um4KN3u",
+             sourceUrl: "https://whatsapp.com/channel/0029VbAckOZ7tkj92um4KN3u",
+             mediaType: 1,
+              showAdAttribution: true
               },
             },
           }),
