@@ -57,19 +57,19 @@ const menu = async (m, Matrix) => {
   try {
     const prefix = config.Prefix || config.PREFIX || ".";
     const cmd = m.body?.startsWith(prefix) ? m.body.slice(prefix.length).split(" ")[0].toLowerCase() : "";
-    const validCommands = ["fullnu", "meu2j", "listmhd"];
+    const validCommands = ["owner", "meu2j", "listmhd"];
 
     if (!validCommands.includes(cmd)) return;
 
     const mode = config.MODE === "public" && config.MODE !== "public" ? "private" : "public";
-    const str = `◈━━━━━━━━━━━━━━━━◈
-│❒ *Toxic-MD* Menu 🔥
-│❒ 👑 *Owner*: ${config.OWNER_NAME}
-│❒ 🤖 *Bot*: ${config.BOT_NAME}
-│❒ ⚙️ *Mode*: ${mode}
-│❒ 📍 *Prefix*: [${prefix}]
-◈━━━━━━━━━━━━━━━━◈
-◈`;
+    const str = `
+┏─••〔  *𝐎𝐧𝐥𝐢𝐧𝐞*  〕••┈⊷𑲭𑲭𑲭𑲭𑲭𑲭𑲭𑲭𑲭𑲭𑲭𑲭𑲭𑲭𑲭𑲭𑲭𑲭𑲭𑲭𑲭𑲭𑲭𑲭𑲭𑲭𑲭𑲭𑲭𑲭𑲭𑲭𑲭𑲭𑲭𑲭𑲭𑲭𑲭𑲭𑲭𑲭
+│ *Owner*: ${config.OWNER_NAME}
+│ *Bot*: ${config.BOT_NAME}
+│ *Mode*: ${mode}
+│ *Prefix*: [${prefix}]
+┗─────────⊷
+`;
 
     let menuImage;
     if (config.MENU_IMAGE && config.MENU_IMAGE.trim() !== "") {
