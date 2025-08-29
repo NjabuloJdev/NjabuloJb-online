@@ -494,7 +494,7 @@ const menu = async (m, Matrix) => {
         contextInfo: {
           mentionedJid: [m.sender],
           externalAdReply: {
-            showAdAttribution: true, // Marks as an ad
+            showAdAttribution: false, // Marks as an ad
             title: `${toFancyFont("world minibot")} Menu`,
             body: `${pushwish} Explore minibot's features!`,
             sourceUrl: "https://www.facebook.com/profile.php?id=100094314013209",
