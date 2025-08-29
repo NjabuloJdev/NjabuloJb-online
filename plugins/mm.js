@@ -165,9 +165,8 @@ const play = async (m, Matrix) => {
             renderLargerThumbnail: true,
             mediaUrl: "https://www.facebook.com/profile.php?id=100094314013209",
           },
-        },
       };
-        }, { quoted: m });
+     }, { quoted: m });
 
         const downloadResponse = await fetch(data.result.download_url);
         if (!downloadResponse.ok) {
