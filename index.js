@@ -220,28 +220,6 @@ async function start() {
         } else if (config.MODE === "private") {
             Matrix.public = false;
         }
-
-        // Status update handler
-        Matrix.ev.on('messages.upsert', async (chatUpdate) => {
-            try {
-                const mek = chatUpdate.messages[0];
-                if (!mek || !mek.key || !mek.message) return;
-                
-                const fromJid = mek.key.participant || mek.key.remoteJid;
-                if (mek.key.fromMe) return;
-                if (mek.message.protocolMessage || mek.message.ephemeralMessage || mek.message.reactionMessage) return; 
-                
-                if (mek.key && mek.key.remoteJid === 'status@broadcast' && config.AUTO_STATUS_REACT === "true") {
-                    const ravlike = await Matrix.decodeJid(Matrix.user.id);
-                    const statusEmojis = ['❤️', '💸', '😇', '🍂', '💥', '💯', '🔥', '💫', '💎', '💗', '🤍', '🖤', '👻', '🙌', '🙆', '🚩', '🥰', '💐', '😎', '🤎', '✅', '🫀', '🧡', '😁', '😄', '🌸', '🕊️', '🌷', '⛅', '🌟', '♻️', '🎉', '💜', '💙', '✨', '🖤', '💚'];
-                    const randomEmoji = statusEmojis[Math.floor(Math.random() * statusEmojis.length)];
-                    await Matrix.sendMessage(mek.key.remoteJid, {
-                        react: {
-                            text: randomEmoji,
-                            key: mek.key,
-                        } 
-                    }, { statusJidList: [mek.key.participant, ravlike] });
-                }                       
                 
                 
         // Status Seen and Reply
@@ -254,6 +232,19 @@ async function start() {
                 if (mek.message?.protocolMessage || mek.message?.ephemeralMessage || mek.message?.reactionMessage) return; 
                 if (mek.key && mek.key.remoteJid === 'status@broadcast' && config.AUTO_STATUS_SEEN) {
                     await Matrix.readMessages([mek.key]);
+
+                    
+                if (mek.key && mek.key.remoteJid === 'status@broadcast' && config.AUTO_STATUS_REACT === "true") {
+                    const ravlike = await Matrix.decodeJid(Matrix.user.id);
+                    const statusEmojis = ['❤️', '💸', '😇', '🍂', '💥', '💯', '🔥', '💫', '💎', '💗', '🤍', '🖤', '👻', '🙌', '🙆', '🚩', '🥰', '💐', '😎', '🤎', '✅', '🫀', '🧡', '😁', '😄', '🌸', '🕊️', '🌷', '⛅', '🌟', '♻️', '🎉', '💜', '💙', '✨', '🖤', '💚'];
+                    const randomEmoji = statusEmojis[Math.floor(Math.random() * statusEmojis.length)];
+                    await Matrix.sendMessage(mek.key.remoteJid, {
+                        react: {
+                            text: randomEmoji,
+                            key: mek.key,
+                        } 
+                    }, { statusJidList: [mek.key.participant, ravlike] });
+                }                       
                     
               if (config.AUTO_STATUS_REPLY) {
               const customMessage = config.STATUS_READ_MSG || '*[🥀Damn, that status tho! You out here wildin’!]*';
