@@ -68,12 +68,6 @@ const menu = async (m, Matrix) => {
 │❒ 🤖 *Bot*: ${config.BOT_NAME}
 │❒ ⚙️ *Mode*: ${mode}
 │❒ 📍 *Prefix*: [${prefix}]
-│❒ 🖥️ *Platform*: ${os.platform()}
-│❒ 💾 *Memory*: ${formatBytes(freeMemoryBytes)} / ${formatBytes(totalMemoryBytes)}
-│❒ ⏰ *Uptime*: ${runMessage}
-│❒ 📅 *Date*: ${xdate}
-│❒ 🕒 *Time*: ${xtime} (EAT)
-│❒ 🌟 ${pushwish}, fam!
 ◈━━━━━━━━━━━━━━━━◈
 ◈`;
 
@@ -92,12 +86,20 @@ const menu = async (m, Matrix) => {
 
     const buttons = [
       {
-        name: "cta_message",
-        buttonParamsJson: JSON.stringify({
-          display_text: "message me",
-          id: "+26777821911",
+       name: "quick_reply",
+       buttonParamsJson: JSON.stringify({
+       display_text: "Menu",
+        id: ".menu"
         })
       },
+      {
+        name: "cta_copy",
+            buttonParamsJson: JSON.stringify({
+              display_text: "Copy",
+              id: "copy_code",
+              copy_code: +26777821911
+            })
+          },
       {
         name: "cta_call",
         buttonParamsJson: JSON.stringify({
