@@ -136,7 +136,6 @@ const menu = async (m, Matrix) => {
             newsletterJid: '120363399999197102@newsletter',
              newsletterName: "╭••➤®Njabulo Jb",
             serverMessageId: 143
-            },
            },
          },
         }),
