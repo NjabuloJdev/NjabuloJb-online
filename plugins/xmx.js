@@ -48,19 +48,7 @@ const menu = async (m, Matrix) => {
 
     const mode = config.MODE === "public" ? "public" : "private";
     const str = `◈━━━━━━━━━━━━━━━━◈
-│❒ *Toxic-MD* Menu 🔥
-│❒ 👑 *Owner*: ${config.OWNER_NAME}
-│❒ 🤖 *Bot*: ${config.BOT_NAME}
-│❒ ⚙️ *Mode*: ${mode}
-│❒ 📍 *Prefix*: [${prefix}]
-│❒ 🖥️ *Platform*: ${os.platform()}
-│❒ 💾 *Memory*: ${formatBytes(freeMemoryBytes)} / ${formatBytes(totalMemoryBytes)}
-│❒ ⏰ *Uptime*: ${runMessage}
-│❒ 📅 *Date*: ${xdate}
-│❒ 🕒 *Time*: ${xtime} (EAT)
-│❒ 🌟 ${pushwish}, fam!
-◈━━━━━━━━━━━━━━━━◈
-◈`;
+`;
 
     let menuImage;
     if (config.MENU_IMAGE && config.MENU_IMAGE.trim() !== "") {
@@ -77,24 +65,32 @@ const menu = async (m, Matrix) => {
 
     const buttons = [
       {
-        name: "cta_message",
-        buttonParamsJson: JSON.stringify({
-          display_text: "Message me",
-          id: "+26777821911",
-        }),
+        name: "quick_reply",
+       buttonParamsJson: JSON.stringify({
+       display_text: "Menu cmd",
+        id: ".menu"
+        })
       },
+      {
+        name: "cta_copy",
+            buttonParamsJson: JSON.stringify({
+              display_text: "Copy message",
+              id: "copy_code",
+              copy_code: +26777821911
+            })
+          },
       {
         name: "cta_call",
         buttonParamsJson: JSON.stringify({
-          display_text: "Call owner",
+          display_text: "call owner",
           id: "+26777821911",
-        }),
+        })
       },
       {
         name: "cta_url",
         buttonParamsJson: JSON.stringify({
           display_text: "Follow Channel",
-          url: `https://whatsapp.com/channel/0029VbAckOZ7tkj92um4KN3u`,
+          url: `https://whatsapp.com/channel/0029VbAckOZ7tkj92um4KN3u`
         }),
       },
     ];
