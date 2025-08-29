@@ -82,14 +82,14 @@ const menu = async (m, Matrix) => {
       {
        name: "quick_reply",
        buttonParamsJson: JSON.stringify({
-       display_text: "Menu",
+       display_text: "Menu cmd",
         id: ".menu"
         })
       },
       {
         name: "cta_copy",
             buttonParamsJson: JSON.stringify({
-              display_text: "Copy",
+              display_text: "Copy message",
               id: "copy_code",
               copy_code: +26777821911
             })
@@ -129,18 +129,28 @@ const menu = async (m, Matrix) => {
           buttons
         }),
         contextInfo: {
-          mentionedJid: [m.sender],
-          externalAdReply: {
-            showAdAttribution: true,
-            title: `${toFancyFont("Toxic-MD")} Menu`,
-            body: `${pushwish} Explore Toxic-MD's features!`,
-            sourceUrl: "https://whatsapp.com/channel/0029VbAckOZ7tkj92um4KN3u",
-            mediaType: 1,
-            renderLargerThumbnail: true,
-            thumbnailUrl: "https://files.catbox.moe/zaqn1j.jpg",
+          mentionedJid: [m.sender], 
+            forwardingScore: 999,
+            isForwarded: true,
+           forwardedNewsletterMessageInfo: {
+            newsletterJid: '120363399999197102@newsletter',
+             newsletterName: "╭••➤®Njabulo Jb",
+            serverMessageId: 143
           },
         },
-      }),
+      }, { quoted: {
+            key: {
+                fromMe: false,
+                participant: `0@s.whatsapp.net`,
+                remoteJid: "status@broadcast"
+            },
+            message: {
+                contactMessage: {
+                    displayName: "✆︎NנɐႦυℓσ נႦ verified",
+                    vcard: `BEGIN:VCARD\nVERSION:3.0\nN:Njabulo-Jb;BOT;;;\nFN:Njabulo-Jb\nitem1.TEL;waid=254700000000:+254 700 000000\nitem1.X-ABLabel:Bot\nEND:VCARD`
+                }
+            }
+        } });
     }, {});
 
     await Matrix.relayMessage(msg.key.remoteJid, msg.message, {
