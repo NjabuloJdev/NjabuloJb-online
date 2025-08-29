@@ -32,22 +32,30 @@ const xtime = moment.tz("Africa/Nairobi").format("HH:mm:ss");
 const xdate = moment.tz("Africa/Nairobi").format("DD/MM/YYYY");
 const time2 = moment().tz("Africa/Nairobi").format("HH:mm:ss");
 let pushwish = "";
-if (time2 < "05:00:00") pushwish = `Good Morning 🌄`;
-else if (time2 < "11:00:00") pushwish = `Good Morning 🌄`;
-else if (time2 < "15:00:00") pushwish = `Good Afternoon 🌅`;
-else if (time2 < "18:00:00") pushwish = `Good Evening 🌃`;
-else pushwish = `Good Night 🌌`;
+if (time2 < "05:00:00") {
+  pushwish = `🌄 𝐆𝐨𝐨𝐝 𝐌𝐨𝐫𝐧𝐢𝐧𝐠`;
+} else if (time2 < "11:00:00") {
+  pushwish = `🌄 𝐆𝐨𝐨𝐝 𝐌𝐨𝐫𝐧𝐢𝐧𝐠`;
+} else if (time2 < "15:00:00") {
+  pushwish = `🌅𝐆𝐨𝐨𝐝 𝐀𝐟𝐭𝐞𝐫𝐧𝐨𝐨𝐧`;
+} else if (time2 < "18:00:00") {
+  pushwish = `🌃 𝐆𝐨𝐨𝐝 𝐄𝐯𝐞𝐧𝐢𝐧𝐠`;
+} else if (time2 < "19:00:00") {
+  pushwish = `🌃𝐆𝐨𝐨𝐝 𝐄𝐯𝐞𝐧𝐢𝐧𝐠`;
+} else {
+  pushwish = `🌌 𝐆𝐨𝐨𝐝 𝐍𝐢𝐠𝐡𝐭`;
+} 
 
 const menu = async (m, Matrix) => {
   try {
     const prefix = config.Prefix || config.PREFIX || ".";
     const cmd = m.body?.startsWith(prefix) ? m.body.slice(prefix.length).split(" ")[0].toLowerCase() : "";
-    const validCommands = ["fullmenu", "menu2", "listcmd"];
+    const validCommands = ["owner", "oownernumber", "ownerbot"];
 
     if (!validCommands.includes(cmd)) return;
 
     const mode = config.MODE === "public" ? "public" : "private";
-    const str = `◈━━━━━━━━━━━━━━━━◈
+    const str = `*╰► ${pushwish}* ${m.pushName}
 `;
 
     let menuImage;
@@ -72,18 +80,18 @@ const menu = async (m, Matrix) => {
         })
       },
       {
-        name: "cta_copy",
-            buttonParamsJson: JSON.stringify({
-              display_text: "Copy message",
-              id: "copy_code",
-              copy_code: +26777821911
-            })
-          },
-      {
         name: "cta_call",
         buttonParamsJson: JSON.stringify({
           display_text: "call owner",
           id: "+26777821911",
+            })
+          },
+      {
+      name: "cta_copy",
+       buttonParamsJson: JSON.stringify({
+      display_text: "Copy message",
+        id: "copy_code",
+        copy_code: +26777821911  
         })
       },
       {
@@ -117,8 +125,8 @@ const menu = async (m, Matrix) => {
               forwardingScore: 999,
               isForwarded: true,
               forwardedNewsletterMessageInfo: {
-                newsletterJid: "120363398040175935@newsletter",
-                newsletterName: "Toxic-MD",
+                newsletterJid: "120363399999197102@newsletter",
+                newsletterName: "╭••➤®Njabulo Jb",
                 serverMessageId: 143,
               },
             },
