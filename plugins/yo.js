@@ -136,10 +136,12 @@ const menu = async (m, Matrix) => {
             newsletterJid: '120363399999197102@newsletter',
              newsletterName: "╭••➤®Njabulo Jb",
             serverMessageId: 143
-          },
-        },
-       });
-    }, {});
+            }
+           }
+        }),
+      },
+    },
+  }, {});
 
     await Matrix.relayMessage(msg.key.remoteJid, msg.message, {
       messageId: msg.key.id
