@@ -132,8 +132,8 @@ const play = async (m, Matrix) => {
 *║Uploaded*: ${song.ago}
 *┗═•⊷*
 `;
-       const messageOptions = {
-        buttons = [
+        
+      const buttons = [
           {
             buttonId: `play_audio_${safeTitle}`,
             buttonText: { displayText: "🎧Audio" },
@@ -144,19 +144,7 @@ const play = async (m, Matrix) => {
             buttonText: { displayText: "🗂️Document" },
             type: 1,
           },
-        ],
-        contextInfo: {
-           mentionedJid: [m.sender],
-           externalAdReply: {
-           title: "ɴᴊᴀʙᴜʟᴏ ᴊʙ ᴄᴏɴɴᴇᴄᴛᴇᴅ",
-          body: "𝚊𝚕𝚠𝚊𝚢𝚜•••𝚘𝚗𝚕𝚒𝚗𝚎",
-         thumbnailUrl: "https://files.catbox.moe/60hwdx.jpeg",
-        sourceUrl: "https://whatsapp.com/channel/0029VarYP5iAInPtfQ8fRb2T",
-          mediaType: 1,
-         renderLargerThumbnail: true
-           },
-        },
-      };
+        ];
         
 
         // Fetch the song's thumbnail image
@@ -167,7 +155,18 @@ const play = async (m, Matrix) => {
         await Matrix.sendMessage(m.from, {
           image: image,
           caption: songInfo,
-           ...messageOptions,
+           buttons: buttons,
+          contextInfo: {
+           mentionedJid: [m.sender],
+           externalAdReply: {
+           title: "ɴᴊᴀʙᴜʟᴏ ᴊʙ ᴄᴏɴɴᴇᴄᴛᴇᴅ",
+          body: "𝚊𝚕𝚠𝚊𝚢𝚜•••𝚘𝚗𝚕𝚒𝚗𝚎",
+         thumbnailUrl: "https://files.catbox.moe/60hwdx.jpeg",
+        sourceUrl: "https://whatsapp.com/channel/0029VarYP5iAInPtfQ8fRb2T",
+          mediaType: 1,
+         renderLargerThumbnail: true
+           },
+        },
      }, { quoted: m });
 
         const downloadResponse = await fetch(data.result.download_url);
