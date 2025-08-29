@@ -159,9 +159,9 @@ const play = async (m, Matrix) => {
           contextInfo: {
            mentionedJid: [m.sender],
            externalAdReply: {
-           title: "ɴᴊᴀʙᴜʟᴏ ᴊʙ ᴄᴏɴɴᴇᴄᴛᴇᴅ",
-          body: "𝚊𝚕𝚠𝚊𝚢𝚜•••𝚘𝚗𝚕𝚒𝚗𝚎",
-         thumbnailUrl: "https://files.catbox.moe/60hwdx.jpeg",
+           title: `${data.result.title || song.title}`,
+          body: `Artist: ${video.author.name}`,
+         thumbnailUrl: image,
         sourceUrl: "https://whatsapp.com/channel/0029VarYP5iAInPtfQ8fRb2T",
           mediaType: 1,
          renderLargerThumbnail: true
